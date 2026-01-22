@@ -1,0 +1,47 @@
+/// Bridge to `Swift.Sequence` for `Copyable` conformers.
+///
+/// Types conforming to `Sequence.Protocol` that are `Copyable` can also
+/// conform to `Swift.Sequence` with no additional implementation:
+///
+/// ```swift
+/// struct MyContainer: Sequence.`Protocol`, Swift.Sequence {
+///     func makeIterator() -> Array<Int>.Iterator { ... }
+///     // Swift.Sequence satisfied automatically
+/// }
+/// ```
+///
+/// ## Why This Works
+///
+/// `Sequence.Protocol` requires:
+/// - `associatedtype Element`
+/// - `associatedtype Iterator: IteratorProtocol`
+/// - `func makeIterator() -> Iterator`
+///
+/// These are exactly the requirements of `Swift.Sequence`, so any
+/// `Copyable` type conforming to `Sequence.Protocol` already satisfies
+/// `Swift.Sequence`.
+///
+/// ## Usage
+///
+/// ```swift
+/// // 1. Define your type with Sequence.Protocol
+/// struct Numbers: Sequence.`Protocol` {
+///     let values: [Int]
+///     func makeIterator() -> Array<Int>.Iterator {
+///         values.makeIterator()
+///     }
+/// }
+///
+/// // 2. Add Swift.Sequence conformance (no implementation needed)
+/// extension Numbers: Swift.Sequence {}
+///
+/// // 3. Now works with for-in and stdlib algorithms
+/// for n in Numbers(values: [1, 2, 3]) { print(n) }
+/// ```
+extension Sequence.`Protocol` where Self: Copyable {
+    /// Default `underestimatedCount` for stdlib compatibility.
+    ///
+    /// Returns 0 as a safe default. Types with known counts should override.
+    @inlinable
+    public var underestimatedCount: Int { 0 }
+}

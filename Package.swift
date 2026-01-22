@@ -1,0 +1,47 @@
+// swift-tools-version: 6.2
+
+import PackageDescription
+
+let package = Package(
+    name: "swift-sequence-primitives",
+    platforms: [
+        .macOS(.v26),
+        .iOS(.v26),
+        .tvOS(.v26),
+        .watchOS(.v26),
+        .visionOS(.v26),
+    ],
+    products: [
+        .library(
+            name: "Sequence Primitives",
+            targets: ["Sequence Primitives"]
+        ),
+    ],
+    dependencies: [
+        .package(path: "../swift-property-primitives"),
+        .package(path: "../swift-index-primitives"),
+        .package(path: "../swift-input-primitives"),
+    ],
+    targets: [
+        .target(
+            name: "Sequence Primitives",
+            dependencies: [
+                .product(name: "Property Primitives", package: "swift-property-primitives"),
+                .product(name: "Index Primitives", package: "swift-index-primitives"),
+                .product(name: "Input Primitives", package: "swift-input-primitives"),
+            ]
+        ),
+    ],
+    swiftLanguageModes: [.v6]
+)
+
+for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
+    let settings: [SwiftSetting] = [
+        .enableUpcomingFeature("ExistentialAny"),
+        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility"),
+        .enableExperimentalFeature("Lifetimes"),
+        .strictMemorySafety(),
+    ]
+    target.swiftSettings = (target.swiftSettings ?? []) + settings
+}

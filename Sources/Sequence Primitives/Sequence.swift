@@ -13,10 +13,23 @@
 ///
 /// | Protocol | Description |
 /// |----------|-------------|
-/// | `Sequence.Protocol` | Iterable type (supports `~Copyable`) |
+/// | `Sequence.Protocol` | Iterable type (supports `~Copyable` containers) |
+/// | `Sequence.Iterator.Protocol` | Iterator type (supports `~Copyable` iterators) |
 /// | `Sequence.Clearable` | Adds `removeAll()` for consuming iteration |
 /// | `Sequence.Drain.Protocol` | Mutating drain (container survives empty) |
 /// | `Sequence.Consume.Protocol` | Consuming iteration (container destroyed) |
+///
+/// ## ~Copyable Element Limitation
+///
+/// The `Element` type implicitly requires `Copyable` per SE-0427 because
+/// `IteratorProtocol.next()` returns `Element?` and `Optional` requires `Copyable`.
+///
+/// For `~Copyable` elements, use closure-based APIs:
+///
+/// | Pattern | Use Case |
+/// |---------|----------|
+/// | `forEach { borrowing element in }` | Borrowing iteration |
+/// | `drain { consuming element in }` | Consuming iteration (container survives) |
 ///
 /// ## Tags (Property.View Operations)
 ///

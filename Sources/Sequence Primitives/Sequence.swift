@@ -18,15 +18,6 @@
 /// | `Sequence.Drain.Protocol` | Mutating drain (container survives empty) |
 /// | `Sequence.Consume.Protocol` | Consuming iteration (container destroyed) |
 ///
-/// ## Span Access Protocols (Canonical Safe Access)
-///
-/// | Protocol | Description |
-/// |----------|-------------|
-/// | `Sequence.Span.Protocol` | Read-only `span` property (stable storage) |
-/// | `Sequence.Span.Mutable.Protocol` | Mutable `mutableSpan` property |
-/// | `Sequence.WithSpan.Protocol` | Closure-based `withSpan(_:)` (inline storage) |
-/// | `Sequence.WithSpan.Mutable.Protocol` | Closure-based `withMutableSpan(_:)` |
-///
 /// ## Tags (Property.View Operations)
 ///
 /// | Tag | Operations |
@@ -78,22 +69,5 @@
 /// }
 /// ```
 ///
-/// 3. For span access, conform to the appropriate protocol:
-///
-/// ```swift
-/// // Heap storage: property-based
-/// extension MyContainer: Sequence.Span.Protocol {
-///     var span: Span<Element> {
-///         @_lifetime(borrow self)
-///         borrowing get { ... }
-///     }
-/// }
-///
-/// // Inline storage: closure-based
-/// extension MyInlineContainer: Sequence.WithSpan.Protocol {
-///     func withSpan<R, E: Error>(_ body: (Span<Element>) throws(E) -> R) throws(E) -> R {
-///         ...
-///     }
-/// }
-/// ```
+/// 3. For span access, see `Property.Span` protocols in property-primitives.
 public struct Sequence: Sendable {}

@@ -10,7 +10,7 @@ extension Sequence {
     /// 2. Add a `forEach` property returning `Property<Sequence.ForEach, Self>.View`
     ///
     /// ```swift
-    /// extension MyContainer: Sequence.Protocol {
+    /// extension MyContainer: Swift.Sequence.Protocol {
     ///     func makeIterator() -> Array<Element>.Iterator {
     ///         storage.makeIterator()
     ///     }

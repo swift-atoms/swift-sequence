@@ -69,7 +69,7 @@ extension Sequence.Consume {
     ///     }
     /// }
     ///
-    /// extension MyContainer: Sequence.Consume.Protocol {
+    /// extension MyContainer: Swift.Sequence.Consume.Protocol {
     ///     consuming func consume() -> Sequence.Consume.View<Element, Consume.State> {
     ///         Sequence.Consume.View(
     ///             state: Consume.State(storage: storage, index: 0, count: count),

@@ -43,7 +43,7 @@
 /// 1. Conform your type to `Sequence.Protocol`:
 ///
 /// ```swift
-/// extension MyContainer: Sequence.Protocol {
+/// extension MyContainer: Swift.Sequence.Protocol {
 ///     func makeIterator() -> Array<Element>.Iterator {
 ///         storage.makeIterator()
 ///     }

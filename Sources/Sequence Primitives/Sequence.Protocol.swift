@@ -13,7 +13,7 @@ extension Sequence {
     ///     var storage: [Element]
     /// }
     ///
-    /// extension MyContainer: Sequence.Protocol {
+    /// extension MyContainer: Swift.Sequence.Protocol {
     ///     func makeIterator() -> Array<Element>.Iterator {
     ///         storage.makeIterator()
     ///     }

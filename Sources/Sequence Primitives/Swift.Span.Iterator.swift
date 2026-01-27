@@ -1,3 +1,5 @@
+public import Index_Primitives
+
 extension Swift.Span {
     /// An iterator that produces single elements from a borrowed span.
     ///
@@ -25,7 +27,7 @@ extension Swift.Span {
         let _span: Swift.Span<Element>
 
         @usableFromInline
-        var _position: Int
+        var _position: Ordinal.Position
 
         /// Creates an iterator over the given span.
         ///
@@ -34,16 +36,22 @@ extension Swift.Span {
         @_lifetime(copy span)
         public init(span: Swift.Span<Element>) {
             self._span = span
-            self._position = 0
+            self._position = .zero
         }
 
         /// Whether the iterator has no remaining elements.
         @inlinable
-        public var isEmpty: Bool { _position >= _span.count }
+        public var isEmpty: Bool {
+            _position.rawValue >= UInt(_span.count)
+        }
 
         /// The number of remaining elements.
         @inlinable
-        public var remaining: Int { _span.count - _position }
+        public var remaining: Cardinal.Count {
+            let total = Cardinal.Count(UInt(_span.count))
+            let consumed = Cardinal.Count(_position.rawValue)
+            return total.subtract.saturating(consumed)
+        }
 
         /// Returns the next element, or `nil` if exhausted.
         ///
@@ -51,9 +59,9 @@ extension Swift.Span {
         @inlinable
         @_lifetime(self: immortal)
         public mutating func next() -> Element? {
-            guard _position < _span.count else { return nil }
-            let element = _span[_position]
-            _position += 1
+            guard _position.rawValue < UInt(_span.count) else { return nil }
+            let element = _span[Int(_position.rawValue)]
+            _position = _position.successor.saturating()
             return element
         }
     }

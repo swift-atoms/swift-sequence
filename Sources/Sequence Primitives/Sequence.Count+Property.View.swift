@@ -1,4 +1,5 @@
 public import Property_Primitives
+public import Index_Primitives
 
 /// Property.View extensions for counting operations on `Sequence.Protocol` conformers.
 extension Property.View
@@ -10,17 +11,17 @@ where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.Count {
     ///
     /// ```swift
     /// var container = MyContainer([1, 2, 3, 4, 5, 6])
-    /// let evenCount = container.count.where { $0 % 2 == 0 }  // 3
+    /// let evenCount = container.count.where { $0 % 2 == 0 }  // Cardinal.Count(3)
     /// ```
     ///
     /// - Parameter predicate: A closure that returns `true` for elements to count.
     /// - Returns: The count of matching elements.
     @inlinable
-    public func `where`(_ predicate: (Base.Element) -> Bool) -> Int {
-        var count = 0
+    public func `where`(_ predicate: (Base.Element) -> Bool) -> Cardinal.Count {
+        var count = Cardinal.Count.zero
         var iterator = unsafe base.pointee.makeIterator()
         while let element = iterator.next() {
-            if predicate(element) { count += 1 }
+            if predicate(element) { count += .one }
         }
         return count
     }
@@ -31,13 +32,13 @@ where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.Count {
     ///
     /// ```swift
     /// var container = MyContainer([1, 2, 3, 4, 5])
-    /// let total = container.count.all  // 5
+    /// let total = container.count.all  // Cardinal.Count(5)
     /// ```
     @inlinable
-    public var all: Int {
-        var count = 0
+    public var all: Cardinal.Count {
+        var count = Cardinal.Count.zero
         var iterator = unsafe base.pointee.makeIterator()
-        while iterator.next() != nil { count += 1 }
+        while iterator.next() != nil { count += .one }
         return count
     }
 }

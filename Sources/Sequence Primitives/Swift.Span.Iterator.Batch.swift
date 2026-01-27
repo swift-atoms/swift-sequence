@@ -1,3 +1,5 @@
+public import Index_Primitives
+
 extension Swift.Span.Iterator {
     /// A batch iterator that produces sub-spans from a borrowed span.
     ///
@@ -15,10 +17,10 @@ extension Swift.Span.Iterator {
     ///
     /// var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
     ///
-    /// let batch1 = iterator.nextSpan(maximumCount: 2)  // [10, 20]
-    /// let batch2 = iterator.nextSpan(maximumCount: 2)  // [30, 40]
-    /// let batch3 = iterator.nextSpan(maximumCount: 2)  // [50]
-    /// let batch4 = iterator.nextSpan(maximumCount: 2)  // empty
+    /// let batch1 = iterator.nextSpan(maximumCount: Cardinal.Count(2))  // [10, 20]
+    /// let batch2 = iterator.nextSpan(maximumCount: Cardinal.Count(2))  // [30, 40]
+    /// let batch3 = iterator.nextSpan(maximumCount: Cardinal.Count(2))  // [50]
+    /// let batch4 = iterator.nextSpan(maximumCount: Cardinal.Count(2))  // empty
     /// ```
     @safe
     public struct Batch: ~Escapable, ~Copyable,
@@ -28,7 +30,7 @@ extension Swift.Span.Iterator {
         let _span: Swift.Span<Element>
 
         @usableFromInline
-        var _position: Int
+        var _position: Ordinal.Position
 
         /// Creates an iterator over the given span.
         ///
@@ -37,16 +39,22 @@ extension Swift.Span.Iterator {
         @_lifetime(copy span)
         public init(span: Swift.Span<Element>) {
             self._span = span
-            self._position = 0
+            self._position = .zero
         }
 
         /// Whether the iterator has no remaining elements.
         @inlinable
-        public var isEmpty: Bool { _position >= _span.count }
+        public var isEmpty: Bool {
+            _position.rawValue >= UInt(_span.count)
+        }
 
         /// The number of remaining elements.
         @inlinable
-        public var remaining: Int { _span.count - _position }
+        public var remaining: Cardinal.Count {
+            let total = Cardinal.Count(UInt(_span.count))
+            let consumed = Cardinal.Count(_position.rawValue)
+            return total.subtract.saturating(consumed)
+        }
 
         /// Returns the next batch of elements as a span.
         ///
@@ -57,26 +65,33 @@ extension Swift.Span.Iterator {
         /// - Returns: A span containing the next batch.
         @inlinable
         @_lifetime(copy self)
-        public mutating func nextSpan(maximumCount: Int) -> Swift.Span<Element> {
-            let count = min(maximumCount, _span.count - _position)
-            guard count > 0 else { return _span.extracting(first: 0) }
+        public mutating func nextSpan(maximumCount: Cardinal.Count) -> Swift.Span<Element> {
+            let availableCount = remaining
+            let takeCount = min(maximumCount.rawValue, availableCount.rawValue)
+            guard takeCount > 0 else { return _span.extracting(first: 0) }
+
+            let startInt = Int(_position.rawValue)
+            let endInt = startInt + Int(takeCount)
+
             let result = _span
-                .extracting(first: _position + count)
-                .extracting(droppingFirst: _position)
-            _position += count
+                .extracting(first: endInt)
+                .extracting(droppingFirst: startInt)
+
+            _position = _position.advance.saturating(by: Cardinal.Count(takeCount))
             return result
         }
 
         /// Advances past elements without returning them.
         ///
-        /// - Parameter maximumOffset: Maximum number of elements to skip.
+        /// - Parameter maximumCount: Maximum number of elements to skip.
         /// - Returns: The actual number of elements skipped.
         @inlinable
         @_lifetime(self: immortal)
-        public mutating func skip(by maximumOffset: Int) -> Int {
-            let count = min(maximumOffset, _span.count - _position)
-            _position += count
-            return count
+        public mutating func skip(by maximumCount: Cardinal.Count) -> Cardinal.Count {
+            let availableCount = remaining
+            let skipCount = min(maximumCount.rawValue, availableCount.rawValue)
+            _position = _position.advance.saturating(by: Cardinal.Count(skipCount))
+            return Cardinal.Count(skipCount)
         }
     }
 }

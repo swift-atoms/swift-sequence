@@ -11,14 +11,14 @@ where Base: Sequence.`Protocol` & ~Copyable, Base.Element: Copyable, Tag == Sequ
     ///
     /// ```swift
     /// var container = MyContainer([1, 2, 3, 4, 5])
-    /// container.drop.first(Cardinal.Count(2))  // [3, 4, 5]
-    /// container.drop.first(Cardinal.Count(10)) // []
+    /// container.drop.first(Cardinal(2))  // [3, 4, 5]
+    /// container.drop.first(Cardinal(10)) // []
     /// ```
     @inlinable
-    public func first(_ count: Cardinal.Count) -> [Base.Element] {
+    public func first(_ count: Cardinal) -> [Base.Element] {
         var result: [Base.Element] = []
         var iterator = unsafe base.pointee.makeIterator()
-        var skipped = Cardinal.Count.zero
+        var skipped = Cardinal.zero
         while let element = iterator.next() {
             if skipped < count {
                 skipped += .one

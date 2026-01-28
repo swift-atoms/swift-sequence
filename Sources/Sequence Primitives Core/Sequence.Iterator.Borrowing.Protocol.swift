@@ -11,7 +11,7 @@ extension Sequence.Iterator.Borrowing {
     /// ```swift
     /// var iterator = container.makeIterator()
     /// while true {
-    ///     let span = iterator.nextSpan(maximumCount: Cardinal.Count(UInt.max))
+    ///     let span = iterator.nextSpan(maximumCount: Cardinal(UInt.max))
     ///     if span.isEmpty { break }
     ///     for i in span.indices {
     ///         process(span[i])
@@ -48,14 +48,14 @@ extension Sequence.Iterator.Borrowing {
         /// - Parameter maximumCount: Maximum number of elements to return.
         /// - Returns: A span containing the next batch of elements.
         @_lifetime(&self)
-        mutating func nextSpan(maximumCount: Cardinal.Count) -> Swift.Span<Element>
+        mutating func nextSpan(maximumCount: Cardinal) -> Swift.Span<Element>
 
         /// Advances past elements without returning them.
         ///
         /// - Parameter maximumCount: Maximum number of elements to skip.
         /// - Returns: The actual number of elements skipped.
         @_lifetime(self: immortal)
-        mutating func skip(by maximumCount: Cardinal.Count) -> Cardinal.Count
+        mutating func skip(by maximumCount: Cardinal) -> Cardinal
     }
 }
 
@@ -67,12 +67,12 @@ extension Sequence.Iterator.Borrowing.`Protocol` {
     /// Conforming types may provide optimized implementations.
     @inlinable
     @_lifetime(self: immortal)
-    public mutating func skip(by maximumCount: Cardinal.Count) -> Cardinal.Count {
+    public mutating func skip(by maximumCount: Cardinal) -> Cardinal {
         var remaining = maximumCount
         while remaining > .zero {
             let span = nextSpan(maximumCount: remaining)
             if span.isEmpty { break }
-            remaining = remaining.subtract.saturating(Cardinal.Count(UInt(span.count)))
+            remaining = remaining.subtract.saturating(Cardinal(UInt(span.count)))
         }
         return maximumCount.subtract.saturating(remaining)
     }

@@ -23,10 +23,23 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Sequence Primitives",
+            name: "Sequence Primitives Core",
             dependencies: [
                 .product(name: "Property Primitives", package: "swift-property-primitives"),
                 .product(name: "Index Primitives", package: "swift-index-primitives"),
+            ]
+        ),
+        .target(
+            name: "Sequence Primitives",
+            dependencies: [
+                "Sequence Primitives Core",
+                "Sequence Primitives Standard Library Integration",
+            ]
+        ),
+        .target(
+            name: "Sequence Primitives Standard Library Integration",
+            dependencies: [
+                "Sequence Primitives Core",
             ]
         ),
     ],

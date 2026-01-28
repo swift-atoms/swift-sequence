@@ -17,10 +17,10 @@ extension Swift.Span.Iterator {
     ///
     /// var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
     ///
-    /// let batch1 = iterator.nextSpan(maximumCount: Cardinal.Count(2))  // [10, 20]
-    /// let batch2 = iterator.nextSpan(maximumCount: Cardinal.Count(2))  // [30, 40]
-    /// let batch3 = iterator.nextSpan(maximumCount: Cardinal.Count(2))  // [50]
-    /// let batch4 = iterator.nextSpan(maximumCount: Cardinal.Count(2))  // empty
+    /// let batch1 = iterator.nextSpan(maximumCount: Cardinal(2))  // [10, 20]
+    /// let batch2 = iterator.nextSpan(maximumCount: Cardinal(2))  // [30, 40]
+    /// let batch3 = iterator.nextSpan(maximumCount: Cardinal(2))  // [50]
+    /// let batch4 = iterator.nextSpan(maximumCount: Cardinal(2))  // empty
     /// ```
     @safe
     public struct Batch: ~Escapable, ~Copyable,
@@ -30,7 +30,7 @@ extension Swift.Span.Iterator {
         let _span: Swift.Span<Element>
 
         @usableFromInline
-        var _position: Ordinal.Position
+        var _position: Ordinal
 
         /// Creates an iterator over the given span.
         ///
@@ -50,9 +50,9 @@ extension Swift.Span.Iterator {
 
         /// The number of remaining elements.
         @inlinable
-        public var remaining: Cardinal.Count {
-            let total = Cardinal.Count(UInt(_span.count))
-            let consumed = Cardinal.Count(_position.rawValue)
+        public var remaining: Cardinal {
+            let total = Cardinal(UInt(_span.count))
+            let consumed = Cardinal(_position.rawValue)
             return total.subtract.saturating(consumed)
         }
 
@@ -65,7 +65,7 @@ extension Swift.Span.Iterator {
         /// - Returns: A span containing the next batch.
         @inlinable
         @_lifetime(copy self)
-        public mutating func nextSpan(maximumCount: Cardinal.Count) -> Swift.Span<Element> {
+        public mutating func nextSpan(maximumCount: Cardinal) -> Swift.Span<Element> {
             let availableCount = remaining
             let takeCount = min(maximumCount.rawValue, availableCount.rawValue)
             guard takeCount > 0 else { return _span.extracting(first: 0) }
@@ -77,7 +77,7 @@ extension Swift.Span.Iterator {
                 .extracting(first: endInt)
                 .extracting(droppingFirst: startInt)
 
-            _position = _position.advance.saturating(by: Cardinal.Count(takeCount))
+            _position = _position.advance.saturating(by: Cardinal(takeCount))
             return result
         }
 
@@ -87,11 +87,11 @@ extension Swift.Span.Iterator {
         /// - Returns: The actual number of elements skipped.
         @inlinable
         @_lifetime(self: immortal)
-        public mutating func skip(by maximumCount: Cardinal.Count) -> Cardinal.Count {
+        public mutating func skip(by maximumCount: Cardinal) -> Cardinal {
             let availableCount = remaining
             let skipCount = min(maximumCount.rawValue, availableCount.rawValue)
-            _position = _position.advance.saturating(by: Cardinal.Count(skipCount))
-            return Cardinal.Count(skipCount)
+            _position = _position.advance.saturating(by: Cardinal(skipCount))
+            return Cardinal(skipCount)
         }
     }
 }

@@ -11,14 +11,14 @@ where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.Count {
     ///
     /// ```swift
     /// var container = MyContainer([1, 2, 3, 4, 5, 6])
-    /// let evenCount = container.count.where { $0 % 2 == 0 }  // Cardinal.Count(3)
+    /// let evenCount = container.count.where { $0 % 2 == 0 }  // Cardinal(3)
     /// ```
     ///
     /// - Parameter predicate: A closure that returns `true` for elements to count.
     /// - Returns: The count of matching elements.
     @inlinable
-    public func `where`(_ predicate: (Base.Element) -> Bool) -> Cardinal.Count {
-        var count = Cardinal.Count.zero
+    public func `where`(_ predicate: (Base.Element) -> Bool) -> Cardinal {
+        var count = Cardinal.zero
         var iterator = unsafe base.pointee.makeIterator()
         while let element = iterator.next() {
             if predicate(element) { count += .one }
@@ -32,11 +32,11 @@ where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.Count {
     ///
     /// ```swift
     /// var container = MyContainer([1, 2, 3, 4, 5])
-    /// let total = container.count.all  // Cardinal.Count(5)
+    /// let total = container.count.all  // Cardinal(5)
     /// ```
     @inlinable
-    public var all: Cardinal.Count {
-        var count = Cardinal.Count.zero
+    public var all: Cardinal {
+        var count = Cardinal.zero
         var iterator = unsafe base.pointee.makeIterator()
         while iterator.next() != nil { count += .one }
         return count

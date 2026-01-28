@@ -27,7 +27,7 @@ extension Swift.Span {
         let _span: Swift.Span<Element>
 
         @usableFromInline
-        var _position: Ordinal.Position
+        var _position: Ordinal
 
         /// Creates an iterator over the given span.
         ///
@@ -47,9 +47,9 @@ extension Swift.Span {
 
         /// The number of remaining elements.
         @inlinable
-        public var remaining: Cardinal.Count {
-            let total = Cardinal.Count(UInt(_span.count))
-            let consumed = Cardinal.Count(_position.rawValue)
+        public var remaining: Cardinal {
+            let total = Cardinal(UInt(_span.count))
+            let consumed = Cardinal(_position.rawValue)
             return total.subtract.saturating(consumed)
         }
 

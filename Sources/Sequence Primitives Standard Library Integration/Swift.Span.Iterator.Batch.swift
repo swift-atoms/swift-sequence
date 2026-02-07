@@ -45,7 +45,7 @@ extension Swift.Span.Iterator {
         /// Whether the iterator has no remaining elements.
         @inlinable
         public var isEmpty: Bool {
-            _position.rawValue >= UInt(_span.count)
+            _position >= Cardinal(UInt(_span.count))
         }
 
         /// The number of remaining elements.
@@ -67,17 +67,14 @@ extension Swift.Span.Iterator {
         @_lifetime(copy self)
         public mutating func nextSpan(maximumCount: Cardinal) -> Swift.Span<Element> {
             let availableCount = remaining
-            let takeCount = min(maximumCount.rawValue, availableCount.rawValue)
-            guard takeCount > 0 else { return _span.extracting(first: 0) }
-
-            let startInt = Int(_position.rawValue)
-            let endInt = startInt + Int(takeCount)
+            let take = Cardinal(Swift.min(maximumCount.rawValue, availableCount.rawValue))
+            guard take > .zero else { return _span.extracting(first: 0) }
 
             let result = _span
-                .extracting(first: endInt)
-                .extracting(droppingFirst: startInt)
+                .extracting(droppingFirst: Cardinal(_position.rawValue))
+                .extracting(first: take)
 
-            _position = _position.advance.saturating(by: Cardinal(takeCount))
+            _position = _position.advance.saturating(by: take)
             return result
         }
 
@@ -89,9 +86,9 @@ extension Swift.Span.Iterator {
         @_lifetime(self: immortal)
         public mutating func skip(by maximumCount: Cardinal) -> Cardinal {
             let availableCount = remaining
-            let skipCount = min(maximumCount.rawValue, availableCount.rawValue)
-            _position = _position.advance.saturating(by: Cardinal(skipCount))
-            return Cardinal(skipCount)
+            let skip = Cardinal(Swift.min(maximumCount.rawValue, availableCount.rawValue))
+            _position = _position.advance.saturating(by: skip)
+            return skip
         }
     }
 }

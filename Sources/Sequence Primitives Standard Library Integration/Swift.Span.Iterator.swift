@@ -42,7 +42,7 @@ extension Swift.Span {
         /// Whether the iterator has no remaining elements.
         @inlinable
         public var isEmpty: Bool {
-            _position.rawValue >= UInt(_span.count)
+            _position >= Cardinal(UInt(_span.count))
         }
 
         /// The number of remaining elements.
@@ -59,8 +59,8 @@ extension Swift.Span {
         @inlinable
         @_lifetime(self: immortal)
         public mutating func next() -> Element? {
-            guard _position.rawValue < UInt(_span.count) else { return nil }
-            let element = _span[Int(_position.rawValue)]
+            guard _position < Cardinal(UInt(_span.count)) else { return nil }
+            let element = _span[Int(bitPattern: _position)]
             _position = _position.successor.saturating()
             return element
         }

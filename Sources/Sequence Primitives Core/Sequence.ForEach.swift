@@ -6,27 +6,17 @@ extension Sequence {
     ///
     /// ## Adding forEach to Your Type
     ///
-    /// 1. Conform to `Sequence.Protocol`
-    /// 2. Add a `forEach` property returning `Property<Sequence.ForEach, Self>.View`
+    /// Conform to `Sequence.Protocol`. The `forEach` accessor property is
+    /// provided automatically via protocol default.
     ///
     /// ```swift
-    /// extension MyContainer: Swift.Sequence.Protocol {
+    /// extension MyContainer: Sequence.Protocol {
     ///     func makeIterator() -> Array<Element>.Iterator {
     ///         storage.makeIterator()
     ///     }
     /// }
-    ///
-    /// extension MyContainer {
-    ///     var forEach: Property<Sequence.ForEach, MyContainer>.View {
-    ///         mutating _read {
-    ///             yield unsafe Property<Sequence.ForEach, MyContainer>.View(&self)
-    ///         }
-    ///         mutating _modify {
-    ///             var view = unsafe Property<Sequence.ForEach, MyContainer>.View(&self)
-    ///             yield &view
-    ///         }
-    ///     }
-    /// }
+    /// // MyContainer now has .forEach { }, .forEach.borrowing { },
+    /// // and .forEach.consuming { } (if also Clearable).
     /// ```
     ///
     /// ## Available Operations

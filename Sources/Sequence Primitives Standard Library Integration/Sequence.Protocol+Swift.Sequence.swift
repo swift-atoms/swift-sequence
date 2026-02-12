@@ -44,4 +44,16 @@ extension Sequence.`Protocol` where Self: Copyable {
     /// Returns 0 as a safe default. Types with known counts should override.
     @inlinable
     public var underestimatedCount: Int { 0 }
+
+    /// The first element of the sequence, or `nil` if empty.
+    ///
+    /// `Swift.Sequence` provides `func first(where:)` but does NOT provide
+    /// `var first: Element?` — that property lives on `Collection`.
+    /// Without this, `sequence.first` resolves to the `first(where:)`
+    /// method reference, not a property access.
+    @inlinable
+    public var first: Element? {
+        var iterator = makeIterator()
+        return iterator.next()
+    }
 }

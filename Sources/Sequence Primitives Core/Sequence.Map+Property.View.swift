@@ -18,7 +18,7 @@ where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.Map {
     /// - Parameter transform: A closure that transforms an element.
     /// - Returns: An array of transformed elements.
     @inlinable
-    public func callAsFunction<U>(_ transform: (Base.Element) -> U) -> [U] {
+    public func callAsFunction<U>(_ transform: (borrowing Base.Element) -> U) -> [U] {
         var result: [U] = []
         var iterator = unsafe base.pointee.makeIterator()
         while let element = iterator.next() {

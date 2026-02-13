@@ -34,7 +34,7 @@ extension Sequence.Consume {
     /// // If early exit, State's deinit cleans up remaining
     /// ```
     @safe
-    public struct View<Element, State: ~Copyable>: ~Copyable {
+    public struct View<Element: ~Copyable, State: ~Copyable>: ~Copyable {
         @usableFromInline
         var _state: State
 
@@ -70,7 +70,7 @@ extension Sequence.Consume {
         /// - Parameter body: Closure called with each element.
         /// - Complexity: O(n) where n is element count.
         @inlinable
-        public consuming func forEach(_ body: (Element) -> Void) {
+        public consuming func forEach(_ body: (consuming Element) -> Void) {
             while let element = _next(&_state) {
                 body(element)
             }

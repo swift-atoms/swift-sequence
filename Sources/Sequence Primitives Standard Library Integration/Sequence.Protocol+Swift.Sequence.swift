@@ -12,14 +12,11 @@
 ///
 /// ## Why This Works
 ///
-/// `Sequence.Protocol` requires:
-/// - `associatedtype Element`
-/// - `associatedtype Iterator: IteratorProtocol`
-/// - `func makeIterator() -> Iterator`
-///
-/// These are exactly the requirements of `Swift.Sequence`, so any
-/// `Copyable` type conforming to `Sequence.Protocol` already satisfies
-/// `Swift.Sequence`.
+/// `Sequence.Protocol` requires `Iterator: Sequence.Iterator.Protocol`,
+/// while `Swift.Sequence` requires `Iterator: IteratorProtocol`.
+/// Types that conform their iterator to both `Sequence.Iterator.Protocol`
+/// and `IteratorProtocol` satisfy both protocol requirements, enabling
+/// the bridge for `Copyable` conformers.
 ///
 /// ## Usage
 ///

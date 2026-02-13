@@ -72,7 +72,7 @@ extension Sequence.Drain {
     /// ```
     public protocol `Protocol`: ~Copyable {
         /// The type of element produced during draining.
-        associatedtype Element
+        associatedtype Element: ~Copyable
 
         /// Drains all elements, passing each to the closure.
         ///

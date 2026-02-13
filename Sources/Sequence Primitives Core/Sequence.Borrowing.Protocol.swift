@@ -31,15 +31,9 @@ extension Sequence.Borrowing {
     /// | Granularity | Single element | Batch of elements |
     /// | Lifetime | Iterator owns elements | Iterator borrows from sequence |
     ///
-    /// ## SE-0427 Limitation
-    ///
-    /// The `Element` type implicitly requires `Copyable` per SE-0427.
-    /// This is a language limitation, not a design choice.
     public protocol `Protocol`: ~Copyable, ~Escapable {
         /// The type of element in the sequence.
-        ///
-        /// > Note: Implicitly requires `Copyable` per SE-0427.
-        associatedtype Element
+        associatedtype Element: ~Copyable
 
         /// The iterator type that produces spans of elements.
         associatedtype Iterator: Sequence.Iterator.Borrowing.`Protocol`

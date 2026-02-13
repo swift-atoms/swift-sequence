@@ -45,7 +45,7 @@ where Base: Sequence.Borrowing.`Protocol` & ~Copyable,
     ///
     /// - Parameter body: A closure called with each element.
     @inlinable
-    public func elements(_ body: (Base.Element) -> Void) {
+    public func elements(_ body: (borrowing Base.Element) -> Void) {
         var iterator = unsafe base.pointee.makeIterator()
         while true {
             let span = iterator.nextSpan(maximumCount: Cardinal(UInt.max))

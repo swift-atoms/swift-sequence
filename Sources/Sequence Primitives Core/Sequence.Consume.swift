@@ -84,7 +84,7 @@ extension Sequence.Consume {
     /// ```
     public protocol `Protocol`: ~Copyable {
         /// The type of element produced during consuming iteration.
-        associatedtype Element
+        associatedtype Element: ~Copyable
 
         /// The state type holding iteration data with deinit for cleanup.
         ///

@@ -31,14 +31,9 @@ extension Sequence.Iterator.Borrowing {
     /// The returned span borrows from the iterator via `@_lifetime(&self)`.
     /// This ensures the span cannot outlive the iterator.
     ///
-    /// ## SE-0427 Limitation
-    ///
-    /// The `Element` type implicitly requires `Copyable` per SE-0427.
     public protocol `Protocol`: ~Copyable, ~Escapable {
         /// The type of element in the span.
-        ///
-        /// > Note: Implicitly requires `Copyable` per SE-0427.
-        associatedtype Element
+        associatedtype Element: ~Copyable
 
         /// Returns the next batch of elements as a span.
         ///
@@ -78,14 +73,3 @@ extension Sequence.Iterator.Borrowing.`Protocol` {
     }
 }
 
-// MARK: - Typealias for Ergonomics
-
-extension Sequence.Iterator {
-    /// Alias for ``Sequence/Iterator/Borrowing/Protocol``.
-    ///
-    /// Provided for ergonomic conformance declarations:
-    /// ```swift
-    /// extension MyIterator: Sequence.Iterator.BorrowingIterating { ... }
-    /// ```
-    public typealias BorrowingIterating = Sequence.Iterator.Borrowing.`Protocol`
-}

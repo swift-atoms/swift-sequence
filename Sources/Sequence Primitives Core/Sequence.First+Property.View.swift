@@ -17,7 +17,7 @@ where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.First {
     /// - Parameter predicate: A closure that takes an element and returns a Bool.
     /// - Returns: The first matching element, or `nil`.
     @inlinable
-    public func callAsFunction(_ predicate: (Base.Element) -> Bool) -> Base.Element? {
+    public func callAsFunction(_ predicate: (borrowing Base.Element) -> Bool) -> Base.Element? {
         var iterator = unsafe base.pointee.makeIterator()
         while let element = iterator.next() {
             if predicate(element) { return element }

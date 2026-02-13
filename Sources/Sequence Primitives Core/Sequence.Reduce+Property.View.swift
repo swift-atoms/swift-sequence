@@ -21,7 +21,7 @@ where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.Reduce {
     @inlinable
     public func into<Result>(
         _ initial: Result,
-        _ operation: (inout Result, Base.Element) -> Void
+        _ operation: (inout Result, borrowing Base.Element) -> Void
     ) -> Result {
         var result = initial
         var iterator = unsafe base.pointee.makeIterator()
@@ -47,7 +47,7 @@ where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.Reduce {
     @inlinable
     public func from<Result>(
         _ initial: Result,
-        _ operation: (Result, Base.Element) -> Result
+        _ operation: (Result, borrowing Base.Element) -> Result
     ) -> Result {
         var result = initial
         var iterator = unsafe base.pointee.makeIterator()

@@ -17,7 +17,7 @@ where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.Count {
     /// - Parameter predicate: A closure that returns `true` for elements to count.
     /// - Returns: The count of matching elements.
     @inlinable
-    public func `where`(_ predicate: (Base.Element) -> Bool) -> Cardinal {
+    public func `where`(_ predicate: (borrowing Base.Element) -> Bool) -> Cardinal {
         var count = Cardinal.zero
         var iterator = unsafe base.pointee.makeIterator()
         while let element = iterator.next() {

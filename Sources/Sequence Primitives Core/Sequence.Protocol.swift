@@ -1,8 +1,9 @@
 extension Sequence {
-    /// A protocol for types that can be iterated, supporting `~Copyable`.
+    /// A protocol for types that can be iterated, supporting `~Copyable`
+    /// containers and `~Copyable` elements.
     ///
-    /// `Sequence.Protocol` mirrors stdlib's `Sequence` but allows `~Copyable` conformers.
-    /// This enables iteration over move-only containers.
+    /// `Sequence.Protocol` mirrors stdlib's `Sequence` but allows `~Copyable`
+    /// conformers and `~Copyable` elements.
     ///
     /// ## Conforming to Sequence.Protocol
     ///
@@ -13,7 +14,7 @@ extension Sequence {
     ///     var storage: [Element]
     /// }
     ///
-    /// extension MyContainer: Swift.Sequence.Protocol {
+    /// extension MyContainer: Sequence.`Protocol` {
     ///     func makeIterator() -> Array<Element>.Iterator {
     ///         storage.makeIterator()
     ///     }
@@ -24,9 +25,10 @@ extension Sequence {
     ///
     /// | Aspect | stdlib `Sequence` | `Sequence.Protocol` |
     /// |--------|-------------------|---------------------|
-    /// | `~Copyable` support | No | Yes |
+    /// | Container `~Copyable` | No | Yes |
+    /// | Element `~Copyable` | No | Yes |
     /// | `for-in` syntax | Yes | No (use `.forEach`) |
-    /// | Iterator requirement | `IteratorProtocol` | `IteratorProtocol` |
+    /// | Iterator requirement | `IteratorProtocol` | `Sequence.Iterator.Protocol` |
     ///
     /// ## ForEach Integration
     ///
@@ -35,10 +37,10 @@ extension Sequence {
     /// See `Sequence.ForEach` for details.
     public protocol `Protocol`: ~Copyable {
         /// The type of element produced by the sequence.
-        associatedtype Element
+        associatedtype Element: ~Copyable
 
         /// The iterator type that produces elements.
-        associatedtype Iterator: IteratorProtocol where Iterator.Element == Element
+        associatedtype Iterator: Sequence.Iterator.`Protocol` where Iterator.Element == Element
 
         /// Returns an iterator over the elements of this sequence.
         ///

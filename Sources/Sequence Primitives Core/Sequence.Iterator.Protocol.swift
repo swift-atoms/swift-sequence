@@ -50,6 +50,14 @@ extension Sequence.Iterator {
     /// | `container.drain { }` | Consuming iteration, container survives empty |
     /// | `container.consume().forEach { }` | Consuming iteration, container destroyed |
     ///
+    /// ## Future: Lending Iterator (`withNext`)
+    ///
+    /// A future `withNext(_ body: (borrowing Element) -> Void) -> Bool` method
+    /// would enable true borrowing iteration through iterators without requiring
+    /// `Element: Copyable`. This would complement the current `next() -> Element?`
+    /// which requires ownership transfer. Until then, collections use index-based
+    /// traversal for borrowing access (see `Collection.ForEach`).
+    ///
     /// ## Relationship to Swift.IteratorProtocol
     ///
     /// This protocol does not inherit from `IteratorProtocol` to avoid the

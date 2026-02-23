@@ -2,8 +2,8 @@
 
 <!--
 ---
-version: 1.0.0
-last_updated: 2026-02-13
+version: 1.1.0
+last_updated: 2026-02-23
 status: DECISION
 tier: 2
 ---
@@ -226,3 +226,14 @@ Maintain the current six protocols with their current relationships.
 - Research: `iterator-protocol-hierarchy.md` v1.0.0 — parallel iterator protocol analysis
 - Buffer.Slab, Buffer.Arena, Set.Ordered, Slab — concrete types conforming to Drain without Sequence.Protocol
 - `Sequence.Consume.View` — ~Copyable State with deinit for early-exit cleanup
+
+## Changelog
+
+### v1.1.0 (2026-02-23)
+
+**Sequence.Borrowing.Protocol reframing.** The decision to detach `Collection.Protocol` from `Sequence.Protocol` (see `swift-primitives/Research/collection-sequence-protocol-detachment.md`, RECOMMENDATION, 2026-02-23) changes the role of `Sequence.Borrowing.Protocol`:
+
+- **Before**: The primary mechanism for borrowing iteration over collections with `~Copyable` elements.
+- **After**: A chunked span access optimization over `Memory.Contiguous.Protocol`, NOT a borrowing iteration mechanism. Borrowing iteration is now handled by `Collection.Protocol` via index/subscript (`Collection.ForEach`).
+
+This does NOT change the decision in v1.0.0 (all six protocols remain). It reframes one protocol's purpose. Doc updates to `Sequence.Borrowing.Protocol` are recommended to reflect this. Deletion is deferred pending audit of bounded-chunk usage (all current call sites pass `Cardinal(UInt.max)`).

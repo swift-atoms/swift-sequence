@@ -16,6 +16,10 @@ let package = Package(
             name: "Sequence Primitives",
             targets: ["Sequence Primitives"]
         ),
+        .library(
+            name: "Sequence Primitives Test Support",
+            targets: ["Sequence Primitives Test Support"]
+        ),
     ],
     dependencies: [
         .package(path: "../swift-property-primitives"),
@@ -40,6 +44,21 @@ let package = Package(
             name: "Sequence Primitives Standard Library Integration",
             dependencies: [
                 "Sequence Primitives Core",
+            ]
+        ),
+        .target(
+            name: "Sequence Primitives Test Support",
+            dependencies: [
+                "Sequence Primitives",
+                .product(name: "Index Primitives Test Support", package: "swift-index-primitives"),
+            ],
+            path: "Tests/Support"
+        ),
+        .testTarget(
+            name: "Sequence Primitives Tests",
+            dependencies: [
+                "Sequence Primitives",
+                "Sequence Primitives Test Support",
             ]
         ),
     ],

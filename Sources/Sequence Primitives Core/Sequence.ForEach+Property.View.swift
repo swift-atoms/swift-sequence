@@ -17,10 +17,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.ForEach
     /// - Parameter body: A closure called with each element.
     @inlinable
     public func callAsFunction(_ body: (borrowing Base.Element) -> Void) {
-        var iterator = unsafe base.pointee.makeIterator()
-        while let element = iterator.next() {
-            body(element)
-        }
+        borrowing(body)
     }
 
     /// Explicit borrowing iteration: `.forEach.borrowing { }`

@@ -49,7 +49,7 @@ extension Sequence.Drop.While where Base: ~Copyable & ~Escapable {
                 return _base.nextSpan(maximumCount: maximumCount)
             }
             while _dropping {
-                let span = _base.nextSpan(maximumCount: maximumCount > .zero ? maximumCount : Cardinal(UInt.max))
+                let span = _base.nextSpan(maximumCount: maximumCount > .zero ? maximumCount : .max)
                 if span.isEmpty { return span }
                 for i in span.indices {
                     if !_predicate(span[i]) {

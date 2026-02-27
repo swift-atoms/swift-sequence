@@ -12,32 +12,38 @@ extension Sequence.Difference.Changes {
         var _storage: [Sequence.Difference.Change<Value>]
 
         @usableFromInline
-        var _index: Int
+        var _index: Ordinal
+
+        @usableFromInline
+        let _count: Cardinal
 
         @inlinable
         init(_ storage: [Sequence.Difference.Change<Value>]) {
             self._storage = storage
-            self._index = 0
+            self._index = .zero
+            self._count = Cardinal(UInt(storage.count))
         }
 
         @_lifetime(&self)
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Span<Sequence.Difference.Change<Value>> {
-            let remaining = _storage.count - _index
-            let take = min(Int(bitPattern: maximumCount), remaining)
-            guard take > 0 else { return _storage.span.extracting(first: 0) }
-            let start = _index
-            _index += take
-            return _storage.span
+            let remaining = _count.subtract.saturating(Cardinal(_index))
+            let take = min(maximumCount, remaining)
+            guard take > .zero else { return _storage.span.extracting(first: 0) }
+            let start = Int(bitPattern: _index)
+            let count = Int(bitPattern: take)
+            let result = _storage.span
                 .extracting(droppingFirst: start)
-                .extracting(first: take)
+                .extracting(first: count)
+            _index = _index.advance.saturating(by: take)
+            return result
         }
 
         @_lifetime(self: immortal)
         @inlinable
         public mutating func next() -> Sequence.Difference.Change<Value>? {
-            guard _index < _storage.count else { return nil }
-            defer { _index += 1 }
+            guard _index < _count else { return nil }
+            defer { _index = _index.successor.saturating() }
             return _storage[_index]
         }
     }

@@ -28,8 +28,8 @@ extension Sequence.Difference {
         _ new: [Element]
     ) -> Changes<Element> {
         let steps = diff(
-            oldCount: try! Cardinal(old.count),
-            newCount: try! Cardinal(new.count),
+            oldCount: Cardinal(UInt(old.count)),
+            newCount: Cardinal(UInt(new.count)),
             equals: { old[$0] == new[$1] }
         )
 

@@ -32,6 +32,9 @@ extension Swift.Span.Iterator {
         @usableFromInline
         var _position: Ordinal
 
+        @usableFromInline
+        let _count: Cardinal
+
         /// Creates an iterator over the given span.
         ///
         /// - Parameter span: The span to iterate over in batches.
@@ -40,20 +43,19 @@ extension Swift.Span.Iterator {
         public init(span: Swift.Span<Element>) {
             self._span = span
             self._position = .zero
+            self._count = Cardinal(UInt(bitPattern: span.count))
         }
 
         /// Whether the iterator has no remaining elements.
         @inlinable
         public var isEmpty: Bool {
-            _position >= Cardinal(UInt(_span.count))
+            _position >= _count
         }
 
         /// The number of remaining elements.
         @inlinable
         public var remaining: Cardinal {
-            let total = Cardinal(UInt(_span.count))
-            let consumed = Cardinal(_position.rawValue)
-            return total.subtract.saturating(consumed)
+            _count.subtract.saturating(Cardinal(_position))
         }
 
         /// Returns the next batch of elements as a span.
@@ -66,12 +68,11 @@ extension Swift.Span.Iterator {
         @inlinable
         @_lifetime(&self)
         public mutating func nextSpan(maximumCount: Cardinal) -> Swift.Span<Element> {
-            let availableCount = remaining
-            let take = Cardinal(Swift.min(maximumCount.rawValue, availableCount.rawValue))
+            let take = min(maximumCount, remaining)
             guard take > .zero else { return _span.extracting(first: 0) }
 
             let result = _span
-                .extracting(droppingFirst: Cardinal(_position.rawValue))
+                .extracting(droppingFirst: Cardinal(_position))
                 .extracting(first: take)
 
             _position = _position.advance.saturating(by: take)
@@ -85,8 +86,7 @@ extension Swift.Span.Iterator {
         @inlinable
         @_lifetime(self: immortal)
         public mutating func skip(by maximumCount: Cardinal) -> Cardinal {
-            let availableCount = remaining
-            let skip = Cardinal(Swift.min(maximumCount.rawValue, availableCount.rawValue))
+            let skip = min(maximumCount, remaining)
             _position = _position.advance.saturating(by: skip)
             return skip
         }

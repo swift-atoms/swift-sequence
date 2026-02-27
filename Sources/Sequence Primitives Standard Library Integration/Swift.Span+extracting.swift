@@ -10,6 +10,21 @@
 // ===----------------------------------------------------------------------===//
 
 public import Cardinal_Primitives
+public import Ordinal_Primitives
+
+extension Swift.Span where Element: Copyable {
+    /// Accesses the element at the given ordinal position.
+    ///
+    /// Bridges the typed `Ordinal` position to the stdlib `Int`-based subscript.
+    ///
+    /// - Parameter position: The ordinal position of the element.
+    /// - Returns: The element at the given position.
+    @inlinable
+    @_lifetime(copy self)
+    public subscript(position: Ordinal) -> Element {
+        self[Int(bitPattern: position)]
+    }
+}
 
 extension Swift.Span {
     /// Returns a span over the first `count` elements.

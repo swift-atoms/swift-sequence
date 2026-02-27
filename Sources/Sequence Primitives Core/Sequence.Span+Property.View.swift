@@ -26,7 +26,7 @@ where Base: Sequence.Borrowing.`Protocol` & ~Copyable,
     public func forEach(_ body: (Swift.Span<Base.Element>) -> Void) {
         var iterator = unsafe base.pointee.makeIterator()
         while true {
-            let span = iterator.nextSpan(maximumCount: Cardinal(UInt.max))
+            let span = iterator.nextSpan(maximumCount: .max)
             if span.isEmpty { break }
             body(span)
         }
@@ -48,7 +48,7 @@ where Base: Sequence.Borrowing.`Protocol` & ~Copyable,
     public func elements(_ body: (borrowing Base.Element) -> Void) {
         var iterator = unsafe base.pointee.makeIterator()
         while true {
-            let span = iterator.nextSpan(maximumCount: Cardinal(UInt.max))
+            let span = iterator.nextSpan(maximumCount: .max)
             if span.isEmpty { break }
             for i in span.indices {
                 body(span[i])
@@ -76,10 +76,10 @@ where Base: Sequence.Borrowing.`Protocol` & ~Copyable,
         _ initial: Result,
         _ operation: (inout Result, Swift.Span<Base.Element>) -> Void
     ) -> Result {
-        var result = initial
         var iterator = unsafe base.pointee.makeIterator()
+        var result = initial
         while true {
-            let span = iterator.nextSpan(maximumCount: Cardinal(UInt.max))
+            let span = iterator.nextSpan(maximumCount: .max)
             if span.isEmpty { break }
             operation(&result, span)
         }
@@ -106,10 +106,10 @@ where Base: Sequence.Borrowing.`Protocol` & ~Copyable,
         _ initial: Result,
         _ operation: (Result, Swift.Span<Base.Element>) -> Result
     ) -> Result {
-        var result = initial
         var iterator = unsafe base.pointee.makeIterator()
+        var result = initial
         while true {
-            let span = iterator.nextSpan(maximumCount: Cardinal(UInt.max))
+            let span = iterator.nextSpan(maximumCount: .max)
             if span.isEmpty { break }
             result = operation(result, span)
         }

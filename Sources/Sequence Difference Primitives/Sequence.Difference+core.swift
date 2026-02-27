@@ -32,6 +32,11 @@ extension Sequence.Difference {
         newCount: Cardinal,
         equals: (Ordinal, Ordinal) -> Bool
     ) -> Steps {
+        // WORKAROUND: Myers algorithm operates in Int — array indices are not domain quantities
+        // WHY: Algorithm internals (v[k + offset], trace[d]) use 2D array indexing that doesn't
+        //      benefit from Ordinal/Cardinal typing
+        // WHEN TO REMOVE: If typed array indexing infrastructure emerges
+        // TRACKING: sequence-primitives implementation audit
         let n = Int(bitPattern: oldCount)
         let m = Int(bitPattern: newCount)
 
@@ -64,7 +69,7 @@ extension Sequence.Difference {
 
                 var y = x - k
 
-                while x < n && y < m && equals(try! Ordinal(x), try! Ordinal(y)) {
+                while x < n && y < m && equals(Ordinal(UInt(x)), Ordinal(UInt(y))) {
                     x += 1
                     y += 1
                 }

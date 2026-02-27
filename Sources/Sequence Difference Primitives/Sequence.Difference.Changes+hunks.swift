@@ -29,16 +29,11 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
         var trailingCount: Cardinal = .zero
 
         for change in _storage {
-            let stringChange: Sequence.Difference.Change<String>
-            switch change {
-            case .first(let e): stringChange = .first(String(describing: e))
-            case .second(let e): stringChange = .second(String(describing: e))
-            case .both(let e): stringChange = .both(String(describing: e))
-            }
+            let stringChange = change.stringified
 
             if change.isChange {
                 if !inHunk {
-                    let bufferCount = try! Cardinal(contextBuffer.count)
+                    let bufferCount = Cardinal(UInt(contextBuffer.count))
                     let skip = bufferCount.subtract.saturating(contextLines)
                     let leading = Array(contextBuffer.dropFirst(Int(bitPattern: skip)))
 
@@ -81,11 +76,11 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
                         trailingCount += .one
                     } else {
                         contextBuffer.append((stringChange, oldLine, newLine))
-                        if try! Cardinal(contextBuffer.count) > contextLines {
+                        if Cardinal(UInt(contextBuffer.count)) > contextLines {
                             contextBuffer.removeFirst()
                         }
 
-                        if try! Cardinal(contextBuffer.count) >= contextLines {
+                        if Cardinal(UInt(contextBuffer.count)) >= contextLines {
                             hunks.append(Sequence.Difference.Hunk(
                                 oldStart: oldStart,
                                 oldCount: oldCount,
@@ -100,17 +95,13 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
 
                 if !inHunk {
                     contextBuffer.append((stringChange, oldLine, newLine))
-                    if try! Cardinal(contextBuffer.count) > contextLines {
+                    if Cardinal(UInt(contextBuffer.count)) > contextLines {
                         contextBuffer.removeFirst()
                     }
                 }
             }
 
-            switch change {
-            case .first: oldLine += .one
-            case .second: newLine += .one
-            case .both: oldLine += .one; newLine += .one
-            }
+            change.advanceLines(old: &oldLine, new: &newLine)
         }
 
         if inHunk {

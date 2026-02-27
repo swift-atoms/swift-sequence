@@ -163,3 +163,4 @@ extension Sequence.Iterator.`Protocol` where Self: ~Copyable & ~Escapable {
         return maximumCount.subtract.saturating(remaining)
     }
 }
+

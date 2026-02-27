@@ -23,22 +23,22 @@ extension Sequence.Difference {
     /// ```
     public struct Hunk: Sendable, Hashable {
         /// Starting line in the original sequence (1-indexed).
-        public let oldStart: Int
+        public let oldStart: Ordinal
         /// Number of lines from the original sequence.
-        public let oldCount: Int
+        public let oldCount: Cardinal
         /// Starting line in the modified sequence (1-indexed).
-        public let newStart: Int
+        public let newStart: Ordinal
         /// Number of lines in the modified sequence.
-        public let newCount: Int
+        public let newCount: Cardinal
         /// The changes in this hunk (removals, insertions, and context).
         public let lines: [Change<String>]
 
         /// Creates a hunk.
         public init(
-            oldStart: Int,
-            oldCount: Int,
-            newStart: Int,
-            newCount: Int,
+            oldStart: Ordinal,
+            oldCount: Cardinal,
+            newStart: Ordinal,
+            newCount: Cardinal,
             lines: [Change<String>]
         ) {
             self.oldStart = oldStart

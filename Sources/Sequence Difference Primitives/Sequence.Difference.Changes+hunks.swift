@@ -1,40 +1,36 @@
 //
-//  Sequence.Difference+hunks.swift
+//  Sequence.Difference.Changes+hunks.swift
 //  swift-sequence-primitives
 //
-//  Unified diff hunk generation from changes.
+//  Unified diff hunk generation from Changes.
 //
 
-extension Sequence.Difference {
-    /// Generates unified diff hunks from a sequence of changes.
+extension Sequence.Difference.Changes where Value: CustomStringConvertible {
+    /// Generates unified diff hunks from these changes.
     ///
     /// Groups changes into hunks with surrounding context lines.
     /// Adjacent changes within `contextLines` distance are merged
     /// into a single hunk.
     ///
-    /// - Parameters:
-    ///   - changes: The computed differences.
-    ///   - contextLines: Number of context lines around changes (default: 3).
+    /// - Parameter contextLines: Number of context lines around changes (default: 3).
     /// - Returns: Array of hunks.
-    public static func hunks<Element: CustomStringConvertible>(
-        from changes: [Change<Element>],
-        contextLines: Int = 3
-    ) -> [Hunk] {
-        var hunks: [Hunk] = []
-        var currentLines: [Change<String>] = []
-        var oldStart = 0
-        var oldCount = 0
-        var newStart = 0
-        var newCount = 0
+    public func hunks(contextLines: Cardinal = 3) -> [Sequence.Difference.Hunk] {
+        let context = Int(bitPattern: contextLines)
+        var hunks: [Sequence.Difference.Hunk] = []
+        var currentLines: [Sequence.Difference.Change<String>] = []
+        var oldStart: Int = 0
+        var oldCount: Int = 0
+        var newStart: Int = 0
+        var newCount: Int = 0
         var inHunk = false
 
         var oldLine = 1
         var newLine = 1
-        var contextBuffer: [(change: Change<String>, oldLine: Int, newLine: Int)] = []
+        var contextBuffer: [(change: Sequence.Difference.Change<String>, oldLine: Int, newLine: Int)] = []
         var trailingCount = 0
 
-        for change in changes {
-            let stringChange: Change<String>
+        for change in _storage {
+            let stringChange: Sequence.Difference.Change<String>
             switch change {
             case .first(let e): stringChange = .first(String(describing: e))
             case .second(let e): stringChange = .second(String(describing: e))
@@ -43,17 +39,16 @@ extension Sequence.Difference {
 
             if change.isChange {
                 if !inHunk {
-                    // Start new hunk with buffered context.
-                    let contextStart = max(0, contextBuffer.count - contextLines)
-                    let context = Array(contextBuffer[contextStart...])
+                    let contextStart = max(0, contextBuffer.count - context)
+                    let leading = Array(contextBuffer[contextStart...])
 
-                    oldStart = context.first?.oldLine ?? oldLine
-                    newStart = context.first?.newLine ?? newLine
+                    oldStart = leading.first?.oldLine ?? oldLine
+                    newStart = leading.first?.newLine ?? newLine
                     oldCount = 0
                     newCount = 0
                     currentLines = []
 
-                    for c in context {
+                    for c in leading {
                         currentLines.append(c.change)
                         oldCount += 1
                         newCount += 1
@@ -61,7 +56,6 @@ extension Sequence.Difference {
 
                     inHunk = true
                 } else if !contextBuffer.isEmpty {
-                    // Merge: flush buffered context into current hunk.
                     for c in contextBuffer {
                         currentLines.append(c.change)
                         oldCount += 1
@@ -80,29 +74,23 @@ extension Sequence.Difference {
                 contextBuffer.removeAll()
             } else {
                 if inHunk {
-                    if trailingCount < contextLines {
-                        // Trailing context for current hunk.
+                    if trailingCount < context {
                         currentLines.append(stringChange)
                         oldCount += 1
                         newCount += 1
                         trailingCount += 1
                     } else {
-                        // Beyond trailing context — buffer for next hunk's
-                        // leading context.
                         contextBuffer.append((stringChange, oldLine, newLine))
-                        if contextBuffer.count > contextLines {
+                        if contextBuffer.count > context {
                             contextBuffer.removeFirst()
                         }
 
-                        // Check if next change could merge: it would need
-                        // to appear within contextLines of this buffer start.
-                        // Once we've buffered more than contextLines, close.
-                        if contextBuffer.count >= contextLines {
-                            hunks.append(Hunk(
-                                oldStart: oldStart,
-                                oldCount: oldCount,
-                                newStart: newStart,
-                                newCount: newCount,
+                        if contextBuffer.count >= context {
+                            hunks.append(Sequence.Difference.Hunk(
+                                oldStart: try! Ordinal(oldStart),
+                                oldCount: try! Cardinal(oldCount),
+                                newStart: try! Ordinal(newStart),
+                                newCount: try! Cardinal(newCount),
                                 lines: currentLines
                             ))
                             inHunk = false
@@ -112,7 +100,7 @@ extension Sequence.Difference {
 
                 if !inHunk {
                     contextBuffer.append((stringChange, oldLine, newLine))
-                    if contextBuffer.count > contextLines {
+                    if contextBuffer.count > context {
                         contextBuffer.removeFirst()
                     }
                 }
@@ -126,11 +114,11 @@ extension Sequence.Difference {
         }
 
         if inHunk {
-            hunks.append(Hunk(
-                oldStart: oldStart,
-                oldCount: oldCount,
-                newStart: newStart,
-                newCount: newCount,
+            hunks.append(Sequence.Difference.Hunk(
+                oldStart: Ordinal(UInt(oldStart)),
+                oldCount: Cardinal(UInt(oldCount)),
+                newStart: Ordinal(UInt(newStart)),
+                newCount: Cardinal(UInt(newCount)),
                 lines: currentLines
             ))
         }

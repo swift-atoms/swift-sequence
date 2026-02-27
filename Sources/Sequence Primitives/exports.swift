@@ -1,2 +1,3 @@
 @_exported public import Sequence_Primitives_Core
+@_exported public import Sequence_Difference_Primitives
 @_exported public import Sequence_Primitives_Standard_Library_Integration

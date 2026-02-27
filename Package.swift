@@ -12,10 +12,19 @@ let package = Package(
         .visionOS(.v26),
     ],
     products: [
+        // MARK: - Sub-targets
+        .library(
+            name: "Sequence Difference Primitives",
+            targets: ["Sequence Difference Primitives"]
+        ),
+
+        // MARK: - Umbrella
         .library(
             name: "Sequence Primitives",
             targets: ["Sequence Primitives"]
         ),
+
+        // MARK: - Test Support
         .library(
             name: "Sequence Primitives Test Support",
             targets: ["Sequence Primitives Test Support"]
@@ -26,6 +35,7 @@ let package = Package(
         .package(path: "../swift-index-primitives"),
     ],
     targets: [
+        // MARK: - Core
         .target(
             name: "Sequence Primitives Core",
             dependencies: [
@@ -33,17 +43,30 @@ let package = Package(
                 .product(name: "Index Primitives", package: "swift-index-primitives"),
             ]
         ),
+
+        // MARK: - Difference
         .target(
-            name: "Sequence Primitives",
+            name: "Sequence Difference Primitives",
             dependencies: [
                 "Sequence Primitives Core",
-                "Sequence Primitives Standard Library Integration",
             ]
         ),
+
+        // MARK: - Standard Library Integration
         .target(
             name: "Sequence Primitives Standard Library Integration",
             dependencies: [
                 "Sequence Primitives Core",
+            ]
+        ),
+
+        // MARK: - Umbrella
+        .target(
+            name: "Sequence Primitives",
+            dependencies: [
+                "Sequence Primitives Core",
+                "Sequence Difference Primitives",
+                "Sequence Primitives Standard Library Integration",
             ]
         ),
         .target(

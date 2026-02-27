@@ -30,27 +30,27 @@ extension Sequence.Difference {
         let steps = diff(
             oldCount: try! Cardinal(old.count),
             newCount: try! Cardinal(new.count),
-            equals: { old[Int(bitPattern: $0)] == new[Int(bitPattern: $1)] }
+            equals: { old[$0] == new[$1] }
         )
 
         var changes: [Change<Element>] = []
         changes.reserveCapacity(steps._storage.count)
 
-        var oldIndex = 0
-        var newIndex = 0
+        var oldPosition: Ordinal = .zero
+        var newPosition: Ordinal = .zero
 
         for step in steps._storage {
             switch step {
             case .first:
-                changes.append(.first(old[oldIndex]))
-                oldIndex += 1
+                changes.append(.first(old[oldPosition]))
+                oldPosition = oldPosition.successor.saturating()
             case .second:
-                changes.append(.second(new[newIndex]))
-                newIndex += 1
+                changes.append(.second(new[newPosition]))
+                newPosition = newPosition.successor.saturating()
             case .both:
-                changes.append(.both(old[oldIndex]))
-                oldIndex += 1
-                newIndex += 1
+                changes.append(.both(old[oldPosition]))
+                oldPosition = oldPosition.successor.saturating()
+                newPosition = newPosition.successor.saturating()
             }
         }
 

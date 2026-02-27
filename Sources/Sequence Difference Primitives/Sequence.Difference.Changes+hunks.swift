@@ -15,19 +15,18 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
     /// - Parameter contextLines: Number of context lines around changes (default: 3).
     /// - Returns: Array of hunks.
     public func hunks(contextLines: Cardinal = 3) -> [Sequence.Difference.Hunk] {
-        let context = Int(bitPattern: contextLines)
         var hunks: [Sequence.Difference.Hunk] = []
         var currentLines: [Sequence.Difference.Change<String>] = []
-        var oldStart: Int = 0
-        var oldCount: Int = 0
-        var newStart: Int = 0
-        var newCount: Int = 0
+        var oldStart: Ordinal = .zero
+        var oldCount: Cardinal = .zero
+        var newStart: Ordinal = .zero
+        var newCount: Cardinal = .zero
         var inHunk = false
 
-        var oldLine = 1
-        var newLine = 1
-        var contextBuffer: [(change: Sequence.Difference.Change<String>, oldLine: Int, newLine: Int)] = []
-        var trailingCount = 0
+        var oldLine: Ordinal = 1
+        var newLine: Ordinal = 1
+        var contextBuffer: [(change: Sequence.Difference.Change<String>, oldLine: Ordinal, newLine: Ordinal)] = []
+        var trailingCount: Cardinal = .zero
 
         for change in _storage {
             let stringChange: Sequence.Difference.Change<String>
@@ -39,58 +38,59 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
 
             if change.isChange {
                 if !inHunk {
-                    let contextStart = max(0, contextBuffer.count - context)
-                    let leading = Array(contextBuffer[contextStart...])
+                    let bufferCount = try! Cardinal(contextBuffer.count)
+                    let skip = bufferCount.subtract.saturating(contextLines)
+                    let leading = Array(contextBuffer.dropFirst(Int(bitPattern: skip)))
 
                     oldStart = leading.first?.oldLine ?? oldLine
                     newStart = leading.first?.newLine ?? newLine
-                    oldCount = 0
-                    newCount = 0
+                    oldCount = .zero
+                    newCount = .zero
                     currentLines = []
 
                     for c in leading {
                         currentLines.append(c.change)
-                        oldCount += 1
-                        newCount += 1
+                        oldCount += .one
+                        newCount += .one
                     }
 
                     inHunk = true
                 } else if !contextBuffer.isEmpty {
                     for c in contextBuffer {
                         currentLines.append(c.change)
-                        oldCount += 1
-                        newCount += 1
+                        oldCount += .one
+                        newCount += .one
                     }
                 }
 
                 currentLines.append(stringChange)
                 switch change {
-                case .first: oldCount += 1
-                case .second: newCount += 1
+                case .first: oldCount += .one
+                case .second: newCount += .one
                 case .both: break
                 }
 
-                trailingCount = 0
+                trailingCount = .zero
                 contextBuffer.removeAll()
             } else {
                 if inHunk {
-                    if trailingCount < context {
+                    if trailingCount < contextLines {
                         currentLines.append(stringChange)
-                        oldCount += 1
-                        newCount += 1
-                        trailingCount += 1
+                        oldCount += .one
+                        newCount += .one
+                        trailingCount += .one
                     } else {
                         contextBuffer.append((stringChange, oldLine, newLine))
-                        if contextBuffer.count > context {
+                        if try! Cardinal(contextBuffer.count) > contextLines {
                             contextBuffer.removeFirst()
                         }
 
-                        if contextBuffer.count >= context {
+                        if try! Cardinal(contextBuffer.count) >= contextLines {
                             hunks.append(Sequence.Difference.Hunk(
-                                oldStart: try! Ordinal(oldStart),
-                                oldCount: try! Cardinal(oldCount),
-                                newStart: try! Ordinal(newStart),
-                                newCount: try! Cardinal(newCount),
+                                oldStart: oldStart,
+                                oldCount: oldCount,
+                                newStart: newStart,
+                                newCount: newCount,
                                 lines: currentLines
                             ))
                             inHunk = false
@@ -100,25 +100,25 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
 
                 if !inHunk {
                     contextBuffer.append((stringChange, oldLine, newLine))
-                    if contextBuffer.count > context {
+                    if try! Cardinal(contextBuffer.count) > contextLines {
                         contextBuffer.removeFirst()
                     }
                 }
             }
 
             switch change {
-            case .first: oldLine += 1
-            case .second: newLine += 1
-            case .both: oldLine += 1; newLine += 1
+            case .first: oldLine += .one
+            case .second: newLine += .one
+            case .both: oldLine += .one; newLine += .one
             }
         }
 
         if inHunk {
             hunks.append(Sequence.Difference.Hunk(
-                oldStart: Ordinal(UInt(oldStart)),
-                oldCount: Cardinal(UInt(oldCount)),
-                newStart: Ordinal(UInt(newStart)),
-                newCount: Cardinal(UInt(newCount)),
+                oldStart: oldStart,
+                oldCount: oldCount,
+                newStart: newStart,
+                newCount: newCount,
                 lines: currentLines
             ))
         }

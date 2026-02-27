@@ -22,7 +22,7 @@
 ///
 /// ```swift
 /// // 1. Define your type with Sequence.Protocol
-/// struct Numbers: Sequence.`Protocol` {
+/// struct NumberS: Swift.Sequence.`Protocol` {
 ///     let values: [Int]
 ///     func makeIterator() -> Array<Int>.Iterator {
 ///         values.makeIterator()

@@ -24,7 +24,7 @@ extension Sequence.Difference.Steps {
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Span<Sequence.Difference.Step> {
             let remaining = _storage.count - _index
-            let take = min(Int(maximumCount.rawValue), remaining)
+            let take = min(Int(bitPattern: maximumCount), remaining)
             guard take > 0 else { return _storage.span.extracting(first: 0) }
             let start = _index
             _index += take

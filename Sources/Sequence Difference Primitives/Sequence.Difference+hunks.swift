@@ -16,7 +16,7 @@ extension Sequence.Difference {
     ///   - changes: The computed differences.
     ///   - contextLines: Number of context lines around changes (default: 3).
     /// - Returns: Array of hunks.
-    public static func hunks<Element: Sendable & CustomStringConvertible>(
+    public static func hunks<Element: CustomStringConvertible>(
         from changes: [Change<Element>],
         contextLines: Int = 3
     ) -> [Hunk] {
@@ -31,9 +31,9 @@ extension Sequence.Difference {
         var oldLine = 1
         var newLine = 1
         var contextBuffer: [(change: Change<String>, oldLine: Int, newLine: Int)] = []
-        var lastChangeIndex = -1
+        var trailingCount = 0
 
-        for (index, change) in changes.enumerated() {
+        for change in changes {
             let stringChange: Change<String>
             switch change {
             case .first(let e): stringChange = .first(String(describing: e))
@@ -60,6 +60,13 @@ extension Sequence.Difference {
                     }
 
                     inHunk = true
+                } else if !contextBuffer.isEmpty {
+                    // Merge: flush buffered context into current hunk.
+                    for c in contextBuffer {
+                        currentLines.append(c.change)
+                        oldCount += 1
+                        newCount += 1
+                    }
                 }
 
                 currentLines.append(stringChange)
@@ -69,27 +76,37 @@ extension Sequence.Difference {
                 case .both: break
                 }
 
-                lastChangeIndex = index
+                trailingCount = 0
                 contextBuffer.removeAll()
             } else {
                 if inHunk {
-                    let distance = index - lastChangeIndex
-                    if distance <= contextLines * 2 {
-                        // Within merge distance — add to current hunk.
+                    if trailingCount < contextLines {
+                        // Trailing context for current hunk.
                         currentLines.append(stringChange)
                         oldCount += 1
                         newCount += 1
+                        trailingCount += 1
                     } else {
-                        // Close current hunk.
-                        hunks.append(Hunk(
-                            oldStart: oldStart,
-                            oldCount: oldCount,
-                            newStart: newStart,
-                            newCount: newCount,
-                            lines: currentLines
-                        ))
-                        inHunk = false
-                        contextBuffer.removeAll()
+                        // Beyond trailing context — buffer for next hunk's
+                        // leading context.
+                        contextBuffer.append((stringChange, oldLine, newLine))
+                        if contextBuffer.count > contextLines {
+                            contextBuffer.removeFirst()
+                        }
+
+                        // Check if next change could merge: it would need
+                        // to appear within contextLines of this buffer start.
+                        // Once we've buffered more than contextLines, close.
+                        if contextBuffer.count >= contextLines {
+                            hunks.append(Hunk(
+                                oldStart: oldStart,
+                                oldCount: oldCount,
+                                newStart: newStart,
+                                newCount: newCount,
+                                lines: currentLines
+                            ))
+                            inHunk = false
+                        }
                     }
                 }
 

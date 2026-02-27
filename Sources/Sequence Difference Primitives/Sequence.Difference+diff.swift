@@ -20,7 +20,7 @@ extension Sequence.Difference {
     ///   - old: The original sequence.
     ///   - new: The modified sequence.
     /// - Returns: Array of changes describing how to transform `old` into `new`.
-    public static func diff<Element: Hashable & Sendable>(
+    public static func diff<Element: Equatable>(
         _ old: [Element],
         _ new: [Element]
     ) -> [Change<Element>] {
@@ -77,32 +77,13 @@ extension Sequence.Difference {
         // within max = n + m steps.
         return old.map { .first($0) } + new.map { .second($0) }
     }
-
-    /// Counts the number of changed elements.
-    ///
-    /// - Parameter changes: The computed differences.
-    /// - Returns: Tuple of (removed, inserted) counts.
-    public static func changeCounts<Element>(
-        _ changes: [Change<Element>]
-    ) -> (removed: Int, inserted: Int) {
-        var removed = 0
-        var inserted = 0
-        for change in changes {
-            switch change {
-            case .first: removed += 1
-            case .second: inserted += 1
-            case .both: break
-            }
-        }
-        return (removed, inserted)
-    }
 }
 
 // MARK: - Backtracking
 
 extension Sequence.Difference {
     /// Reconstructs the edit script by tracing back through saved states.
-    private static func backtrack<Element: Hashable & Sendable>(
+    private static func backtrack<Element: Equatable>(
         trace: [[Int]],
         old: [Element],
         new: [Element],

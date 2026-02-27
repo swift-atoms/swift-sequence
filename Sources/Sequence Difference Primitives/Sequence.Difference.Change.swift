@@ -12,7 +12,7 @@ extension Sequence.Difference {
     /// - `.first`: element exists only in the first sequence (removed)
     /// - `.second`: element exists only in the second sequence (inserted)
     /// - `.both`: element exists in both sequences (matched)
-    public enum Change<Element: Sendable>: Sendable {
+    public enum Change<Element> {
         /// Element exists only in the first sequence.
         case first(Element)
         /// Element exists only in the second sequence.
@@ -49,6 +49,10 @@ extension Sequence.Difference.Change {
         }
     }
 }
+
+// MARK: - Sendable
+
+extension Sequence.Difference.Change: Sendable where Element: Sendable {}
 
 // MARK: - Equatable
 

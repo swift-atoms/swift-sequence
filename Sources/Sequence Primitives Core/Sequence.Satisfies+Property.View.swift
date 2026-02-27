@@ -2,7 +2,7 @@ public import Property_Primitives
 
 /// Property.View extensions for predicate satisfaction checks on `Sequence.Protocol` conformers.
 extension Property.View
-where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.Satisfies {
+where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Satisfies {
 
     /// Check if all elements satisfy predicate: `.satisfies.all { }`
     ///

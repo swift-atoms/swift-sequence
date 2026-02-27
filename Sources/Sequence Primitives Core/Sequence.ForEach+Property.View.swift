@@ -2,7 +2,7 @@ public import Property_Primitives
 
 /// Property.View extensions for borrowing iteration on `Sequence.Protocol` conformers.
 extension Property.View
-where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.ForEach {
+where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.ForEach {
 
     /// Borrowing iteration: `.forEach { }`
     ///
@@ -45,7 +45,7 @@ where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.ForEach {
 
 /// Property.View extensions for consuming iteration on `Sequence.Clearable` conformers.
 extension Property.View
-where Base: Sequence.Clearable & ~Copyable, Tag == Sequence.ForEach {
+where Base: Sequence.Clearable, Base.Element: Copyable, Tag == Sequence.ForEach {
 
     /// Consuming iteration: `.forEach.consuming { }`
     ///

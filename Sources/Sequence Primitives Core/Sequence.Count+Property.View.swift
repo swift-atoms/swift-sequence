@@ -3,7 +3,7 @@ public import Index_Primitives
 
 /// Property.View extensions for counting operations on `Sequence.Protocol` conformers.
 extension Property.View
-where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.Count {
+where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Count {
 
     /// Count elements matching predicate: `.count.where { }`
     ///

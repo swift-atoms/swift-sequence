@@ -2,7 +2,7 @@ public import Property_Primitives
 
 /// Property.View extensions for reduction operations on `Sequence.Protocol` conformers.
 extension Property.View
-where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.Reduce {
+where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Reduce {
 
     /// Reduce with mutable accumulator: `.reduce.into(_:) { }`
     ///

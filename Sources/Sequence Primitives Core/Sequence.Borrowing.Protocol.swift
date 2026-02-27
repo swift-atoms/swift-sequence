@@ -1,13 +1,24 @@
 extension Sequence.Borrowing {
-    /// A protocol for sequences that support borrowing span-based iteration.
+    /// A protocol for sequences that support non-destructive borrowing
+    /// iteration.
     ///
-    /// `Sequence.Borrowing.Protocol` enables efficient iteration by returning
-    /// `Span<Element>` chunks rather than individual elements. This reduces
-    /// function call overhead and enables bulk operations.
+    /// `Sequence.Borrowing.Protocol` provides span-based iteration where
+    /// the iterator borrows from the sequence. The sequence remains valid
+    /// during and after iteration.
+    ///
+    /// ## Distinction from `Sequence.Protocol`
+    ///
+    /// | Aspect | `Sequence.Protocol` | `Sequence.Borrowing.Protocol` |
+    /// |--------|---------------------|-------------------------------|
+    /// | `makeIterator()` | `consuming` | `borrowing` |
+    /// | Lifetime annotation | `@_lifetime(copy self)` | `@_lifetime(borrow self)` |
+    /// | Purpose | Lazy pipelines, terminal ops | Non-destructive span access |
+    /// | Dual conformance | — | Types can conform to both |
+    ///
+    /// `Sequence.Protocol` consumes (for lazy pipelines).
+    /// `Sequence.Borrowing.Protocol` borrows (for in-place span access).
     ///
     /// ## Conforming to Sequence.Borrowing.Protocol
-    ///
-    /// Implement `makeIterator()` to return a borrowing iterator:
     ///
     /// ```swift
     /// extension MyContainer: Sequence.Borrowing.`Protocol` {
@@ -18,32 +29,41 @@ extension Sequence.Borrowing {
     /// }
     /// ```
     ///
-    /// ## Iterator Requirements
+    /// ### `@_lifetime(borrow self)`
     ///
-    /// The iterator must conform to `Sequence.Iterator.Borrowing.Protocol`,
-    /// which provides `nextSpan(maximumCount:)` for batch access.
+    /// The returned iterator's lifetime is tied to the borrow of `self`.
+    /// The iterator cannot outlive the sequence it borrows from.
     ///
-    /// ## Difference from Sequence.Protocol
+    /// ### Use Case
     ///
-    /// | Aspect | `Sequence.Protocol` | `Sequence.Borrowing.Protocol` |
-    /// |--------|---------------------|-------------------------------|
-    /// | Return type | `Element?` | `Span<Element>` |
-    /// | Granularity | Single element | Batch of elements |
-    /// | Lifetime | Iterator owns elements | Iterator borrows from sequence |
+    /// Contiguous storage types that can lend their memory as spans
+    /// without copying. The iterator walks the storage by yielding spans
+    /// that borrow from it.
     ///
+    /// > Note: The `Iterator` associated type does not include
+    /// > `& ~Copyable & ~Escapable` (unlike `Sequence.Protocol`'s
+    /// > associated type). This may need updating for consistency —
+    /// > flagged for review.
     public protocol `Protocol`: ~Copyable, ~Escapable {
         /// The type of element in the sequence.
         associatedtype Element: ~Copyable
 
         /// The iterator type that produces spans of elements.
-        associatedtype Iterator: Sequence.Iterator.Borrowing.`Protocol`
+        ///
+        /// > Note: Does not suppress `Copyable` or `Escapable` (unlike
+        /// > `Sequence.Protocol`'s `Iterator` associated type). This may
+        /// > need updating for consistency.
+        associatedtype Iterator: Sequence.Iterator.`Protocol`
             where Iterator.Element == Element
 
         /// Returns a borrowing iterator over the elements.
         ///
-        /// The returned iterator borrows from this sequence and produces
-        /// spans of elements via `nextSpan(maximumCount:)`.
+        /// The sequence remains valid during and after iteration. The
+        /// returned iterator borrows from `self` and produces spans of
+        /// elements via `nextSpan(maximumCount:)`.
         ///
+        /// - `@_lifetime(borrow self)`: The iterator's lifetime is tied
+        ///   to the borrow of `self`.
         /// - Returns: An iterator that produces `Span<Element>` chunks.
         @_lifetime(borrow self)
         borrowing func makeIterator() -> Iterator

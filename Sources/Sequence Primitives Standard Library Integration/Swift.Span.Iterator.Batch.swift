@@ -6,8 +6,8 @@ extension Swift.Span.Iterator {
     /// Unlike the single-element ``Swift/Span/Iterator``, this returns
     /// `Span<Element>` chunks via `nextSpan(maximumCount:)`.
     ///
-    /// `Batch` implements `Sequence.Iterator.Borrowing.Protocol` for use
-    /// with `Sequence.Borrowing.Protocol` containers.
+    /// `Batch` implements `Sequence.Iterator.Protocol` via `nextSpan`,
+    /// returning sub-span batches.
     ///
     /// ## Usage
     ///
@@ -24,7 +24,7 @@ extension Swift.Span.Iterator {
     /// ```
     @safe
     public struct Batch: ~Escapable, ~Copyable,
-        Sequence.Iterator.Borrowing.`Protocol`
+        Sequence.Iterator.`Protocol`
     {
         @usableFromInline
         let _span: Swift.Span<Element>
@@ -64,7 +64,7 @@ extension Swift.Span.Iterator {
         /// - Parameter maximumCount: Maximum elements to return.
         /// - Returns: A span containing the next batch.
         @inlinable
-        @_lifetime(copy self)
+        @_lifetime(&self)
         public mutating func nextSpan(maximumCount: Cardinal) -> Swift.Span<Element> {
             let availableCount = remaining
             let take = Cardinal(Swift.min(maximumCount.rawValue, availableCount.rawValue))

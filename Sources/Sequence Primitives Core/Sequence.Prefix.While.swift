@@ -1,14 +1,14 @@
-extension Sequence {
-    /// Lazy wrapper that filters elements of a base sequence by a
-    /// predicate.
+extension Sequence.Prefix {
+    /// Lazy wrapper that takes leading elements while a predicate
+    /// holds.
     ///
-    /// Created by calling `.filter { }` on a `Sequence.Protocol`
-    /// conformer. Conforms to `Sequence.Protocol`, enabling further
-    /// chaining.
+    /// Created by calling `.prefix(while:)` on a `Sequence.Protocol`
+    /// conformer. Once the predicate returns `false`, the sequence is
+    /// exhausted.
     ///
     /// ```swift
-    /// let evens = source.filter { $0 % 2 == 0 }
-    /// let result = evens.collect()  // [2, 4, 6]
+    /// let head = source.prefix(while: { $0 < 4 })
+    /// let result = head.collect()  // [1, 2, 3] from [1, 2, 3, 4, 5]
     /// ```
     ///
     /// ## Suppression Pattern
@@ -22,8 +22,9 @@ extension Sequence {
     /// `Base.Element: Copyable` is required because the predicate
     /// closure takes `Base.Element` by value.
     ///
-    /// Iterator uses the heap buffer strategy.
-    public struct Filter<Base: Sequence.`Protocol` & ~Copyable & ~Escapable>: ~Copyable, ~Escapable
+    /// Iterator uses forward-to-base (zero allocation) with a
+    /// scan-then-terminate approach.
+    public struct While<Base: Sequence.`Protocol` & ~Copyable & ~Escapable>: ~Copyable, ~Escapable
     where Base.Element: Copyable {
         @usableFromInline
         let _base: Base
@@ -40,10 +41,10 @@ extension Sequence {
     }
 }
 
-extension Sequence.Filter: Copyable where Base: Copyable & ~Escapable {}
-extension Sequence.Filter: Escapable where Base: Escapable & ~Copyable {}
+extension Sequence.Prefix.While: Copyable where Base: Copyable & ~Escapable {}
+extension Sequence.Prefix.While: Escapable where Base: Escapable & ~Copyable {}
 
-extension Sequence.Filter: Sequence.`Protocol` where Base: ~Copyable & ~Escapable {
+extension Sequence.Prefix.While: Sequence.`Protocol` where Base: ~Copyable & ~Escapable {
     public typealias Element = Base.Element
 
     @_lifetime(copy self)

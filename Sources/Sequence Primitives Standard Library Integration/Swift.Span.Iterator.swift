@@ -22,7 +22,9 @@ extension Swift.Span {
     ///
     /// For batch access returning sub-spans, use ``Iterator/Batch`` instead.
     @safe
-    public struct Iterator: ~Escapable, ~Copyable {
+    public struct Iterator: ~Escapable, ~Copyable,
+        Sequence.Iterator.`Protocol`
+    {
         @usableFromInline
         let _span: Swift.Span<Element>
 
@@ -53,7 +55,28 @@ extension Swift.Span {
             return total.subtract.saturating(consumed)
         }
 
+        /// Returns the next batch of elements as a span.
+        ///
+        /// - Parameter maximumCount: Maximum elements to return.
+        /// - Returns: A span containing the next batch.
+        @inlinable
+        @_lifetime(&self)
+        public mutating func nextSpan(maximumCount: Cardinal) -> Swift.Span<Element> {
+            let availableCount = remaining
+            let take = Cardinal(Swift.min(maximumCount.rawValue, availableCount.rawValue))
+            guard take > .zero else { return _span.extracting(first: 0) }
+
+            let result = _span
+                .extracting(droppingFirst: Cardinal(_position.rawValue))
+                .extracting(first: take)
+
+            _position = _position.advance.saturating(by: take)
+            return result
+        }
+
         /// Returns the next element, or `nil` if exhausted.
+        ///
+        /// Performance override — avoids span construction for single elements.
         ///
         /// - Returns: The next element, or `nil`.
         @inlinable

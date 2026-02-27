@@ -35,7 +35,7 @@
 /// // 3. Now works with for-in and stdlib algorithms
 /// for n in Numbers(values: [1, 2, 3]) { print(n) }
 /// ```
-extension Sequence.`Protocol` where Self: Copyable {
+extension Sequence.`Protocol` where Self: Copyable, Element: Copyable {
     /// Default `underestimatedCount` for stdlib compatibility.
     ///
     /// Returns 0 as a safe default. Types with known counts should override.

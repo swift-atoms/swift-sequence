@@ -2,7 +2,7 @@ public import Property_Primitives
 
 /// Property.View extensions for containment checks on `Sequence.Protocol` conformers.
 extension Property.View
-where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.Contains {
+where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Contains {
 
     /// Check if sequence contains element matching predicate: `.contains { }`
     ///

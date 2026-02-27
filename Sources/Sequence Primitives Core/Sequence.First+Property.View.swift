@@ -2,7 +2,7 @@ public import Property_Primitives
 
 /// Property.View extensions for finding first matching element on `Sequence.Protocol` conformers.
 extension Property.View
-where Base: Sequence.`Protocol` & ~Copyable, Tag == Sequence.First {
+where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.First {
 
     /// Find first element matching predicate: `.first { }`
     ///

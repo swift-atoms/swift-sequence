@@ -20,3 +20,5 @@
 | span-extension-test | Test extending Swift.Span with nested Iterator and Iterator.Batch types | 2026-01-24 | Swift 6.2 | CONFIRMED |
 | suppressed-associated-types | Test SuppressedAssociatedTypes flag enabling `associatedtype Element: ~Copyable` | 2026-02-12 | Swift 6.2.3 / Xcode 26 beta | CONFIRMED |
 | two-tier-borrowing-overloads | Test borrowing closure transparency and two-tier overloads (borrowing + by-value) for ~Copyable elements | 2026-02-12 | Swift 6.2.3 / Xcode 26 beta | CONFIRMED |
+| optional-inline-span | Verify Optional\<T\> inline span pattern: ABI layout (payload at offset 0), Span creation via withUnsafeMutablePointer, 6 variants (Int, class, protocol, iterator, size, empty). | 2026-03-04 | Swift 6.2 | CONFIRMED |
+| batch-vs-single-element-span | [EXP-017] Benchmark: array-buffer batch vs Optional inline single-element for nextSpan throughput. Single-element 2-3x FASTER for tree traversal (V1-V4). Array-buffer overhead dominates. | 2026-03-04 | Swift 6.2 | CONFIRMED |

@@ -1,17 +1,16 @@
 public import Index_Primitives
 
 extension Sequence.Filter where Base: ~Copyable & ~Escapable {
-    /// Iterator for `Sequence.Filter` using the heap buffer strategy.
+    /// Iterator for `Sequence.Filter` using the Optional inline strategy.
     ///
     /// Scans the base iterator via `next()`, stores matching elements
-    /// in a heap-allocated buffer, and returns single-element spans.
-    /// Same pattern as `Sequence.Map.Iterator` — see its documentation
-    /// for the full heap buffer strategy explanation.
+    /// in `Optional<Base.Element>` inline storage, and returns
+    /// single-element spans. Same pattern as `Sequence.Map.Iterator` —
+    /// see its documentation for the full Optional inline explanation.
     ///
     /// ## Suppression
     ///
-    /// - `~Copyable` because it has a `deinit` (manages heap
-    ///   allocation).
+    /// - `~Copyable` because the base iterator may be `~Copyable`.
     /// - `~Escapable` because its lifetime is derived from the base
     ///   iterator.
     ///
@@ -29,50 +28,36 @@ extension Sequence.Filter where Base: ~Copyable & ~Escapable {
         let _predicate: (Base.Element) -> Bool
 
         @usableFromInline
-        let _mutableBuffer: UnsafeMutablePointer<Base.Element>
-
-        @usableFromInline
-        var _bufferPtr: UnsafePointer<Base.Element>
-
-        @usableFromInline
-        var _bufferInitialized: Bool
+        var _element: Base.Element? = nil
 
         @_lifetime(copy _base)
         @inlinable
         init(_base: consuming Base.Iterator, _predicate: @escaping (Base.Element) -> Bool) {
             self._base = _base
             self._predicate = _predicate
-            let buf = unsafe UnsafeMutablePointer<Base.Element>.allocate(capacity: 1)
-            self._mutableBuffer = buf
-            self._bufferPtr = unsafe UnsafePointer(buf)
-            self._bufferInitialized = false
-        }
-
-        deinit {
-            if _bufferInitialized {
-                _mutableBuffer.deinitialize(count: 1)
-            }
-            _mutableBuffer.deallocate()
         }
 
         @_lifetime(&self)
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Span<Base.Element> {
+            let ptr = unsafe withUnsafeMutablePointer(to: &_element) { p in
+                unsafe UnsafePointer<Base.Element>(
+                    unsafe UnsafeRawPointer(p).assumingMemoryBound(to: Base.Element.self)
+                )
+            }
             guard maximumCount > .zero else {
-                return unsafe Span(_unsafeStart: _bufferPtr, count: 0)
+                let span = unsafe Span(_unsafeStart: ptr, count: 0)
+                return unsafe _overrideLifetime(span, mutating: &self)
             }
             while let candidate = _base.next() {
                 if _predicate(candidate) {
-                    if _bufferInitialized {
-                        unsafe _mutableBuffer.deinitialize(count: 1)
-                    }
-                    unsafe _mutableBuffer.initialize(to: candidate)
-                    _bufferInitialized = true
-                    let span = unsafe Span(_unsafeStart: _bufferPtr, count: 1)
+                    _element = candidate
+                    let span = unsafe Span(_unsafeStart: ptr, count: 1)
                     return unsafe _overrideLifetime(span, mutating: &self)
                 }
             }
-            return unsafe Span(_unsafeStart: _bufferPtr, count: 0)
+            let span = unsafe Span(_unsafeStart: ptr, count: 0)
+            return unsafe _overrideLifetime(span, mutating: &self)
         }
 
         @_lifetime(self: immortal)

@@ -14,22 +14,24 @@ extension Sequence.Iterator {
     ///
     /// ### Two Iterator Strategies
     ///
-    /// **Heap buffer** (element-transforming: `Map`, `Filter`,
+    /// **Optional inline** (element-transforming: `Map`, `Filter`,
     /// `CompactMap`):
     ///
-    /// Allocate a single-element `UnsafeMutablePointer<Output>` in
-    /// `init`, write transformed elements into it, return 1-element
-    /// spans, clean up in `deinit`. One allocation per iterator lifetime.
+    /// Store `var _element: Element? = nil` inline. The Optional
+    /// payload is at byte offset 0 (ABI guarantee for single-payload
+    /// enums since Swift 5.0). Use `withUnsafeMutablePointer` +
+    /// `assumingMemoryBound` to produce a `Span`. Zero heap allocation,
+    /// no `deinit`.
     ///
     /// ```swift
-    /// let buf = unsafe UnsafeMutablePointer<Output>.allocate(capacity: 1)
-    /// // In nextSpan:
-    /// unsafe buf.initialize(to: transformedValue)
-    /// let span = unsafe Span(_unsafeStart: UnsafePointer(buf), count: 1)
+    /// _element = transformedValue
+    /// let ptr = unsafe withUnsafeMutablePointer(to: &_element) { p in
+    ///     unsafe UnsafePointer<Element>(
+    ///         unsafe UnsafeRawPointer(p).assumingMemoryBound(to: Element.self)
+    ///     )
+    /// }
+    /// let span = unsafe Span(_unsafeStart: ptr, count: 1)
     /// return unsafe _overrideLifetime(span, mutating: &self)
-    /// // In deinit:
-    /// if _bufferInitialized { _mutableBuffer.deinitialize(count: 1) }
-    /// _mutableBuffer.deallocate()
     /// ```
     ///
     /// Use `_overrideLifetime(span, mutating: &self)` to chain the
@@ -72,8 +74,9 @@ extension Sequence.Iterator {
     ///
     /// ### `~Copyable`, `~Escapable`
     ///
-    /// Iterators with `deinit` (heap buffer) are `~Copyable`. Iterators
-    /// that borrow from their sequence are `~Escapable`. Both
+    /// Iterators with `~Copyable` elements or base iterators are
+    /// `~Copyable`. Iterators that borrow from their sequence are
+    /// `~Escapable`. Both
     /// suppressions are on the protocol. Conformers providing plain
     /// `Copyable` + `Escapable` iterators (like wrapping
     /// `Array.Iterator`) satisfy this automatically — no annotations
@@ -81,9 +84,10 @@ extension Sequence.Iterator {
     ///
     /// ### Empty Span Convention
     ///
-    /// When exhausted, return an empty span. For heap buffer iterators,
-    /// `unsafe Span(_unsafeStart: bufferPtr, count: 0)` works (the
-    /// pointer is valid, count is 0). For forward-to-base iterators,
+    /// When exhausted, return an empty span. For Optional inline
+    /// iterators, the pointer from `withUnsafeMutablePointer` is valid
+    /// even when nil (the storage exists), with count 0. For
+    /// forward-to-base iterators,
     /// forwarding with `maximumCount: .zero` returns the base's empty
     /// span.
     ///

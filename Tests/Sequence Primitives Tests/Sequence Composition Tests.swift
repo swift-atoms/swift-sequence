@@ -81,6 +81,26 @@ extension SequenceCompositionTests.Integration {
     }
 
     @Test
+    func `map then flatMap then collect`() {
+        let source = Sequence.Fixture.Source([1, 2, 3])
+        let result = source
+            .map { $0 * 2 }
+            .flatMap { n in Sequence.Fixture.Source([n, n + 1]) }
+            .collect()
+        #expect(result == [2, 3, 4, 5, 6, 7])
+    }
+
+    @Test
+    func `flatMap then filter then collect`() {
+        let source = Sequence.Fixture.Source([1, 2, 3])
+        let result = source
+            .flatMap { n in Sequence.Fixture.Source(Array(1...n)) }
+            .filter { $0 > 1 }
+            .collect()
+        #expect(result == [2, 2, 3])
+    }
+
+    @Test
     func `full pipeline on empty sequence`() {
         let source = Sequence.Fixture.Source<Int>([])
         let result = source

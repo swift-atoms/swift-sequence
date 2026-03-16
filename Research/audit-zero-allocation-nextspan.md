@@ -4,7 +4,7 @@
 ---
 version: 1.0.0
 date: 2026-02-26
-status: AUDIT
+status: RECOMMENDATION
 auditor: Claude
 source: zero-allocation-nextspan-for-generating-iterators.md
 ---

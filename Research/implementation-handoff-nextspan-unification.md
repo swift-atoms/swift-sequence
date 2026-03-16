@@ -1,4 +1,11 @@
 # Handoff: Unify Iterator Protocols via nextSpan
+<!--
+---
+version: 1.0.0
+last_updated: 2026-03-16
+status: RECOMMENDATION
+---
+-->
 
 ## Goal
 

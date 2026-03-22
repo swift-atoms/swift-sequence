@@ -30,8 +30,6 @@ extension Sequence.`Protocol` where Self: ~Copyable {
 ///
 /// The Property.View `forEach` property remains accessible for qualified
 /// variants: `instance.forEach.borrowing { }`, `instance.forEach.consuming { }`.
-// WORKAROUND: @inline(__always) forEach — CopyPropagation crash (Swift 6.2.3)
-// WHEN TO REMOVE: When swiftlang/swift CopyPropagation ~Copyable deinit bug is fixed
 extension Sequence.`Protocol` where Self: Swift.Sequence {
     @inline(__always)
     @inlinable

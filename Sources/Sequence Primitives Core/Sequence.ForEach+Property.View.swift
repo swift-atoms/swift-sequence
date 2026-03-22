@@ -55,7 +55,6 @@ where Base: Sequence.Clearable, Base.Element: Copyable, Tag == Sequence.ForEach 
     /// ```
     ///
     /// - Parameter body: A closure called with each element.
-    @_lifetime(&self)
     @inlinable
     public mutating func consuming(_ body: (consuming Base.Element) -> Void) {
         var iterator = unsafe base.pointee.makeIterator()

@@ -18,7 +18,6 @@ where Base: Sequence.Drain.`Protocol` & ~Copyable, Tag == Sequence.Drain {
     ///
     /// - Parameter body: A closure called with each element (ownership transferred).
     /// - Complexity: O(n) where n is the number of elements.
-    @_lifetime(&self)
     @inlinable
     public mutating func callAsFunction(_ body: (consuming Base.Element) -> Void) {
         unsafe base.pointee.drain(body)

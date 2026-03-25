@@ -56,7 +56,6 @@ extension Sequence.Fixture.Source {
                 .extracting(first: take)
         }
 
-        @_lifetime(self: immortal)
         @inlinable
         public mutating func next() -> Element? {
             guard _index < _elements.count else { return nil }

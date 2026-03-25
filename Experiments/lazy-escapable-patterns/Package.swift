@@ -12,7 +12,6 @@ let package = Package(
                 .enableExperimentalFeature("Lifetimes"),
                 .enableExperimentalFeature("LifetimeDependenceDiagnosticsForReturnedConsuming"),
                 .enableExperimentalFeature("SuppressedAssociatedTypes"),
-                .enableExperimentalFeature("SuppressedAssociatedTypesWithDefaults"),
                 .enableExperimentalFeature("BuiltinModule"),
                 .strictMemorySafety(),
             ]

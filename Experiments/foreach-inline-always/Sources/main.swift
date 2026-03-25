@@ -1,9 +1,9 @@
-// MARK: - forEach @inline(__always) Overload Resolution
+// MARK: - forEach @inline(always) Overload Resolution
 // Purpose: Verify that a method on `Protocol1 where Self: Protocol2` wins
 //   overload resolution over a method on `Protocol2` alone, enabling a single
-//   @inline(__always) forEach to shadow Swift.Sequence.forEach for all dual-conformers.
+//   @inline(always) forEach to shadow Swift.Sequence.forEach for all dual-conformers.
 // Hypothesis 1: `MyProtocol where Self: Swift.Sequence` method beats `Swift.Sequence` method
-// Hypothesis 2: @inline(__always) on forEach prevents CopyPropagation crash in class deinits
+// Hypothesis 2: @inline(always) on forEach prevents CopyPropagation crash in class deinits
 //
 // Toolchain: swift-6.2-DEVELOPMENT-SNAPSHOT-2025-05-31-a
 // Platform: macOS 26.0 (arm64)
@@ -113,9 +113,9 @@ do {
 /// The proposed fix: a single method on MySequenceProtocol constrained to Swift.Sequence.
 /// More constrained than Swift.Sequence alone → should win overload resolution.
 extension MySequenceProtocol where Self: Swift.Sequence {
-    @inline(__always)
+    @inline(always)
     func forEach(_ body: (Element) -> Void) {
-        CallTracker.lastCalled = "Bridging @inline(__always) forEach"
+        CallTracker.lastCalled = "Bridging @inline(always) forEach"
         var iterator = makeIterator()
         while let element = iterator.next() {
             body(element)
@@ -135,7 +135,7 @@ do {
     CallTracker.lastCalled = ""
     dual.forEach { _ in }
 
-    if CallTracker.lastCalled == "Bridging @inline(__always) forEach" {
+    if CallTracker.lastCalled == "Bridging @inline(always) forEach" {
         print("  CONFIRMED: Bridging method wins overload resolution")
     } else if CallTracker.lastCalled == "" {
         print("  REFUTED: Swift.Sequence.forEach still called")
@@ -165,7 +165,7 @@ do {
 
 // ============================================================================
 // MARK: - Variant 5: Class Deinit with ~Copyable Generic
-// Hypothesis: @inline(__always) forEach prevents CopyPropagation crash
+// Hypothesis: @inline(always) forEach prevents CopyPropagation crash
 // Result: (pending — requires release build to verify)
 // ============================================================================
 
@@ -173,13 +173,13 @@ print("\n--- Variant 5: Class deinit with ~Copyable generic ---")
 do {
     // Minimal reproduction of the pattern that crashes CopyPropagation.
     // The crash requires: class + ~Copyable generic + closure in deinit.
-    // If this compiles in release mode, the @inline(__always) fix works.
+    // If this compiles in release mode, the @inline(always) fix works.
     final class Container<Element: ~Copyable> {
         var indices: [Int] = [0, 1, 2]
 
         deinit {
             // This forEach call uses a closure that captures `self` (via `indices`).
-            // Without @inline(__always), CopyPropagation may crash on this pattern.
+            // Without @inline(always), CopyPropagation may crash on this pattern.
             indices.forEach { index in
                 _ = index
             }

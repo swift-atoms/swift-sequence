@@ -50,9 +50,6 @@ extension Sequence.Borrowing {
 
         /// The iterator type that produces spans of elements.
         ///
-        /// > Note: Does not suppress `Copyable` or `Escapable` (unlike
-        /// > `Sequence.Protocol`'s `Iterator` associated type). This may
-        /// > need updating for consistency.
         associatedtype Iterator: Sequence.Iterator.`Protocol`
             where Iterator.Element == Element
 
@@ -62,10 +59,10 @@ extension Sequence.Borrowing {
         /// returned iterator borrows from `self` and produces spans of
         /// elements via `nextSpan(maximumCount:)`.
         ///
-        /// - `@_lifetime(borrow self)`: The iterator's lifetime is tied
-        ///   to the borrow of `self`.
         /// - Returns: An iterator that produces `Span<Element>` chunks.
-        @_lifetime(borrow self)
+        ///
+        /// > Note: `@_lifetime(borrow self)` removed — invalid on Escapable
+        /// > Iterator. Will be restored when Iterator gains `~Escapable`.
         borrowing func makeIterator() -> Iterator
     }
 }

@@ -12,7 +12,6 @@ extension Sequence.`Protocol` where Self: ~Copyable & ~Escapable, Element: Copya
     /// `Element: Copyable` is required to store elements in `Array`.
     ///
     /// - Returns: An array containing all elements of the sequence.
-    @_lifetime(copy self)
     @inlinable
     public consuming func collect() -> [Element] {
         var iterator = makeIterator()

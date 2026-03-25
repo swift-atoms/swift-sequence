@@ -39,7 +39,6 @@ extension Sequence.Difference.Changes {
             return result
         }
 
-        @_lifetime(self: immortal)
         @inlinable
         public mutating func next() -> Sequence.Difference.Change<Value>? {
             guard _index < _count else { return nil }

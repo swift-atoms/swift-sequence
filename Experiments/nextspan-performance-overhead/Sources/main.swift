@@ -15,7 +15,7 @@
 //     V10 generic ~Escapable struct : 1.00 ms  ← PARITY (generic + ~Escapable!)
 //     V8  custom ~Escapable struct  : 1.03 ms  ← PARITY (~Escapable alone!)
 //     V5  tuple (ptr,count)         : 1.10 ms  ← PARITY
-//     V7  @inline(__always) + Span  : 2.99 ms  (2.4x)
+//     V7  @inline(always) + Span  : 2.99 ms  (2.4x)
 //     V4  Span no min()            : 3.26 ms  (2.6x)
 //     V3  manual next + Span       : 3.38 ms  (2.7x)
 //     V2  full Span protocol ext   : 3.51 ms  (2.8x)
@@ -232,7 +232,7 @@ struct V6_NoBoundsCheck: ~Copyable {
 }
 
 // ============================================================================
-// MARK: - Variant 7: @inline(__always) on derived next()
+// MARK: - Variant 7: @inline(always) on derived next()
 // Forces inlining of the protocol extension path.
 // ============================================================================
 
@@ -253,7 +253,7 @@ struct V7_ForceInline: ~Copyable, SpanIteratorProtocol {
         return span
     }
 
-    @inline(__always)
+    @inline(always)
     mutating func next() -> Int? {
         let span = nextSpan(maximumCount: 1)
         return span.isEmpty ? nil : span[0]
@@ -578,7 +578,7 @@ array.withUnsafeBufferPointer { buf in
     print("V4  nextSpan (no min)          : \(t4)")
     print("V5  tuple (ptr,count) no Span  : \(t5)  ← Escapable control")
     print("V6  Span + no bounds check     : \(t6)")
-    print("V7  nextSpan + @inline(__always): \(t7)")
+    print("V7  nextSpan + @inline(always): \(t7)")
     print("V8  custom ~Escapable struct   : \(t8)  ← ~Escapable (not Span)")
     print("V9  Escapable struct           : \(t9)  ← Escapable control")
     print("V10 generic ~Escapable struct  : \(t10) ← generic + ~Escapable")

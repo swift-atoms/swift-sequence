@@ -14,6 +14,26 @@ let package = Package(
     products: [
         // MARK: - Sub-targets
         .library(
+            name: "Sequence Primitives Core",
+            targets: ["Sequence Primitives Core"]
+        ),
+        .library(
+            name: "Sequence Consuming Primitives",
+            targets: ["Sequence Consuming Primitives"]
+        ),
+        .library(
+            name: "Sequence Lazy Primitives",
+            targets: ["Sequence Lazy Primitives"]
+        ),
+        .library(
+            name: "Sequence Terminal Primitives",
+            targets: ["Sequence Terminal Primitives"]
+        ),
+        .library(
+            name: "Sequence Primitives Standard Library Integration",
+            targets: ["Sequence Primitives Standard Library Integration"]
+        ),
+        .library(
             name: "Sequence Difference Primitives",
             targets: ["Sequence Difference Primitives"]
         ),
@@ -44,6 +64,31 @@ let package = Package(
             ]
         ),
 
+        // MARK: - Consuming
+        .target(
+            name: "Sequence Consuming Primitives",
+            dependencies: [
+                "Sequence Primitives Core",
+            ]
+        ),
+
+        // MARK: - Lazy
+        .target(
+            name: "Sequence Lazy Primitives",
+            dependencies: [
+                "Sequence Primitives Core",
+            ]
+        ),
+
+        // MARK: - Terminal
+        .target(
+            name: "Sequence Terminal Primitives",
+            dependencies: [
+                "Sequence Primitives Core",
+                "Sequence Consuming Primitives",
+            ]
+        ),
+
         // MARK: - Difference
         .target(
             name: "Sequence Difference Primitives",
@@ -65,6 +110,9 @@ let package = Package(
             name: "Sequence Primitives",
             dependencies: [
                 "Sequence Primitives Core",
+                "Sequence Consuming Primitives",
+                "Sequence Lazy Primitives",
+                "Sequence Terminal Primitives",
                 "Sequence Difference Primitives",
                 "Sequence Primitives Standard Library Integration",
             ]

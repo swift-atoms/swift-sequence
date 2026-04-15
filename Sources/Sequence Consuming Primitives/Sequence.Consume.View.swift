@@ -83,5 +83,10 @@ extension Sequence.Consume {
 
 // MARK: - Sendable
 
+// WHY: Category D — structural Sendable workaround (SP-4).
+// WHY: ~Copyable struct with two generic parameters. Phantom-type-over-two-generics
+// WHY: pattern blocks structural Sendable inference.
+// WHEN TO REMOVE: When compiler gains structural Sendable through generic params.
+// TRACKING: unsafe-audit-findings.md Category D SP-4.
 extension Sequence.Consume.View: @unchecked Sendable
 where Element: Sendable, State: Sendable {}

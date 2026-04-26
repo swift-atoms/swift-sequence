@@ -18,7 +18,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Satisfi
     /// - Returns: `true` if all elements satisfy the predicate.
     @inlinable
     public func all(_ predicate: (borrowing Base.Element) -> Bool) -> Bool {
-        var iterator = unsafe base.pointee.makeIterator()
+        var iterator = unsafe base.value.makeIterator()
         while let element = iterator.next() {
             if !predicate(element) { return false }
         }
@@ -38,7 +38,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Satisfi
     /// - Returns: `true` if any element satisfies the predicate.
     @inlinable
     public func any(_ predicate: (borrowing Base.Element) -> Bool) -> Bool {
-        var iterator = unsafe base.pointee.makeIterator()
+        var iterator = unsafe base.value.makeIterator()
         while let element = iterator.next() {
             if predicate(element) { return true }
         }

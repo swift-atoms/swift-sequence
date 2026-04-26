@@ -20,6 +20,6 @@ where Base: Sequence.Drain.`Protocol` & ~Copyable, Tag == Sequence.Drain {
     /// - Complexity: O(n) where n is the number of elements.
     @inlinable
     public mutating func callAsFunction(_ body: (consuming Base.Element) -> Void) {
-        unsafe base.pointee.drain(body)
+        unsafe base.value.drain(body)
     }
 }

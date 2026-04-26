@@ -18,7 +18,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.First {
     /// - Returns: The first matching element, or `nil`.
     @inlinable
     public func callAsFunction(_ predicate: (borrowing Base.Element) -> Bool) -> Base.Element? {
-        var iterator = unsafe base.pointee.makeIterator()
+        var iterator = unsafe base.value.makeIterator()
         while let element = iterator.next() {
             if predicate(element) { return element }
         }

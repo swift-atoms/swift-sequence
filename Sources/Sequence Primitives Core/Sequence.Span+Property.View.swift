@@ -24,7 +24,7 @@ where Base: Sequence.Borrowing.`Protocol` & ~Copyable,
     /// - Parameter body: A closure called with each span batch.
     @inlinable
     public func forEach(_ body: (Swift.Span<Base.Element>) -> Void) {
-        var iterator = unsafe base.pointee.makeIterator()
+        var iterator = unsafe base.value.makeIterator()
         while true {
             let span = iterator.nextSpan(maximumCount: .max)
             if span.isEmpty { break }
@@ -46,7 +46,7 @@ where Base: Sequence.Borrowing.`Protocol` & ~Copyable,
     /// - Parameter body: A closure called with each element.
     @inlinable
     public func elements(_ body: (borrowing Base.Element) -> Void) {
-        var iterator = unsafe base.pointee.makeIterator()
+        var iterator = unsafe base.value.makeIterator()
         while true {
             let span = iterator.nextSpan(maximumCount: .max)
             if span.isEmpty { break }
@@ -76,7 +76,7 @@ where Base: Sequence.Borrowing.`Protocol` & ~Copyable,
         _ initial: Result,
         _ operation: (inout Result, Swift.Span<Base.Element>) -> Void
     ) -> Result {
-        var iterator = unsafe base.pointee.makeIterator()
+        var iterator = unsafe base.value.makeIterator()
         var result = initial
         while true {
             let span = iterator.nextSpan(maximumCount: .max)
@@ -106,7 +106,7 @@ where Base: Sequence.Borrowing.`Protocol` & ~Copyable,
         _ initial: Result,
         _ operation: (Result, Swift.Span<Base.Element>) -> Result
     ) -> Result {
-        var iterator = unsafe base.pointee.makeIterator()
+        var iterator = unsafe base.value.makeIterator()
         var result = initial
         while true {
             let span = iterator.nextSpan(maximumCount: .max)

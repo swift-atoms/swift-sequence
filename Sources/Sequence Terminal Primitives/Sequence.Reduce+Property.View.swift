@@ -24,7 +24,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Reduce 
         _ operation: (inout Result, borrowing Base.Element) -> Void
     ) -> Result {
         var result = initial
-        var iterator = unsafe base.pointee.makeIterator()
+        var iterator = unsafe base.value.makeIterator()
         while let element = iterator.next() {
             operation(&result, element)
         }
@@ -50,7 +50,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Reduce 
         _ operation: (Result, borrowing Base.Element) -> Result
     ) -> Result {
         var result = initial
-        var iterator = unsafe base.pointee.makeIterator()
+        var iterator = unsafe base.value.makeIterator()
         while let element = iterator.next() {
             result = operation(result, element)
         }

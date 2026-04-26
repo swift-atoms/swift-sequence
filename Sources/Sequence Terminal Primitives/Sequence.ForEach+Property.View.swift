@@ -33,7 +33,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.ForEach
     /// - Parameter body: A closure called with each element.
     @inlinable
     public func borrowing(_ body: (borrowing Base.Element) -> Void) {
-        var iterator = unsafe base.pointee.makeIterator()
+        var iterator = unsafe base.value.makeIterator()
         while let element = iterator.next() {
             body(element)
         }
@@ -57,10 +57,10 @@ where Base: Sequence.Clearable, Base.Element: Copyable, Tag == Sequence.ForEach 
     /// - Parameter body: A closure called with each element.
     @inlinable
     public mutating func consuming(_ body: (consuming Base.Element) -> Void) {
-        var iterator = unsafe base.pointee.makeIterator()
+        var iterator = unsafe base.value.makeIterator()
         while let element = iterator.next() {
             body(element)
         }
-        unsafe base.pointee.removeAll()
+        unsafe base.value.removeAll()
     }
 }

@@ -1,3 +1,4 @@
+
 extension Sequence {
     /// A protocol for types that produce elements through consuming iteration.
     ///
@@ -74,7 +75,7 @@ extension Sequence {
     ///
     /// `.forEach { }`, `.contains { }`, `.count.all`, `.first { }`,
     /// `.satisfies.all { }`, `.reduce.into(_:) { }` — these work through
-    /// `base.pointee.makeIterator()` which requires an implicit copy.
+    /// `base.value.makeIterator()` which requires an implicit copy.
     /// Therefore they only work for **Copyable** conformers. `~Copyable`
     /// conformers should use the consuming pipeline or
     /// ``Sequence/Borrowing-swift.enum/Protocol-swift.protocol``.

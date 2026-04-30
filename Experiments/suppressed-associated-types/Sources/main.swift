@@ -158,6 +158,7 @@ resources.forEach { element in
 // MARK: - Variant 6: Stdlib IteratorProtocol ~Copyable Element
 // Hypothesis: stdlib IteratorProtocol.Element is also ~Copyable with this flag
 // Result: REFUTED — SuppressedAssociatedTypes (legacy) only enables
+// Revalidated: Swift 6.3.1 (2026-04-30) — PASSES
 //         user-defined protocols to declare ~Copyable associated types.
 //         It does NOT retroactively change stdlib protocol signatures.
 //         stdlib IteratorProtocol.Element remains implicitly Copyable.

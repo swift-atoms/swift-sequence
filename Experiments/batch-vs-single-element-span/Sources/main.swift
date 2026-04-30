@@ -15,6 +15,7 @@
 // Platform: macOS 26.x (arm64)
 //
 // Result: CONFIRMED — Single-element is 2-3x FASTER than batch for
+// Revalidated: Swift 6.3.1 (2026-04-30) — STILL PRESENT
 //         tree traversal (V1-V4). Array-buffer overhead (removeAll,
 //         append, array metadata) exceeds any batching amortization.
 //         Sequential access (V5) shows single-element optimized away

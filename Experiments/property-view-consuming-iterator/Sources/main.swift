@@ -17,6 +17,7 @@
 // Platform: macOS (arm64)
 //
 // Result: CONFIRMED — TEST A (forEach requirement) and TEST E (Clearable move+reinit)
+// Revalidated: Swift 6.3.1 (2026-04-30) — STILL PRESENT
 //         both compile and run. TEST 1b REFUTED (can't consume through borrowed pointee).
 //         Decision: Dual-protocol (Option C) — see Research/consuming-vs-borrowing-iteration.md
 // Date: 2026-02-26

@@ -16,6 +16,7 @@
 // Platform: macOS 26.0 (arm64)
 //
 // Result: CONFIRMED — all 10 variants pass (7 storage types, 3 batch/borrow tests)
+// Revalidated: Swift 6.3.1 (2026-04-30) — PASSES
 // Date: 2026-02-26
 
 // ============================================================================

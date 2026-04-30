@@ -27,6 +27,7 @@
 // Platform: macOS 26.0 (arm64)
 //
 // Result: CONFIRMED (V1, V2, V4, V5, V6) / REFUTED (V3)
+// Revalidated: Swift 6.3.1 (2026-04-30) — STILL PRESENT
 //   V1: CONFIRMED — Escapable constraint + in-place mutation works
 //   V2: CONFIRMED — Copyable + Escapable + `if var` pattern works
 //   V3: REFUTED   — No constraint: 'lifetime-dependent variable self escapes'

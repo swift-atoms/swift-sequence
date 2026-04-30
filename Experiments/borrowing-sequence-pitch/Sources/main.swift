@@ -280,6 +280,7 @@ func testVariant8() {
 // =============================================================================
 // MARK: - Variant 9: Span-returning Iterator with extracting
 // Result: [PENDING]
+// Revalidated: Swift 6.3.1 (2026-04-30) — STILL PRESENT
 // =============================================================================
 
 extension Span {

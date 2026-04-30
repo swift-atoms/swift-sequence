@@ -167,6 +167,7 @@ do {
 // MARK: - Variant 5: Class Deinit with ~Copyable Generic
 // Hypothesis: @inline(always) forEach prevents CopyPropagation crash
 // Result: (pending — requires release build to verify)
+// Revalidated: Swift 6.3.1 (2026-04-30) — PASSES
 // ============================================================================
 
 print("\n--- Variant 5: Class deinit with ~Copyable generic ---")

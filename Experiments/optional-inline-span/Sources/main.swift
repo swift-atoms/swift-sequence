@@ -12,6 +12,7 @@
 // iterators across the ecosystem.
 //
 // Toolchain: Apple Swift 6.2 (swiftlang-6.2.x)
+// Revalidated: Swift 6.3.1 (2026-04-30) — STILL PRESENT
 // Platform: macOS 26.x (arm64)
 //
 // Date: 2026-03-04

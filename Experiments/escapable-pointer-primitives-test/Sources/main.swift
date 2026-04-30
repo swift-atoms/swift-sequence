@@ -6,6 +6,7 @@
 // Platform: macOS 26.0 (arm64)
 //
 // Result: BLOCKED - Fundamental language constraint
+// Revalidated: Swift 6.3.1 (2026-04-30) — PASSES
 // Date: 2026-01-24
 //
 // Blog: BLOG-IDEA-025 "Why You Can't Build a ~Escapable Pointer"

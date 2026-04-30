@@ -181,6 +181,7 @@ func testV1() {
 // Hypothesis: Storing Element? inline and creating Span via withUnsafePointer
 //             avoids heap allocation.
 // Result: REFUTED — withUnsafePointer(to:_:) requires Result: Escapable.
+// Revalidated: Swift 6.3.1 (2026-04-30) — PASSES
 //         Span<Element> is ~Escapable. Cannot return Span from withUnsafePointer.
 //         There is no user-accessible API to get a pointer to a stored property
 //         and return a ~Escapable value constructed from it.

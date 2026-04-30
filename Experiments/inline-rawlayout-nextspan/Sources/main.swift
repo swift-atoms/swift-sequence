@@ -17,6 +17,7 @@
 // Platform: macOS 26.2 (arm64)
 //
 // Result: CONFIRMED — All variants pass
+// Revalidated: Swift 6.3.1 (2026-04-30) — STILL PRESENT
 //   V1  Counter iterator (@_rawLayout):       CONFIRMED (correct output [1,2,3,4,5] and [10,11,12,13])
 //   V2  Fibonacci iterator (@_rawLayout):     CONFIRMED (correct output [0,1,1,2,3,5,8,13])
 //   V3  Cyclic group iterator (@_rawLayout):  CONFIRMED (correct output [3,2,6,4,5,1])

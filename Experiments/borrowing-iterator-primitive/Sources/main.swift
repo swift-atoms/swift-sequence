@@ -24,6 +24,7 @@
 //            container is not consumed. No ~Escapable cascade required.
 //
 // Toolchain: Swift 6.2.3, Xcode 26.0 beta 2 (16A5171r)
+// Revalidated: Swift 6.3.1 (2026-04-30) — PASSES
 // Platform:  macOS 26.0 (25A5279m), Apple M4
 // Date:      2026-02-23
 

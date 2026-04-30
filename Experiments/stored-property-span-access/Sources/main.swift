@@ -84,6 +84,7 @@ func testV1() {
 // MARK: - Variant 2: withUnsafePointer(to: _element) — borrowing
 // Hypothesis: Borrowing variant also works for read-only Span creation.
 // Result: REFUTED — withUnsafePointer(to: _element) passes _element by VALUE.
+// Revalidated: Swift 6.3.1 (2026-04-30) — STILL PRESENT
 //         The pointer points to a temporary copy on the stack, which is
 //         destroyed when withUnsafePointer returns. The pointer is dangling.
 //         Only withUnsafeMutablePointer(to: &_element) gives an in-place pointer.

@@ -7,6 +7,7 @@
 // Platform: macOS 26.0 (arm64)
 //
 // Result: CONFIRMED — overhead is Span-specific, NOT ~Escapable-generic.
+// Revalidated: Swift 6.3.1 (2026-04-30) — PASSES
 //         Root cause identified via SIL analysis.
 //
 //   Release (-O), 1000 elements × 10,000 iterations:

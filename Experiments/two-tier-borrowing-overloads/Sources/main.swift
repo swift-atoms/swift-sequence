@@ -162,6 +162,7 @@ r5.forEach { element in
 // Hypothesis: A second Copyable-only overload with by-value parameter
 //             coexists with the borrowing overload
 // Result: CONFIRMED — distinct method names (.borrowing/.byValue) work.
+// Revalidated: Swift 6.3.1 (2026-04-30) — PASSES
 // Finding: Same-name callAsFunction overloads crash MoveOnlyChecker
 //          when using stub bodies. Distinct names avoid the issue entirely.
 

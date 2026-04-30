@@ -9,6 +9,8 @@
 // [TEST-5] .forEach.consuming { } consuming iteration works
 //
 // Toolchain: Apple Swift version 6.2.3
+// Status: SUPERSEDED 2026-04-30 — Sequence protocol restructured (Sequence.Protocol, Sequence.Borrowing.Protocol, Sequence.Iterator.Protocol, Sequence.Drain.Protocol, etc.); experiment tests an earlier non-decomposed Sequence surface and would require redesign against current ForEach/Drain witness shape
+// Revalidated: Swift 6.3.1 (2026-04-30) — STILL PRESENT (deep API drift; SUPERSEDED per [META-007])
 // Date: 2026-01-22
 
 import Sequence_Primitives

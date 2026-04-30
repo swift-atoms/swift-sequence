@@ -1,4 +1,5 @@
 // Status: SUPERSEDED -- Swift.Span nested-type extension pattern absorbed into swift-property-primitives Property.View. (Phase 1b stale-triage 2026-04-30)
+// Revalidated: Swift 6.3.1 (2026-04-30) — SUPERSEDED (per existing Status line; not re-run)
 // Test: Can we extend Swift.Span to add nested types?
 // This avoids introducing a separate top-level Span namespace.
 

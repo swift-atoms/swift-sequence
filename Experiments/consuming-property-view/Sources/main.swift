@@ -1,3 +1,4 @@
+// Status: SUPERSEDED -- consuming Property.View pattern shipped in swift-property-primitives. (Phase 1b stale-triage 2026-04-30)
 // ===----------------------------------------------------------------------===//
 // EXPERIMENT: consuming-property-view
 // ===----------------------------------------------------------------------===//

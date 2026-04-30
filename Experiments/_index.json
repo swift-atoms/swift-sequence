@@ -1,7 +1,7 @@
 {
   "$schema": "https://swift-institute.org/schemas/experiments-index-v1.json",
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-04-18",
+  "generatedAt": "2026-04-30",
   "title": "Experiments Index",
   "blurb": "",
   "scope": "swift-sequence-primitives (swift-primitives)",
@@ -36,10 +36,10 @@
       "purpose": "Test whether Property.View can support consuming container semantics for drain patterns",
       "date": "2026-01-23",
       "toolchain": "Swift 6.2",
-      "status": "CONFIRMED",
-      "statusDetail": null,
-      "statusRaw": "CONFIRMED",
-      "supersededBy": null,
+      "status": "SUPERSEDED",
+      "statusDetail": "consuming Property.View pattern shipped in swift-property-primitives (Phase 1b stale-triage 2026-04-30)",
+      "statusRaw": "CONFIRMED -> SUPERSEDED (Phase 1b stale-triage 2026-04-30)",
+      "supersededBy": "consuming Property.View pattern shipped in swift-property-primitives",
       "crossRefs": []
     },
     {
@@ -72,10 +72,10 @@
       "purpose": "Test whether inline storage types can provide span property via @lifetime annotations",
       "date": "2026-01-23",
       "toolchain": "Swift 6.2",
-      "status": "CONFIRMED",
-      "statusDetail": null,
-      "statusRaw": "CONFIRMED",
-      "supersededBy": null,
+      "status": "SUPERSEDED",
+      "statusDetail": "Property.View .span pattern shipped in swift-property-primitives (Phase 1b stale-triage 2026-04-30)",
+      "statusRaw": "CONFIRMED -> SUPERSEDED (Phase 1b stale-triage 2026-04-30)",
+      "supersededBy": "Property.View .span pattern shipped in swift-property-primitives",
       "crossRefs": []
     },
     {
@@ -192,10 +192,10 @@
       "purpose": "Test extending Swift.Span with nested Iterator and Iterator.Batch types",
       "date": "2026-01-24",
       "toolchain": "Swift 6.2",
-      "status": "CONFIRMED",
-      "statusDetail": null,
-      "statusRaw": "CONFIRMED",
-      "supersededBy": null,
+      "status": "SUPERSEDED",
+      "statusDetail": "Swift.Span nested-type extension pattern absorbed into swift-property-primitives Property.View (Phase 1b stale-triage 2026-04-30)",
+      "statusRaw": "CONFIRMED -> SUPERSEDED (Phase 1b stale-triage 2026-04-30)",
+      "supersededBy": "Swift.Span nested-type extension pattern absorbed into swift-property-primitives Property.View",
       "crossRefs": []
     },
     {

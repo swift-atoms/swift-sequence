@@ -47,7 +47,7 @@ extension Sequence.Fixture.Source {
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Swift.Span<Element> {
             let remaining = _elements.count - _index
-            let take = min(Int(maximumCount.rawValue), remaining)
+            let take = min(Int(maximumCount.underlying), remaining)
             guard take > 0 else { return _elements.span.extracting(first: 0) }
             let start = _index
             _index += take

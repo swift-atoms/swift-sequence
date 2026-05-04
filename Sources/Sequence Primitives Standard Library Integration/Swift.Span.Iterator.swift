@@ -67,7 +67,8 @@ extension Swift.Span {
             let take = min(maximumCount, remaining)
             guard take > .zero else { return _span.extracting(first: 0) }
 
-            let result = _span
+            let result =
+                _span
                 .extracting(droppingFirst: Cardinal(_position))
                 .extracting(first: take)
 

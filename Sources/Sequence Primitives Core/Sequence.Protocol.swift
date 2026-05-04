@@ -1,4 +1,3 @@
-
 extension Sequence {
     /// A protocol for types that produce elements through consuming iteration.
     ///
@@ -102,7 +101,7 @@ extension Sequence {
         /// dependency). Conformers providing plain
         /// `Copyable` + `Escapable` iterators satisfy this automatically.
         associatedtype Iterator: Sequence.Iterator.`Protocol` & ~Copyable & ~Escapable
-            where Iterator.Element == Element
+        where Iterator.Element == Element
 
         /// Returns an iterator over the elements of this sequence.
         ///

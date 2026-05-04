@@ -81,13 +81,15 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
                         }
 
                         if Cardinal(UInt(contextBuffer.count)) >= contextLines {
-                            hunks.append(Sequence.Difference.Hunk(
-                                oldStart: oldStart,
-                                oldCount: oldCount,
-                                newStart: newStart,
-                                newCount: newCount,
-                                lines: currentLines
-                            ))
+                            hunks.append(
+                                Sequence.Difference.Hunk(
+                                    oldStart: oldStart,
+                                    oldCount: oldCount,
+                                    newStart: newStart,
+                                    newCount: newCount,
+                                    lines: currentLines
+                                )
+                            )
                             inHunk = false
                         }
                     }
@@ -105,13 +107,15 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
         }
 
         if inHunk {
-            hunks.append(Sequence.Difference.Hunk(
-                oldStart: oldStart,
-                oldCount: oldCount,
-                newStart: newStart,
-                newCount: newCount,
-                lines: currentLines
-            ))
+            hunks.append(
+                Sequence.Difference.Hunk(
+                    oldStart: oldStart,
+                    oldCount: oldCount,
+                    newStart: newStart,
+                    newCount: newCount,
+                    lines: currentLines
+                )
+            )
         }
 
         return hunks

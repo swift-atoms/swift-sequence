@@ -1,5 +1,5 @@
-import Testing
 import Sequence_Primitives_Test_Support
+import Testing
 
 @Suite("Sequence.ForEach")
 struct SequenceForEachTests {

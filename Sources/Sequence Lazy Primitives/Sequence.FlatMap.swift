@@ -40,8 +40,11 @@ extension Sequence {
         Base: Sequence.`Protocol` & ~Copyable & ~Escapable,
         InnerSequence: Sequence.`Protocol`
     >: ~Copyable, ~Escapable
-    where Base.Element: Copyable, InnerSequence.Element: Copyable,
-          InnerSequence.Iterator: Escapable {
+    where
+        Base.Element: Copyable,
+        InnerSequence.Element: Copyable,
+        InnerSequence.Iterator: Escapable
+    {
         @usableFromInline
         let _base: Base
 

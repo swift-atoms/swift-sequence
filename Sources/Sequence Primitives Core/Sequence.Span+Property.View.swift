@@ -1,5 +1,5 @@
-public import Property_Primitives
 public import Index_Primitives
+public import Property_Primitives
 
 /// Property.View extensions for span-based borrowing iteration.
 ///
@@ -7,8 +7,9 @@ public import Index_Primitives
 /// > language constraint (`Builtin.load` requires `Escapable`). Types that
 /// > are truly `~Escapable` must use `Sequence.Borrowing.Protocol` directly.
 extension Property.View
-where Base: Sequence.Borrowing.`Protocol` & ~Copyable,
-      Tag == Sequence.Span
+where
+    Base: Sequence.Borrowing.`Protocol` & ~Copyable,
+    Tag == Sequence.Span
 {
     /// Process each span batch: `.span.forEach { }`
     ///

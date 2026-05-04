@@ -57,7 +57,9 @@ extension Sequence.Difference.Change {
         switch self {
         case .first: old += .one
         case .second: new += .one
-        case .both: old += .one; new += .one
+        case .both:
+            old += .one
+            new += .one
         }
     }
 }

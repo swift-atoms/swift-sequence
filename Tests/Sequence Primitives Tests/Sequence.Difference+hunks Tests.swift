@@ -1,5 +1,5 @@
-import Testing
 import Sequence_Primitives_Test_Support
+import Testing
 
 private typealias Diff = Sequence.Difference
 private typealias Change = Sequence.Difference.Change<String>

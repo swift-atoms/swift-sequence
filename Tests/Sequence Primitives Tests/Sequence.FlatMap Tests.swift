@@ -1,5 +1,5 @@
-import Testing
 import Sequence_Primitives_Test_Support
+import Testing
 
 @Suite("Sequence.FlatMap")
 struct SequenceFlatMapTests {
@@ -31,7 +31,8 @@ extension SequenceFlatMapTests.Unit {
     @Test
     func `flatMap chains with other operations`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
-        let result = source
+        let result =
+            source
             .flatMap { n in Sequence.Fixture.Source([n, n * 10]) }
             .filter { $0 > 5 }
             .collect()
@@ -41,7 +42,8 @@ extension SequenceFlatMapTests.Unit {
     @Test
     func `flatMap after map`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
-        let result = source
+        let result =
+            source
             .map { $0 * 2 }
             .flatMap { n in Sequence.Fixture.Source([n, n + 1]) }
             .collect()

@@ -1,5 +1,5 @@
-import Testing
 import Sequence_Primitives_Test_Support
+import Testing
 
 private typealias Diff = Sequence.Difference
 private typealias Step = Sequence.Difference.Step
@@ -150,7 +150,8 @@ extension SequenceDifferenceTests.EdgeCase {
     @Test
     func `both empty sequences`() {
         let steps = Diff.diff(
-            oldCount: .zero, newCount: .zero,
+            oldCount: .zero,
+            newCount: .zero,
             equals: { _, _ in true }
         )
         #expect(steps.collect().isEmpty)

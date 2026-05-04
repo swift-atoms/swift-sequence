@@ -1,5 +1,5 @@
-public import Property_Primitives
 public import Index_Primitives
+public import Property_Primitives
 
 /// Property.View extensions for counting operations on `Sequence.Protocol` conformers.
 extension Property.View

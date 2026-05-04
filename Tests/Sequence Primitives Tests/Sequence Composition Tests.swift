@@ -1,5 +1,5 @@
-import Testing
 import Sequence_Primitives_Test_Support
+import Testing
 
 @Suite("Sequence Composition")
 struct SequenceCompositionTests {
@@ -12,7 +12,8 @@ extension SequenceCompositionTests.Integration {
     @Test
     func `map then filter then collect`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-        let result = source
+        let result =
+            source
             .map { $0 * 3 }
             .filter { $0 > 10 }
             .collect()
@@ -22,7 +23,8 @@ extension SequenceCompositionTests.Integration {
     @Test
     func `filter then map`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5])
-        let result = source
+        let result =
+            source
             .filter { $0 % 2 != 0 }
             .map { $0 * $0 }
             .collect()
@@ -32,7 +34,8 @@ extension SequenceCompositionTests.Integration {
     @Test
     func `drop then prefix`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5, 6, 7, 8])
-        let result = source
+        let result =
+            source
             .drop(first: Cardinal(2))
             .prefix(first: Cardinal(3))
             .collect()
@@ -42,7 +45,8 @@ extension SequenceCompositionTests.Integration {
     @Test
     func `prefix then map`() {
         let source = Sequence.Fixture.Source([10, 20, 30, 40, 50])
-        let result = source
+        let result =
+            source
             .prefix(first: Cardinal(3))
             .map { $0 / 10 }
             .collect()
@@ -52,7 +56,8 @@ extension SequenceCompositionTests.Integration {
     @Test
     func `chained maps`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
-        let result = source
+        let result =
+            source
             .map { $0 + 1 }
             .map { $0 * 2 }
             .map { $0 - 1 }
@@ -63,7 +68,8 @@ extension SequenceCompositionTests.Integration {
     @Test
     func `drop while then filter`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5, 6])
-        let result = source
+        let result =
+            source
             .drop(while: { $0 < 3 })
             .filter { $0 % 2 == 0 }
             .collect()
@@ -73,7 +79,8 @@ extension SequenceCompositionTests.Integration {
     @Test
     func `compactMap then prefix`() {
         let source = Sequence.Fixture.Source(["1", "two", "3", "four", "5", "6"])
-        let result = source
+        let result =
+            source
             .compactMap { Int($0) }
             .prefix(first: Cardinal(3))
             .collect()
@@ -83,7 +90,8 @@ extension SequenceCompositionTests.Integration {
     @Test
     func `map then flatMap then collect`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
-        let result = source
+        let result =
+            source
             .map { $0 * 2 }
             .flatMap { n in Sequence.Fixture.Source([n, n + 1]) }
             .collect()
@@ -93,7 +101,8 @@ extension SequenceCompositionTests.Integration {
     @Test
     func `flatMap then filter then collect`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
-        let result = source
+        let result =
+            source
             .flatMap { n in Sequence.Fixture.Source(Array(1...n)) }
             .filter { $0 > 1 }
             .collect()
@@ -103,7 +112,8 @@ extension SequenceCompositionTests.Integration {
     @Test
     func `full pipeline on empty sequence`() {
         let source = Sequence.Fixture.Source<Int>([])
-        let result = source
+        let result =
+            source
             .map { $0 * 2 }
             .filter { $0 > 0 }
             .drop(first: Cardinal(1))

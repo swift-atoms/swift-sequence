@@ -51,7 +51,7 @@ extension Sequence.Borrowing {
         /// The iterator type that produces spans of elements.
         ///
         associatedtype Iterator: Sequence.Iterator.`Protocol`
-            where Iterator.Element == Element
+        where Iterator.Element == Element
 
         /// Returns a borrowing iterator over the elements.
         ///

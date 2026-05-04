@@ -27,11 +27,6 @@ jobs:
   docs:
     uses: swift-institute/.github/.github/workflows/swift-docs.yml@main
     with:
-      umbrella-module: Sequence_Primitives
-      umbrella-display-name: "Sequence Primitives"
-      umbrella-bundle-id: "swift-sequence-primitives.Sequence-Primitives"
-      umbrella-docc-path: "Sources/Sequence Primitives/Sequence Primitives.docc"
-      exclude-modules: "Sequence_Primitives_Test_Support"
       enable-private-repos: true
     secrets:
       PRIVATE_REPO_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}

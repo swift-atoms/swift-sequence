@@ -41,7 +41,7 @@ extension Sequence.Difference.Changes {
 
         @inlinable
         public mutating func next() -> Sequence.Difference.Change<Value>? {
-            guard Cardinal(_index) < _count else { return nil }
+            guard _index < _count else { return nil }
             defer { _index = _index.successor.saturating() }
             return _storage[_index]
         }

@@ -49,7 +49,7 @@ extension Swift.Span.Iterator {
         /// Whether the iterator has no remaining elements.
         @inlinable
         public var isEmpty: Bool {
-            Cardinal(_position) >= _count
+            _position >= _count
         }
 
         /// The number of remaining elements.

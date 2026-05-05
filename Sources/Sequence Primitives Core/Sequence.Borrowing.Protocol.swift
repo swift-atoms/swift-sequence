@@ -40,17 +40,18 @@ extension Sequence.Borrowing {
     /// without copying. The iterator walks the storage by yielding spans
     /// that borrow from it.
     ///
-    /// > Note: The `Iterator` associated type does not include
-    /// > `& ~Copyable & ~Escapable` (unlike `Sequence.Protocol`'s
-    /// > associated type). This may need updating for consistency —
-    /// > flagged for review.
     public protocol `Protocol`<Element>: ~Copyable, ~Escapable {
         /// The type of element in the sequence.
         associatedtype Element: ~Copyable
 
         /// The iterator type that produces spans of elements.
         ///
-        associatedtype Iterator: Sequence.Iterator.`Protocol`
+        /// Suppresses both `Copyable` and `Escapable` to allow iterators
+        /// that manage heap allocations (`~Copyable` for `deinit`) or
+        /// borrow from the sequence (`~Escapable` for lifetime
+        /// dependency). Conformers providing plain
+        /// `Copyable` + `Escapable` iterators satisfy this automatically.
+        associatedtype Iterator: Sequence.Iterator.`Protocol` & ~Copyable & ~Escapable
         where Iterator.Element == Element
 
         /// Returns a borrowing iterator over the elements.
@@ -59,10 +60,13 @@ extension Sequence.Borrowing {
         /// returned iterator borrows from `self` and produces spans of
         /// elements via `nextSpan(maximumCount:)`.
         ///
+        /// - `@_lifetime(borrow self)`: ties the returned iterator's
+        ///   lifetime to the borrow of `self`. Required because the
+        ///   `Iterator` associated type permits `~Escapable` iterators;
+        ///   without the annotation the compiler cannot infer the
+        ///   lifetime relationship.
         /// - Returns: An iterator that produces `Span<Element>` chunks.
-        ///
-        /// > Note: `@_lifetime(borrow self)` removed — invalid on Escapable
-        /// > Iterator. Will be restored when Iterator gains `~Escapable`.
+        @_lifetime(borrow self)
         borrowing func makeIterator() -> Iterator
     }
 }

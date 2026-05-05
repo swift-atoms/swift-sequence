@@ -25,12 +25,15 @@ where
     /// - Parameter body: A closure called with each span batch.
     @inlinable
     public func forEach(_ body: (Swift.Span<Base.Element>) -> Void) {
-        var iterator = base.value.makeIterator()
-        while true {
-            let span = iterator.nextSpan(maximumCount: .max)
-            if span.isEmpty { break }
-            body(span)
+        func loop(_ source: borrowing Base) {
+            var iterator = source.makeIterator()
+            while true {
+                let span = iterator.nextSpan(maximumCount: .max)
+                if span.isEmpty { break }
+                body(span)
+            }
         }
+        loop(base.value)
     }
 
     /// Process each element from spans: `.span.elements { }`
@@ -47,14 +50,17 @@ where
     /// - Parameter body: A closure called with each element.
     @inlinable
     public func elements(_ body: (borrowing Base.Element) -> Void) {
-        var iterator = base.value.makeIterator()
-        while true {
-            let span = iterator.nextSpan(maximumCount: .max)
-            if span.isEmpty { break }
-            for i in span.indices {
-                body(span[i])
+        func loop(_ source: borrowing Base) {
+            var iterator = source.makeIterator()
+            while true {
+                let span = iterator.nextSpan(maximumCount: .max)
+                if span.isEmpty { break }
+                for i in span.indices {
+                    body(span[i])
+                }
             }
         }
+        loop(base.value)
     }
 
     /// Reduce with mutable accumulator: `.span.reduceInto(_:) { }`
@@ -77,13 +83,16 @@ where
         _ initial: Result,
         _ operation: (inout Result, Swift.Span<Base.Element>) -> Void
     ) -> Result {
-        var iterator = base.value.makeIterator()
         var result = initial
-        while true {
-            let span = iterator.nextSpan(maximumCount: .max)
-            if span.isEmpty { break }
-            operation(&result, span)
+        func loop(_ source: borrowing Base) {
+            var iterator = source.makeIterator()
+            while true {
+                let span = iterator.nextSpan(maximumCount: .max)
+                if span.isEmpty { break }
+                operation(&result, span)
+            }
         }
+        loop(base.value)
         return result
     }
 
@@ -107,13 +116,16 @@ where
         _ initial: Result,
         _ operation: (Result, Swift.Span<Base.Element>) -> Result
     ) -> Result {
-        var iterator = base.value.makeIterator()
         var result = initial
-        while true {
-            let span = iterator.nextSpan(maximumCount: .max)
-            if span.isEmpty { break }
-            result = operation(result, span)
+        func loop(_ source: borrowing Base) {
+            var iterator = source.makeIterator()
+            while true {
+                let span = iterator.nextSpan(maximumCount: .max)
+                if span.isEmpty { break }
+                result = operation(result, span)
+            }
         }
+        loop(base.value)
         return result
     }
 }

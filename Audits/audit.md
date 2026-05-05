@@ -1,5 +1,33 @@
 # Audit: swift-sequence-primitives
 
+## Code Surface — 2026-05-05
+
+### Scope
+
+- **Target**: `Sequence.\`Protocol\`` and its sibling protocols in `Sequence Primitives Core`
+- **Skill**: code-surface — opaque-return-type ergonomics for downstream consumers
+- **Files**: 3 source files
+  - `Sources/Sequence Primitives Core/Sequence.Protocol.swift`
+  - `Sources/Sequence Primitives Core/Sequence.Iterator.Protocol.swift`
+  - `Sources/Sequence Primitives Core/Sequence.Borrowing.Protocol.swift`
+- **Trigger**: surfaced 2026-05-05 during the swift-graph-primitives `nodes`-accessor workaround discussion (Vector-based fix landed; opaque ecosystem return shape `some Sequence_Primitives.Sequence.\`Protocol\`<Element>` was the user's preferred shape but is currently inexpressible — see investigation pointer below).
+
+### Findings
+
+| # | Severity | Rule | Location | Finding | Status |
+|---|----------|------|----------|---------|--------|
+| 1 | LOW | (no specific requirement ID — ergonomic enhancement) | `Sequence.Protocol.swift:92` | `Sequence.\`Protocol\`` declares `associatedtype Element: ~Copyable` as a regular (non-primary) associated type. Consumers who want opaque-return-type accessors of the form `some Sequence_Primitives.Sequence.\`Protocol\`<MyElement>` are blocked: the compiler rejects with `error: protocol 'Sequence.\`Protocol\`' does not have primary associated types that can be constrained`. Promoting to `public protocol \`Protocol\`<Element>: ~Copyable, ~Escapable { ... }` is additive — every existing `extension where Element == X` keeps working — and unlocks the constrained-opaque-return shape across every consumer. | DEFERRED — small ecosystem-positive change deferred for a separate authorized cycle. Investigation pointer: `/Users/coen/Developer/HANDOFF-graph-primitives-sigabrt-earlyperf-inliner.md` Findings section "Workaround attempts on the secondary bug" item 4. The current graph-primitives fix sidesteps the need by reusing concrete `Vector<Bound>` (which conforms to both ecosystem `Sequence.\`Protocol\`` and `Swift.Sequence`); promotion remains valuable for future consumers who want the opaque shape without a concrete name. |
+| 2 | LOW | (no specific requirement ID — consistency follow-up to #1) | `Sequence.Iterator.Protocol.swift:109` | Same shape as #1: `Sequence.Iterator.\`Protocol\`` declares `associatedtype Element: ~Copyable` non-primary. Mirror promotion (`public protocol \`Protocol\`<Element>: ~Copyable, ~Escapable { ... }`) keeps the protocol family consistent. Without it, downstream conformers and constrained-opaque-return code on iterators face the same blocker as #1. | DEFERRED — same investigation pointer as #1; resolve as a unit to keep `Sequence.\`Protocol\``-family ergonomics symmetric. |
+| 3 | LOW | (no specific requirement ID — consistency follow-up to #1) | `Sequence.Borrowing.Protocol.swift:47` | Same shape as #1: `Sequence.Borrowing.\`Protocol\`` declares `associatedtype Element` non-primary. Mirror promotion completes the protocol-family pattern. | DEFERRED — same investigation pointer as #1. |
+
+### Summary
+
+3 findings, all LOW severity, all DEFERRED. None are correctness or convention violations against existing code-surface requirement IDs; they are recorded here per [AUDIT-017] (parking destination for deferred investigations) because the improvement was identified and the design is well-formed but landing it is deferred for a separate authorized cycle.
+
+The pattern is uniform: three sibling protocols (`Sequence.\`Protocol\``, `Sequence.Iterator.\`Protocol\``, `Sequence.Borrowing.\`Protocol\``) all declare `Element` as a regular associated type. Promoting `Element` to a primary associated type on each (additive, ABI-compatible — every existing `extension where Element == X` continues to compile) unlocks the constrained-opaque-return-type shape `some Sequence_Primitives.Sequence.\`Protocol\`<MyElement>` ecosystem-wide. The blocker surfaced during a downstream consumer's API design (graph-primitives `nodes` accessor); the immediate workaround there reused concrete `Vector_Primitives.Vector<Bound>` (which conforms to both protocols) so no upstream change was required to unblock that consumer. The promotion remains a small, valuable ergonomic improvement for future consumers who want the opaque-with-element-constraint shape.
+
+When this lands, all three protocols should be promoted in the same change to keep the family consistent. Verification: `swift build -c release` clean across consumers; spot-check that `extension Sequence.\`Protocol\` where Element == X` style declarations and `extension Sequence.\`Protocol\`` (no constraint) declarations both still type-check (additive primary-associated-type promotion does not require existing `where Element == X` syntax to change).
+
 ## Legacy — Consolidated 2026-04-08
 
 ### From: audit-zero-allocation-nextspan.md (2026-02-26)

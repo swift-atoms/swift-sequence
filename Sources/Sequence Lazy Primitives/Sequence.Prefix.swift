@@ -1,16 +1,16 @@
 extension Sequence {
     /// Tag type for `.prefix` property extensions.
     ///
-    /// Use this tag with `Property.View` to add `.prefix` functionality
+    /// Use this tag with `Property.Inout` to add `.prefix` functionality
     /// to types conforming to `Sequence.Protocol`.
     ///
     /// ## Adding prefix to Your Type
     ///
     /// ```swift
     /// extension MyContainer where Element: Copyable {
-    ///     var prefix: Property<Sequence.Prefix, Self>.View {
+    ///     var prefix: Property<Sequence.Prefix, Self>.Inout {
     ///         mutating _read {
-    ///             yield unsafe Property<Sequence.Prefix, Self>.View(&self)
+    ///             yield Property<Sequence.Prefix, Self>.Inout(&self)
     ///         }
     ///     }
     /// }

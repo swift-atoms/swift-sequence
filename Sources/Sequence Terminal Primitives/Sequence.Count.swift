@@ -1,16 +1,16 @@
 extension Sequence {
     /// Tag type for `.count` property extensions.
     ///
-    /// Use this tag with `Property.View` to add `.count` functionality
+    /// Use this tag with `Property.Inout` to add `.count` functionality
     /// to types conforming to `Sequence.Protocol`.
     ///
     /// ## Adding count to Your Type
     ///
     /// ```swift
     /// extension MyContainer {
-    ///     var count: Property<Sequence.Count, MyContainer>.View {
+    ///     var count: Property<Sequence.Count, MyContainer>.Inout {
     ///         mutating _read {
-    ///             yield unsafe Property<Sequence.Count, MyContainer>.View(&self)
+    ///             yield Property<Sequence.Count, MyContainer>.Inout(&self)
     ///         }
     ///     }
     /// }

@@ -1,16 +1,16 @@
 extension Sequence {
     /// Tag type for `.drop` property extensions.
     ///
-    /// Use this tag with `Property.View` to add `.drop` functionality
+    /// Use this tag with `Property.Inout` to add `.drop` functionality
     /// to types conforming to `Sequence.Protocol`.
     ///
     /// ## Adding drop to Your Type
     ///
     /// ```swift
     /// extension MyContainer where Element: Copyable {
-    ///     var drop: Property<Sequence.Drop, Self>.View {
+    ///     var drop: Property<Sequence.Drop, Self>.Inout {
     ///         mutating _read {
-    ///             yield unsafe Property<Sequence.Drop, Self>.View(&self)
+    ///             yield Property<Sequence.Drop, Self>.Inout(&self)
     ///         }
     ///     }
     /// }

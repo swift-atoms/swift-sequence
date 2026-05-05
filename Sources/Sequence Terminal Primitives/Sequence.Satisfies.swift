@@ -1,16 +1,16 @@
 extension Sequence {
     /// Tag type for `.satisfies` property extensions.
     ///
-    /// Use this tag with `Property.View` to add `.satisfies` functionality
+    /// Use this tag with `Property.Inout` to add `.satisfies` functionality
     /// to types conforming to `Sequence.Protocol`.
     ///
     /// ## Adding satisfies to Your Type
     ///
     /// ```swift
     /// extension MyContainer {
-    ///     var satisfies: Property<Sequence.Satisfies, MyContainer>.View {
+    ///     var satisfies: Property<Sequence.Satisfies, MyContainer>.Inout {
     ///         mutating _read {
-    ///             yield unsafe Property<Sequence.Satisfies, MyContainer>.View(&self)
+    ///             yield Property<Sequence.Satisfies, MyContainer>.Inout(&self)
     ///         }
     ///     }
     /// }

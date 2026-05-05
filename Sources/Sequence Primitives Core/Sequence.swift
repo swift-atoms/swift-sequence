@@ -31,7 +31,7 @@
 /// | `forEach { borrowing element in }` | Borrowing iteration |
 /// | `drain { consuming element in }` | Consuming iteration (container survives) |
 ///
-/// ## Tags (Property.View Operations)
+/// ## Tags (Property.Inout Operations)
 ///
 /// | Tag | Operations |
 /// |-----|------------|
@@ -67,15 +67,15 @@
 ///
 /// ```swift
 /// extension MyContainer {
-///     var forEach: Property<Sequence.ForEach, MyContainer>.View {
+///     var forEach: Property<Sequence.ForEach, MyContainer>.Inout {
 ///         mutating _read {
-///             yield unsafe Property<Sequence.ForEach, MyContainer>.View(&self)
+///             yield Property<Sequence.ForEach, MyContainer>.Inout(&self)
 ///         }
 ///     }
 ///
-///     var map: Property<Sequence.Map, MyContainer>.View {
+///     var map: Property<Sequence.Map, MyContainer>.Inout {
 ///         mutating _read {
-///             yield unsafe Property<Sequence.Map, MyContainer>.View(&self)
+///             yield Property<Sequence.Map, MyContainer>.Inout(&self)
 ///         }
 ///     }
 ///     // ... other operations as needed

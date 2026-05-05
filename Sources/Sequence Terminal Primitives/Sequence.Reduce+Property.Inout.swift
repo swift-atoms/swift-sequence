@@ -1,7 +1,7 @@
 public import Property_Primitives
 
-/// Property.View extensions for reduction operations on `Sequence.Protocol` conformers.
-extension Property.View
+/// Property.Inout extensions for reduction operations on `Sequence.Protocol` conformers.
+extension Property.Inout
 where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Reduce {
 
     /// Reduce with mutable accumulator: `.reduce.into(_:) { }`
@@ -24,7 +24,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Reduce 
         _ operation: (inout Result, borrowing Base.Element) -> Void
     ) -> Result {
         var result = initial
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         while let element = iterator.next() {
             operation(&result, element)
         }
@@ -50,7 +50,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Reduce 
         _ operation: (Result, borrowing Base.Element) -> Result
     ) -> Result {
         var result = initial
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         while let element = iterator.next() {
             result = operation(result, element)
         }

@@ -1,7 +1,7 @@
 public import Property_Primitives
 
-/// Property.View extensions for borrowing iteration on `Sequence.Protocol` conformers.
-extension Property.View
+/// Property.Inout extensions for borrowing iteration on `Sequence.Protocol` conformers.
+extension Property.Inout
 where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.ForEach {
 
     /// Borrowing iteration: `.forEach { }`
@@ -33,15 +33,15 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.ForEach
     /// - Parameter body: A closure called with each element.
     @inlinable
     public func borrowing(_ body: (borrowing Base.Element) -> Void) {
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         while let element = iterator.next() {
             body(element)
         }
     }
 }
 
-/// Property.View extensions for consuming iteration on `Sequence.Clearable` conformers.
-extension Property.View
+/// Property.Inout extensions for consuming iteration on `Sequence.Clearable` conformers.
+extension Property.Inout
 where Base: Sequence.Clearable, Base.Element: Copyable, Tag == Sequence.ForEach {
 
     /// Consuming iteration: `.forEach.consuming { }`
@@ -57,10 +57,10 @@ where Base: Sequence.Clearable, Base.Element: Copyable, Tag == Sequence.ForEach 
     /// - Parameter body: A closure called with each element.
     @inlinable
     public mutating func consuming(_ body: (consuming Base.Element) -> Void) {
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         while let element = iterator.next() {
             body(element)
         }
-        unsafe base.value.removeAll()
+        base.value.removeAll()
     }
 }

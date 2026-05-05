@@ -1,7 +1,7 @@
 public import Property_Primitives
 
-/// Property.View extensions for draining iteration on `Sequence.Drain.Protocol` conformers.
-extension Property.View
+/// Property.Inout extensions for draining iteration on `Sequence.Drain.Protocol` conformers.
+extension Property.Inout
 where Base: Sequence.Drain.`Protocol` & ~Copyable, Tag == Sequence.Drain {
 
     /// Draining iteration: `.drain { }`
@@ -20,6 +20,6 @@ where Base: Sequence.Drain.`Protocol` & ~Copyable, Tag == Sequence.Drain {
     /// - Complexity: O(n) where n is the number of elements.
     @inlinable
     public mutating func callAsFunction(_ body: (consuming Base.Element) -> Void) {
-        unsafe base.value.drain(body)
+        base.value.drain(body)
     }
 }

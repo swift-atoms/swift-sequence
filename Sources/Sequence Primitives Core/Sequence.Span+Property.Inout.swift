@@ -1,12 +1,12 @@
 public import Index_Primitives
 public import Property_Primitives
 
-/// Property.View extensions for span-based borrowing iteration.
+/// Property.Inout extensions for span-based borrowing iteration.
 ///
-/// > Note: Property.View requires `Base: Escapable` due to a fundamental
+/// > Note: Property.Inout requires `Base: Escapable` due to a fundamental
 /// > language constraint (`Builtin.load` requires `Escapable`). Types that
 /// > are truly `~Escapable` must use `Sequence.Borrowing.Protocol` directly.
-extension Property.View
+extension Property.Inout
 where
     Base: Sequence.Borrowing.`Protocol` & ~Copyable,
     Tag == Sequence.Span
@@ -25,7 +25,7 @@ where
     /// - Parameter body: A closure called with each span batch.
     @inlinable
     public func forEach(_ body: (Swift.Span<Base.Element>) -> Void) {
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         while true {
             let span = iterator.nextSpan(maximumCount: .max)
             if span.isEmpty { break }
@@ -47,7 +47,7 @@ where
     /// - Parameter body: A closure called with each element.
     @inlinable
     public func elements(_ body: (borrowing Base.Element) -> Void) {
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         while true {
             let span = iterator.nextSpan(maximumCount: .max)
             if span.isEmpty { break }
@@ -77,7 +77,7 @@ where
         _ initial: Result,
         _ operation: (inout Result, Swift.Span<Base.Element>) -> Void
     ) -> Result {
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         var result = initial
         while true {
             let span = iterator.nextSpan(maximumCount: .max)
@@ -107,7 +107,7 @@ where
         _ initial: Result,
         _ operation: (Result, Swift.Span<Base.Element>) -> Result
     ) -> Result {
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         var result = initial
         while true {
             let span = iterator.nextSpan(maximumCount: .max)

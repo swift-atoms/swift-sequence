@@ -1,16 +1,16 @@
 extension Sequence {
     /// Tag type for `.reduce` property extensions.
     ///
-    /// Use this tag with `Property.View` to add `.reduce` functionality
+    /// Use this tag with `Property.Inout` to add `.reduce` functionality
     /// to types conforming to `Sequence.Protocol`.
     ///
     /// ## Adding reduce to Your Type
     ///
     /// ```swift
     /// extension MyContainer {
-    ///     var reduce: Property<Sequence.Reduce, MyContainer>.View {
+    ///     var reduce: Property<Sequence.Reduce, MyContainer>.Inout {
     ///         mutating _read {
-    ///             yield unsafe Property<Sequence.Reduce, MyContainer>.View(&self)
+    ///             yield Property<Sequence.Reduce, MyContainer>.Inout(&self)
     ///         }
     ///     }
     /// }

@@ -1,13 +1,13 @@
 extension Sequence {
     /// Tag type for `.drain` property extensions and namespace for drain-related types.
     ///
-    /// Use this tag with `Property.View` to add `.drain { }` functionality
+    /// Use this tag with `Property.Inout` to add `.drain { }` functionality
     /// to types conforming to `Sequence.Drain.Protocol`.
     ///
     /// ## Adding drain to Your Type
     ///
     /// 1. Conform to `Sequence.Drain.Protocol`
-    /// 2. Add a `drain` property returning `Property<Sequence.Drain, Self>.View`
+    /// 2. Add a `drain` property returning `Property<Sequence.Drain, Self>.Inout`
     ///
     /// ```swift
     /// extension MyContainer: Sequence.Drain.Protocol {
@@ -20,13 +20,13 @@ extension Sequence {
     /// }
     ///
     /// extension MyContainer {
-    ///     var drain: Property<Sequence.Drain, Self>.View {
+    ///     var drain: Property<Sequence.Drain, Self>.Inout {
     ///         mutating _read {
-    ///             yield unsafe Property<Sequence.Drain, Self>.View(&self)
+    ///             yield Property<Sequence.Drain, Self>.Inout(&self)
     ///         }
     ///         mutating _modify {
-    ///             var view = unsafe Property<Sequence.Drain, Self>.View(&self)
-    ///             yield &view
+    ///             var accessor = Property<Sequence.Drain, Self>.Inout(&self)
+    ///             yield &accessor
     ///         }
     ///     }
     /// }

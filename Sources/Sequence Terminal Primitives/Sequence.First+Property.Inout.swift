@@ -1,7 +1,7 @@
 public import Property_Primitives
 
-/// Property.View extensions for finding first matching element on `Sequence.Protocol` conformers.
-extension Property.View
+/// Property.Inout extensions for finding first matching element on `Sequence.Protocol` conformers.
+extension Property.Inout
 where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.First {
 
     /// Find first element matching predicate: `.first { }`
@@ -18,7 +18,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.First {
     /// - Returns: The first matching element, or `nil`.
     @inlinable
     public func callAsFunction(_ predicate: (borrowing Base.Element) -> Bool) -> Base.Element? {
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         while let element = iterator.next() {
             if predicate(element) { return element }
         }

@@ -1,12 +1,12 @@
 extension Sequence.`Protocol` where Self: ~Copyable {
     @inlinable
-    public var contains: Property<Sequence.Contains, Self>.View {
+    public var contains: Property<Sequence.Contains, Self>.Inout {
         mutating _read {
-            yield unsafe Property<Sequence.Contains, Self>.View(&self)
+            yield Property<Sequence.Contains, Self>.Inout(&self)
         }
         mutating _modify {
-            var view = unsafe Property<Sequence.Contains, Self>.View(&self)
-            yield &view
+            var accessor = Property<Sequence.Contains, Self>.Inout(&self)
+            yield &accessor
         }
     }
 }

@@ -1,13 +1,13 @@
 extension Sequence {
     /// Tag type for `.span` property extensions.
     ///
-    /// Use this tag with `Property.View` to add span-based iteration
+    /// Use this tag with `Property.Inout` to add span-based iteration
     /// to types conforming to `Sequence.Borrowing.Protocol`.
     ///
     /// ## Adding span to Your Type
     ///
     /// 1. Conform to `Sequence.Borrowing.Protocol`
-    /// 2. Add a `span` property returning `Property<Sequence.Span, Self>.View`
+    /// 2. Add a `span` property returning `Property<Sequence.Span, Self>.Inout`
     ///
     /// ```swift
     /// extension MyContainer: Sequence.Borrowing.`Protocol` {
@@ -18,9 +18,9 @@ extension Sequence {
     /// }
     ///
     /// extension MyContainer {
-    ///     var span: Property<Sequence.Span, MyContainer>.View {
+    ///     var span: Property<Sequence.Span, MyContainer>.Inout {
     ///         mutating _read {
-    ///             yield unsafe Property<Sequence.Span, MyContainer>.View(&self)
+    ///             yield Property<Sequence.Span, MyContainer>.Inout(&self)
     ///         }
     ///     }
     /// }

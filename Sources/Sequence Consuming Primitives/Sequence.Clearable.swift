@@ -20,7 +20,7 @@ extension Sequence {
     /// ## Consuming Iteration
     ///
     /// Types conforming to `Sequence.Clearable` get `.forEach.consuming { }`
-    /// automatically via the `Property.View` extension:
+    /// automatically via the `Property.Inout` extension:
     ///
     /// ```swift
     /// var container = MyContainer([1, 2, 3])

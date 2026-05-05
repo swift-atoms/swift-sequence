@@ -1,8 +1,8 @@
 public import Index_Primitives
 public import Property_Primitives
 
-/// Property.View extensions for counting operations on `Sequence.Protocol` conformers.
-extension Property.View
+/// Property.Inout extensions for counting operations on `Sequence.Protocol` conformers.
+extension Property.Inout
 where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Count {
 
     /// Count elements matching predicate: `.count.where { }`
@@ -19,7 +19,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Count {
     @inlinable
     public func `where`(_ predicate: (borrowing Base.Element) -> Bool) -> Cardinal {
         var count = Cardinal.zero
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         while let element = iterator.next() {
             if predicate(element) { count += .one }
         }
@@ -37,7 +37,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Count {
     @inlinable
     public var all: Cardinal {
         var count = Cardinal.zero
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         while iterator.next() != nil { count += .one }
         return count
     }

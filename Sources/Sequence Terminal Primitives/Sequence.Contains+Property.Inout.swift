@@ -1,7 +1,7 @@
 public import Property_Primitives
 
-/// Property.View extensions for containment checks on `Sequence.Protocol` conformers.
-extension Property.View
+/// Property.Inout extensions for containment checks on `Sequence.Protocol` conformers.
+extension Property.Inout
 where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Contains {
 
     /// Check if sequence contains element matching predicate: `.contains { }`
@@ -18,7 +18,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Contain
     /// - Returns: `true` if any element satisfies the predicate.
     @inlinable
     public func callAsFunction(_ predicate: (borrowing Base.Element) -> Bool) -> Bool {
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         while let element = iterator.next() {
             if predicate(element) { return true }
         }

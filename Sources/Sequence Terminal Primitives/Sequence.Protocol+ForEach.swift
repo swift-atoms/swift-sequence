@@ -1,12 +1,12 @@
 extension Sequence.`Protocol` where Self: ~Copyable {
     @inlinable
-    public var forEach: Property<Sequence.ForEach, Self>.View {
+    public var forEach: Property<Sequence.ForEach, Self>.Inout {
         mutating _read {
-            yield unsafe Property<Sequence.ForEach, Self>.View(&self)
+            yield Property<Sequence.ForEach, Self>.Inout(&self)
         }
         mutating _modify {
-            var view = unsafe Property<Sequence.ForEach, Self>.View(&self)
-            yield &view
+            var accessor = Property<Sequence.ForEach, Self>.Inout(&self)
+            yield &accessor
         }
     }
 }
@@ -28,7 +28,7 @@ extension Sequence.`Protocol` where Self: ~Copyable {
 /// forces closure inlining during mandatory SIL passes — before
 /// CopyPropagation runs — eliminating the `partial_apply` entirely.
 ///
-/// The Property.View `forEach` property remains accessible for qualified
+/// The Property.Inout `forEach` property remains accessible for qualified
 /// variants: `instance.forEach.borrowing { }`, `instance.forEach.consuming { }`.
 extension Sequence.`Protocol` where Self: Swift.Sequence {
     @inline(always)

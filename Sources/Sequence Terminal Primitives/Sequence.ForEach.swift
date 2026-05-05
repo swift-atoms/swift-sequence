@@ -1,7 +1,7 @@
 extension Sequence {
     /// Tag type for `.forEach` property extensions.
     ///
-    /// Use this tag with `Property.View` to add `.forEach` functionality
+    /// Use this tag with `Property.Inout` to add `.forEach` functionality
     /// to types conforming to `Sequence.Protocol`.
     ///
     /// ## Adding forEach to Your Type
@@ -22,7 +22,7 @@ extension Sequence {
     /// ## Available Operations
     ///
     /// Once you add the `forEach` property, these operations are available
-    /// via `Property.View` extensions:
+    /// via `Property.Inout` extensions:
     ///
     /// | Operation | Description |
     /// |-----------|-------------|

@@ -70,7 +70,7 @@ extension Sequence {
     /// `~Copyable` types that need non-destructive iteration should conform
     /// to ``Sequence/Borrowing-swift.enum/Protocol-swift.protocol``.
     ///
-    /// ## Property.View Operations
+    /// ## Property.Inout Operations
     ///
     /// `.forEach { }`, `.contains { }`, `.count.all`, `.first { }`,
     /// `.satisfies.all { }`, `.reduce.into(_:) { }` — these work through

@@ -1,7 +1,7 @@
 public import Property_Primitives
 
-/// Property.View extensions for predicate satisfaction checks on `Sequence.Protocol` conformers.
-extension Property.View
+/// Property.Inout extensions for predicate satisfaction checks on `Sequence.Protocol` conformers.
+extension Property.Inout
 where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Satisfies {
 
     /// Check if all elements satisfy predicate: `.satisfies.all { }`
@@ -18,7 +18,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Satisfi
     /// - Returns: `true` if all elements satisfy the predicate.
     @inlinable
     public func all(_ predicate: (borrowing Base.Element) -> Bool) -> Bool {
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         while let element = iterator.next() {
             if !predicate(element) { return false }
         }
@@ -38,7 +38,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Satisfi
     /// - Returns: `true` if any element satisfies the predicate.
     @inlinable
     public func any(_ predicate: (borrowing Base.Element) -> Bool) -> Bool {
-        var iterator = unsafe base.value.makeIterator()
+        var iterator = base.value.makeIterator()
         while let element = iterator.next() {
             if predicate(element) { return true }
         }

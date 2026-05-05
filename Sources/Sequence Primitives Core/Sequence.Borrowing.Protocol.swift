@@ -44,7 +44,7 @@ extension Sequence.Borrowing {
     /// > `& ~Copyable & ~Escapable` (unlike `Sequence.Protocol`'s
     /// > associated type). This may need updating for consistency —
     /// > flagged for review.
-    public protocol `Protocol`: ~Copyable, ~Escapable {
+    public protocol `Protocol`<Element>: ~Copyable, ~Escapable {
         /// The type of element in the sequence.
         associatedtype Element: ~Copyable
 

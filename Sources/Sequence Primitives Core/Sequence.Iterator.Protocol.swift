@@ -106,7 +106,7 @@ extension Sequence.Iterator {
     /// | Element `~Copyable` | No | Yes |
     /// | Span-based | No | Yes (sole requirement) |
     /// | `for-in` syntax | Yes | No |
-    public protocol `Protocol`: ~Copyable, ~Escapable {
+    public protocol `Protocol`<Element>: ~Copyable, ~Escapable {
         /// The type of element produced by the iterator.
         associatedtype Element: ~Copyable
 

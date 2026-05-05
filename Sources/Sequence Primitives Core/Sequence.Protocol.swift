@@ -89,7 +89,7 @@ extension Sequence {
     /// | Iterator requirement | `IteratorProtocol` | `Sequence.Iterator.Protocol` |
     /// | `makeIterator()` | Non-consuming | `consuming` |
     /// | Pipeline | Eager | Lazy (`.collect()` materializes) |
-    public protocol `Protocol`: ~Copyable, ~Escapable {
+    public protocol `Protocol`<Element>: ~Copyable, ~Escapable {
         /// The type of element produced by the sequence.
         associatedtype Element: ~Copyable
 

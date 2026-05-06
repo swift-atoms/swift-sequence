@@ -20,7 +20,7 @@ extension SequenceDropFirstTests.Unit {
     @Test
     func `drop first 1 element`() {
         let source = Sequence.Fixture.Source([10, 20, 30])
-        let result = source.drop(first: Cardinal(1)).collect()
+        let result = source.drop(first: .one).collect()
         #expect(result == [20, 30])
     }
 }

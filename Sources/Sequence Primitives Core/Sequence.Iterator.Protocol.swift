@@ -139,7 +139,7 @@ extension Sequence.Iterator.`Protocol` where Self: ~Copyable & ~Escapable, Eleme
     @inlinable
     @_lifetime(self: immortal)
     public mutating func next() -> Element? {
-        let span = nextSpan(maximumCount: Cardinal(1))
+        let span = nextSpan(maximumCount: .one)
         return span.isEmpty ? nil : span[0]
     }
 }

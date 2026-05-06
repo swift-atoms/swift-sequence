@@ -20,7 +20,7 @@ extension SequencePrefixFirstTests.Unit {
     @Test
     func `prefix first 1 element`() {
         let source = Sequence.Fixture.Source([10, 20, 30])
-        let result = source.prefix(first: Cardinal(1)).collect()
+        let result = source.prefix(first: .one).collect()
         #expect(result == [10])
     }
 }

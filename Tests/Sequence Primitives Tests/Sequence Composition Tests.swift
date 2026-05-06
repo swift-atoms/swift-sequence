@@ -116,7 +116,7 @@ extension SequenceCompositionTests.Integration {
             source
             .map { $0 * 2 }
             .filter { $0 > 0 }
-            .drop(first: Cardinal(1))
+            .drop(first: .one)
             .prefix(first: Cardinal(5))
             .collect()
         #expect(result.isEmpty)

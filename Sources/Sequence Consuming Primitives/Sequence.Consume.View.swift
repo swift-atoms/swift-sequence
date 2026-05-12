@@ -33,6 +33,9 @@ extension Sequence.Consume {
     /// // If forEach completes, all elements processed
     /// // If early exit, State's deinit cleans up remaining
     /// ```
+    // WHY: Category D — structural Sendable workaround; the type is
+    // WHY: structurally value-safe but the compiler cannot synthesize
+    // WHY: Sendable due to a stored pointer / generic parameter shape.
     @safe
     public struct View<Element: ~Copyable, State: ~Copyable>: ~Copyable {
         @usableFromInline

@@ -44,9 +44,11 @@ extension Sequence.Difference {
             case .first:
                 changes.append(.first(old[oldPosition]))
                 oldPosition = oldPosition.successor.saturating()
+
             case .second:
                 changes.append(.second(new[newPosition]))
                 newPosition = newPosition.successor.saturating()
+
             case .both:
                 changes.append(.both(old[oldPosition]))
                 oldPosition = oldPosition.successor.saturating()

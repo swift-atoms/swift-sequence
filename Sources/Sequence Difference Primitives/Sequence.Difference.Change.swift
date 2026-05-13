@@ -56,7 +56,9 @@ extension Sequence.Difference.Change {
     public func advanceLines(old: inout Ordinal, new: inout Ordinal) {
         switch self {
         case .first: old += .one
+
         case .second: new += .one
+
         case .both:
             old += .one
             new += .one

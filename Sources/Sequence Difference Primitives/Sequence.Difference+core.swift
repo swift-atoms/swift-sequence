@@ -32,6 +32,10 @@ extension Sequence.Difference {
         newCount: Cardinal,
         equals: (Ordinal, Ordinal) -> Bool
     ) -> Steps {
+        // reason: full four-part WORKAROUND/WHY/WHEN TO REMOVE/TRACKING template is present
+        // immediately below; the rule's single-line regex cannot verify adjacency, so disabling
+        // on the marker line is the institute-precedent class-(a) form per [DOC-045] / [PATTERN-016].
+        // swiftlint:disable:next workaround_marker_present
         // WORKAROUND: Myers algorithm operates in Int — array indices are not domain quantities
         // WHY: Algorithm internals (v[k + offset], trace[d]) use 2D array indexing that doesn't
         //      benefit from Ordinal/Cardinal typing

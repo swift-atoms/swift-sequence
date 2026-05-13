@@ -38,6 +38,7 @@ extension Sequence.Map where Base: ~Copyable & ~Escapable {
     /// directly. `@_lifetime(self: immortal)` because it returns an
     /// owned `Copyable` value, not a borrowed span.
     public struct Iterator: ~Copyable, ~Escapable, Sequence.Iterator.`Protocol` {
+        /// The element type produced by this iterator.
         public typealias Element = Output
 
         @usableFromInline
@@ -56,6 +57,7 @@ extension Sequence.Map where Base: ~Copyable & ~Escapable {
             self._transform = _transform
         }
 
+        /// Returns the next batch of transformed elements as a borrowed span.
         @_lifetime(&self)
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Span<Output> {
@@ -77,6 +79,7 @@ extension Sequence.Map where Base: ~Copyable & ~Escapable {
             return unsafe _overrideLifetime(span, mutating: &self)
         }
 
+        /// Returns the next transformed element, or `nil` when iteration completes.
         @_lifetime(self: immortal)
         @inlinable
         public mutating func next() -> Output? {

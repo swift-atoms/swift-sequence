@@ -24,6 +24,7 @@ extension Sequence.Difference.Steps {
             self._count = Cardinal(UInt(storage.count))
         }
 
+        /// Returns the next batch of edit steps as a borrowed span over the backing storage.
         @_lifetime(&self)
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Span<Sequence.Difference.Step> {
@@ -39,6 +40,7 @@ extension Sequence.Difference.Steps {
             return result
         }
 
+        /// Returns the next edit step, or `nil` when iteration completes.
         @inlinable
         public mutating func next() -> Sequence.Difference.Step? {
             guard _index < _count else { return nil }

@@ -26,6 +26,7 @@ extension Sequence.Difference {
 // MARK: - Sequence.Protocol
 
 extension Sequence.Difference.Steps: Sequence.`Protocol` {
+    /// Creates a fresh iterator that yields the stored edit steps in order.
     @inlinable
     public consuming func makeIterator() -> Iterator {
         Iterator(_storage)

@@ -4,7 +4,7 @@ public import Property_Primitives
 extension Property.Inout
 where Base: Sequence.Drain.`Protocol` & ~Copyable, Tag == Sequence.Drain {
 
-    /// Draining iteration: `.drain { }`
+    /// Draining iteration via `.drain { }`.
     ///
     /// Removes all elements from the container, passing each to the closure.
     /// The container survives but is empty after this call.

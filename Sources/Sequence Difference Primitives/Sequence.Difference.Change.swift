@@ -94,6 +94,7 @@ extension Sequence.Difference.Change: Hashable where Element: Hashable {}
 // MARK: - CustomStringConvertible
 
 extension Sequence.Difference.Change: CustomStringConvertible {
+    /// A textual representation of this change, naming the case and embedding the element.
     public var description: String {
         switch self {
         case .first(let e): ".first(\(e))"

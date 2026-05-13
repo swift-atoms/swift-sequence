@@ -44,8 +44,10 @@ extension Sequence.CompactMap: Copyable where Base: Copyable & ~Escapable {}
 extension Sequence.CompactMap: Escapable where Base: Escapable & ~Copyable {}
 
 extension Sequence.CompactMap: Sequence.`Protocol` where Base: ~Copyable & ~Escapable {
+    /// The element type produced by this lazy sequence (non-`nil` results of the transform).
     public typealias Element = Output
 
+    /// Creates a fresh iterator that yields only non-`nil` transformed elements.
     @_lifetime(copy self)
     @inlinable
     public consuming func makeIterator() -> Iterator {

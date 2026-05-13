@@ -4,7 +4,7 @@ public import Property_Primitives
 extension Property.Inout
 where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Contains {
 
-    /// Check if sequence contains element matching predicate: `.contains { }`
+    /// Check if sequence contains element matching predicate via `.contains { }`.
     ///
     /// Returns `true` if at least one element satisfies the predicate.
     ///

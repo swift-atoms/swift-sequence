@@ -16,11 +16,13 @@ extension Sequence.Fixture {
         @usableFromInline
         let _elements: [Element]
 
+        /// Creates a fixture source from a copy of the provided elements.
         @inlinable
         public init(_ elements: [Element]) {
             self._elements = elements
         }
 
+        /// Creates a fresh iterator over the fixture elements.
         @inlinable
         public consuming func makeIterator() -> Iterator {
             Iterator(_elements)
@@ -43,6 +45,7 @@ extension Sequence.Fixture.Source {
             self._index = 0
         }
 
+        /// Returns the next batch of fixture elements as a borrowed span over the backing storage.
         @_lifetime(&self)
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Swift.Span<Element> {
@@ -56,6 +59,7 @@ extension Sequence.Fixture.Source {
                 .extracting(first: take)
         }
 
+        /// Returns the next fixture element, or `nil` when iteration completes.
         @inlinable
         public mutating func next() -> Element? {
             guard _index < _elements.count else { return nil }
@@ -74,16 +78,19 @@ extension Sequence.Fixture {
         @usableFromInline
         var _elements: [Element]
 
+        /// Creates a clearable fixture source from a copy of the provided elements.
         @inlinable
         public init(_ elements: [Element]) {
             self._elements = elements
         }
 
+        /// Creates a fresh iterator over the fixture elements (delegates to `Source.Iterator`).
         @inlinable
         public consuming func makeIterator() -> Source<Element>.Iterator {
             .init(_elements)
         }
 
+        /// Empties the fixture's backing storage in place.
         @inlinable
         public mutating func removeAll() {
             _elements.removeAll()
@@ -99,11 +106,13 @@ extension Sequence.Fixture {
         @usableFromInline
         var _elements: [Element]
 
+        /// Creates a drainable fixture source from a copy of the provided elements.
         @inlinable
         public init(_ elements: [Element]) {
             self._elements = elements
         }
 
+        /// Drains every fixture element through the closure (ownership transferred per element).
         @inlinable
         public mutating func drain(_ body: (consuming Element) -> Void) {
             while !_elements.isEmpty {

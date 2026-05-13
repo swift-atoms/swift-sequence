@@ -20,6 +20,7 @@ extension Sequence.Prefix.While where Base: ~Copyable & ~Escapable {
     /// The `where Base: ~Copyable & ~Escapable` on this extension is
     /// required — same as `Map.Iterator`.
     public struct Iterator: ~Copyable, ~Escapable, Sequence.Iterator.`Protocol` {
+        /// The element type produced by this iterator (base elements while the predicate holds).
         public typealias Element = Base.Element
 
         @usableFromInline
@@ -39,6 +40,7 @@ extension Sequence.Prefix.While where Base: ~Copyable & ~Escapable {
             self._done = false
         }
 
+        /// Returns the next batch of prefix elements, stopping at the first element where the predicate fails.
         @_lifetime(&self)
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Span<Base.Element> {
@@ -59,6 +61,7 @@ extension Sequence.Prefix.While where Base: ~Copyable & ~Escapable {
             return span
         }
 
+        /// Returns the next prefix element, or `nil` once the predicate first fails.
         @_lifetime(self: immortal)
         @inlinable
         public mutating func next() -> Base.Element? {

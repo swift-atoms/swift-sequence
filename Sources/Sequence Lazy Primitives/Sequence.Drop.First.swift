@@ -44,8 +44,10 @@ extension Sequence.Drop.First: Copyable where Base: Copyable & ~Escapable {}
 extension Sequence.Drop.First: Escapable where Base: Escapable & ~Copyable {}
 
 extension Sequence.Drop.First: Sequence.`Protocol` where Base: ~Copyable & ~Escapable {
+    /// The element type produced by this lazy sequence (the same element type as the base).
     public typealias Element = Base.Element
 
+    /// Creates a fresh iterator that skips the first stored count of base elements.
     @_lifetime(copy self)
     @inlinable
     public consuming func makeIterator() -> Iterator {

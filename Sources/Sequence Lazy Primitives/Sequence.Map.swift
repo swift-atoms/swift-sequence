@@ -66,8 +66,10 @@ extension Sequence.Map: Copyable where Base: Copyable & ~Escapable {}
 extension Sequence.Map: Escapable where Base: Escapable & ~Copyable {}
 
 extension Sequence.Map: Sequence.`Protocol` where Base: ~Copyable & ~Escapable {
+    /// The element type produced by this lazy sequence.
     public typealias Element = Output
 
+    /// Creates a fresh iterator that transforms each base element by the stored closure.
     @_lifetime(copy self)
     @inlinable
     public consuming func makeIterator() -> Iterator {

@@ -24,6 +24,7 @@ extension Sequence.Difference.Changes {
             self._count = Cardinal(UInt(storage.count))
         }
 
+        /// Returns the next batch of element-carrying changes as a borrowed span over the backing storage.
         @_lifetime(&self)
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Span<Sequence.Difference.Change<Value>> {
@@ -39,6 +40,7 @@ extension Sequence.Difference.Changes {
             return result
         }
 
+        /// Returns the next element-carrying change, or `nil` when iteration completes.
         @inlinable
         public mutating func next() -> Sequence.Difference.Change<Value>? {
             guard _index < _count else { return nil }

@@ -4,7 +4,7 @@ public import Property_Primitives
 extension Property.Inout
 where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Satisfies {
 
-    /// Check if all elements satisfy predicate: `.satisfies.all { }`
+    /// Check if all elements satisfy predicate via `.satisfies.all { }`.
     ///
     /// Returns `true` if every element in the sequence satisfies the predicate,
     /// or if the sequence is empty.
@@ -25,7 +25,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Satisfi
         return true
     }
 
-    /// Check if any element satisfies predicate: `.satisfies.any { }`
+    /// Check if any element satisfies predicate via `.satisfies.any { }`.
     ///
     /// Returns `true` if at least one element satisfies the predicate.
     ///
@@ -45,7 +45,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Satisfi
         return false
     }
 
-    /// Check if no elements satisfy predicate: `.satisfies.none { }`
+    /// Check if no elements satisfy predicate via `.satisfies.none { }`.
     ///
     /// Returns `true` if no element satisfies the predicate,
     /// or if the sequence is empty.

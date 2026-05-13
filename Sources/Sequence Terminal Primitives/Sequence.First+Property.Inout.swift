@@ -4,7 +4,7 @@ public import Property_Primitives
 extension Property.Inout
 where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.First {
 
-    /// Find first element matching predicate: `.first { }`
+    /// Find first element matching predicate via `.first { }`.
     ///
     /// Returns the first element that satisfies the predicate, or `nil` if none found.
     ///

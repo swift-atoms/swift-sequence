@@ -11,7 +11,7 @@ where
     Base: Sequence.Borrowing.`Protocol` & ~Copyable,
     Tag == Sequence.Span
 {
-    /// Process each span batch: `.span.forEach { }`
+    /// Process each span batch via `.span.forEach { }`.
     ///
     /// Iterates over spans, calling the body with each batch.
     ///
@@ -36,7 +36,7 @@ where
         loop(base.value)
     }
 
-    /// Process each element from spans: `.span.elements { }`
+    /// Process each element from spans via `.span.elements { }`.
     ///
     /// Iterates over all elements by processing spans.
     ///
@@ -63,7 +63,7 @@ where
         loop(base.value)
     }
 
-    /// Reduce with mutable accumulator: `.span.reduceInto(_:) { }`
+    /// Reduce with mutable accumulator via `.span.reduceInto(_:) { }`.
     ///
     /// Combines spans using a mutable accumulator.
     ///
@@ -96,7 +96,7 @@ where
         return result
     }
 
-    /// Reduce with immutable accumulator: `.span.reduceFrom(_:) { }`
+    /// Reduce with immutable accumulator via `.span.reduceFrom(_:) { }`.
     ///
     /// Combines spans by producing a new value at each step.
     ///

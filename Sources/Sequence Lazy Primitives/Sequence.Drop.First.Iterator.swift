@@ -32,6 +32,7 @@ extension Sequence.Drop.First where Base: ~Copyable & ~Escapable {
     /// one-by-one during the skip phase, then forwards to
     /// `_base.next()`.
     public struct Iterator: ~Copyable, ~Escapable, Sequence.Iterator.`Protocol` {
+        /// The element type produced by this iterator (forwarded from the base).
         public typealias Element = Base.Element
 
         @usableFromInline
@@ -47,6 +48,7 @@ extension Sequence.Drop.First where Base: ~Copyable & ~Escapable {
             self._remaining = _remaining
         }
 
+        /// Returns the next batch of base elements after the initial drop count is exhausted.
         @_lifetime(&self)
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Span<Base.Element> {
@@ -60,6 +62,7 @@ extension Sequence.Drop.First where Base: ~Copyable & ~Escapable {
             return _base.nextSpan(maximumCount: maximumCount)
         }
 
+        /// Returns the next base element after the drop phase, or `nil` when iteration completes.
         @_lifetime(self: immortal)
         @inlinable
         public mutating func next() -> Base.Element? where Base.Element: Copyable {

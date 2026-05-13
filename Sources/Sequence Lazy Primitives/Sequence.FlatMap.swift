@@ -67,8 +67,10 @@ extension Sequence.FlatMap: Copyable where Base: Copyable & ~Escapable {}
 extension Sequence.FlatMap: Escapable where Base: Escapable & ~Copyable {}
 
 extension Sequence.FlatMap: Sequence.`Protocol` where Base: ~Copyable & ~Escapable {
+    /// The element type produced by this lazy sequence (elements of each transformed inner sequence).
     public typealias Element = InnerSequence.Element
 
+    /// Creates a fresh iterator that flattens each transformed inner sequence into a single stream.
     @_lifetime(copy self)
     @inlinable
     public consuming func makeIterator() -> Iterator {

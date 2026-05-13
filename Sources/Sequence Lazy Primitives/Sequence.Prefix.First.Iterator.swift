@@ -21,6 +21,7 @@ extension Sequence.Prefix.First where Base: ~Copyable & ~Escapable {
     /// The `where Base: ~Copyable & ~Escapable` on this extension is
     /// required — same as `Map.Iterator`.
     public struct Iterator: ~Copyable, ~Escapable, Sequence.Iterator.`Protocol` {
+        /// The element type produced by this iterator (the first N elements of the base).
         public typealias Element = Base.Element
 
         @usableFromInline
@@ -36,6 +37,7 @@ extension Sequence.Prefix.First where Base: ~Copyable & ~Escapable {
             self._remaining = _remaining
         }
 
+        /// Returns the next batch of prefix elements, bounded by the remaining count.
         @_lifetime(&self)
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Span<Base.Element> {
@@ -48,6 +50,7 @@ extension Sequence.Prefix.First where Base: ~Copyable & ~Escapable {
             return span
         }
 
+        /// Returns the next prefix element, or `nil` when the prefix count is exhausted.
         @_lifetime(self: immortal)
         @inlinable
         public mutating func next() -> Base.Element? where Base.Element: Copyable {

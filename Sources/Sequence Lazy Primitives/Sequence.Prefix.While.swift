@@ -45,8 +45,10 @@ extension Sequence.Prefix.While: Copyable where Base: Copyable & ~Escapable {}
 extension Sequence.Prefix.While: Escapable where Base: Escapable & ~Copyable {}
 
 extension Sequence.Prefix.While: Sequence.`Protocol` where Base: ~Copyable & ~Escapable {
+    /// The element type produced by this lazy sequence (the same element type as the base).
     public typealias Element = Base.Element
 
+    /// Creates a fresh iterator that yields leading base elements while the predicate holds.
     @_lifetime(copy self)
     @inlinable
     public consuming func makeIterator() -> Iterator {

@@ -4,7 +4,7 @@ public import Property_Primitives
 extension Property.Inout
 where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.ForEach {
 
-    /// Borrowing iteration: `.forEach { }`
+    /// Borrowing iteration via `.forEach { }`.
     ///
     /// Iterates over all elements without consuming the sequence.
     ///
@@ -20,7 +20,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.ForEach
         borrowing(body)
     }
 
-    /// Explicit borrowing iteration: `.forEach.borrowing { }`
+    /// Explicit borrowing iteration via `.forEach.borrowing { }`.
     ///
     /// Same as `callAsFunction`, but with explicit naming for clarity.
     ///
@@ -44,7 +44,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.ForEach
 extension Property.Inout
 where Base: Sequence.Clearable, Base.Element: Copyable, Tag == Sequence.ForEach {
 
-    /// Consuming iteration: `.forEach.consuming { }`
+    /// Consuming iteration via `.forEach.consuming { }`.
     ///
     /// Iterates over all elements and then clears the sequence.
     ///

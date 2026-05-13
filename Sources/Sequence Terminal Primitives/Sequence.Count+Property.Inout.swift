@@ -5,7 +5,7 @@ public import Property_Primitives
 extension Property.Inout
 where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Count {
 
-    /// Count elements matching predicate: `.count.where { }`
+    /// Count elements matching predicate via `.count.where { }`.
     ///
     /// Returns the number of elements satisfying the predicate.
     ///
@@ -26,7 +26,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Count {
         return count
     }
 
-    /// Count all elements: `.count.all`
+    /// Count all elements via `.count.all`.
     ///
     /// Returns the total number of elements in the sequence.
     ///

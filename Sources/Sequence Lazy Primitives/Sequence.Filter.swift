@@ -44,8 +44,10 @@ extension Sequence.Filter: Copyable where Base: Copyable & ~Escapable {}
 extension Sequence.Filter: Escapable where Base: Escapable & ~Copyable {}
 
 extension Sequence.Filter: Sequence.`Protocol` where Base: ~Copyable & ~Escapable {
+    /// The element type produced by this lazy sequence (elements of the base that match the predicate).
     public typealias Element = Base.Element
 
+    /// Creates a fresh iterator that yields only elements satisfying the predicate.
     @_lifetime(copy self)
     @inlinable
     public consuming func makeIterator() -> Iterator {

@@ -4,7 +4,7 @@ public import Property_Primitives
 extension Property.Inout
 where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Reduce {
 
-    /// Reduce with mutable accumulator: `.reduce.into(_:) { }`
+    /// Reduce with mutable accumulator via `.reduce.into(_:) { }`.
     ///
     /// Combines elements using a mutable accumulator for better performance
     /// with value types.
@@ -31,7 +31,7 @@ where Base: Sequence.`Protocol`, Base.Element: Copyable, Tag == Sequence.Reduce 
         return result
     }
 
-    /// Reduce with immutable accumulator: `.reduce.from(_:) { }`
+    /// Reduce with immutable accumulator via `.reduce.from(_:) { }`.
     ///
     /// Combines elements by producing a new value at each step.
     ///

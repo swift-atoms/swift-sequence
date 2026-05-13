@@ -23,6 +23,7 @@ extension Sequence.Drop.While where Base: ~Copyable & ~Escapable {
     /// The `where Base: ~Copyable & ~Escapable` on this extension is
     /// required — same as `Map.Iterator`.
     public struct Iterator: ~Copyable, ~Escapable, Sequence.Iterator.`Protocol` {
+        /// The element type produced by this iterator (forwarded from the base after the drop phase).
         public typealias Element = Base.Element
 
         @usableFromInline
@@ -42,6 +43,7 @@ extension Sequence.Drop.While where Base: ~Copyable & ~Escapable {
             self._dropping = true
         }
 
+        /// Returns the next batch of base elements once the predicate first fails.
         @_lifetime(&self)
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Span<Base.Element> {
@@ -61,6 +63,7 @@ extension Sequence.Drop.While where Base: ~Copyable & ~Escapable {
             return _base.nextSpan(maximumCount: .zero)
         }
 
+        /// Returns the next base element once the predicate first fails, or `nil` when iteration completes.
         @_lifetime(self: immortal)
         @inlinable
         public mutating func next() -> Base.Element? {

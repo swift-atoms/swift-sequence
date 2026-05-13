@@ -32,6 +32,7 @@ extension Sequence.FlatMap where Base: ~Copyable & ~Escapable {
     /// The `where Base: ~Copyable & ~Escapable` on this extension is
     /// required — same as `Map.Iterator`.
     public struct Iterator: ~Copyable, ~Escapable, Sequence.Iterator.`Protocol` {
+        /// The element type produced by this iterator (elements of each transformed inner sequence).
         public typealias Element = InnerSequence.Element
 
         @usableFromInline
@@ -56,6 +57,7 @@ extension Sequence.FlatMap where Base: ~Copyable & ~Escapable {
             self._transform = _transform
         }
 
+        /// Returns the next batch of inner elements as a borrowed span.
         @_lifetime(&self)
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Span<Element> {
@@ -86,6 +88,7 @@ extension Sequence.FlatMap where Base: ~Copyable & ~Escapable {
             }
         }
 
+        /// Returns the next inner element, or `nil` when all inner sequences are exhausted.
         @_lifetime(self: immortal)
         @inlinable
         public mutating func next() -> Element? {

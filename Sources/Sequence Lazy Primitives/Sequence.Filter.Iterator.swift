@@ -19,6 +19,7 @@ extension Sequence.Filter where Base: ~Copyable & ~Escapable {
     /// The `where Base: ~Copyable & ~Escapable` on this extension is
     /// required — same as `Map.Iterator`.
     public struct Iterator: ~Copyable, ~Escapable, Sequence.Iterator.`Protocol` {
+        /// The element type produced by this iterator (elements of the base that match the predicate).
         public typealias Element = Base.Element
 
         @usableFromInline
@@ -37,6 +38,7 @@ extension Sequence.Filter where Base: ~Copyable & ~Escapable {
             self._predicate = _predicate
         }
 
+        /// Returns the next batch of matching elements as a borrowed span.
         @_lifetime(&self)
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Span<Base.Element> {
@@ -60,6 +62,7 @@ extension Sequence.Filter where Base: ~Copyable & ~Escapable {
             return unsafe _overrideLifetime(span, mutating: &self)
         }
 
+        /// Returns the next matching element, or `nil` when iteration completes.
         @_lifetime(self: immortal)
         @inlinable
         public mutating func next() -> Base.Element? {

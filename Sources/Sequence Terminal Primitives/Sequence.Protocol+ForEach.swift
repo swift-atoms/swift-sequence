@@ -1,4 +1,5 @@
 extension Sequence.`Protocol` where Self: ~Copyable {
+    /// Fluent accessor for iteration: `.forEach { body }`, `.forEach.borrowing { }`, `.forEach.consuming { }`.
     @inlinable
     public var forEach: Property<Sequence.ForEach, Self>.Inout {
         mutating _read {
@@ -31,6 +32,7 @@ extension Sequence.`Protocol` where Self: ~Copyable {
 /// The Property.Inout `forEach` property remains accessible for qualified
 /// variants: `instance.forEach.borrowing { }`, `instance.forEach.consuming { }`.
 extension Sequence.`Protocol` where Self: Swift.Sequence {
+    /// `@inline(always)` forEach for dual-conformers — wins overload resolution against `Swift.Sequence.forEach` and forces closure inlining before CopyPropagation.
     @inline(always)
     @inlinable
     public func forEach(_ body: (Element) -> Void) {

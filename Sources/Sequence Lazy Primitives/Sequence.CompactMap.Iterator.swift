@@ -20,6 +20,7 @@ extension Sequence.CompactMap where Base: ~Copyable & ~Escapable {
     /// The `where Base: ~Copyable & ~Escapable` on this extension is
     /// required — same as `Map.Iterator`.
     public struct Iterator: ~Copyable, ~Escapable, Sequence.Iterator.`Protocol` {
+        /// The element type produced by this iterator (non-`nil` results of the transform).
         public typealias Element = Output
 
         @usableFromInline
@@ -38,6 +39,7 @@ extension Sequence.CompactMap where Base: ~Copyable & ~Escapable {
             self._transform = _transform
         }
 
+        /// Returns the next batch of non-`nil` transformed elements as a borrowed span.
         @_lifetime(&self)
         @inlinable
         public mutating func nextSpan(maximumCount: Cardinal) -> Span<Output> {
@@ -61,6 +63,7 @@ extension Sequence.CompactMap where Base: ~Copyable & ~Escapable {
             return unsafe _overrideLifetime(span, mutating: &self)
         }
 
+        /// Returns the next non-`nil` transformed element, or `nil` when iteration completes.
         @_lifetime(self: immortal)
         @inlinable
         public mutating func next() -> Output? {

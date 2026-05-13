@@ -21,9 +21,11 @@ extension Swift.Span {
     /// ## Batch Access
     ///
     /// For batch access returning sub-spans, use ``Iterator/Batch`` instead.
-    // SAFETY: Safe by construction — backing storage uses only stdlib
-    // SAFETY: safe types; `@safe` documents that this type performs no
-    // SAFETY: unsafe operations.
+    ///
+    /// ## Safety Invariant
+    ///
+    /// Safe by construction — backing storage uses only stdlib safe types;
+    /// `@safe` documents that this type performs no unsafe operations.
     @safe
     public struct Iterator: ~Escapable, ~Copyable,
         Sequence.Iterator.`Protocol`

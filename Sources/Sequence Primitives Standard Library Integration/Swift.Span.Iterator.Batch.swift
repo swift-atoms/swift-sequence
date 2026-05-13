@@ -22,9 +22,11 @@ extension Swift.Span.Iterator {
     /// let batch3 = iterator.nextSpan(maximumCount: Cardinal(2))  // [50]
     /// let batch4 = iterator.nextSpan(maximumCount: Cardinal(2))  // empty
     /// ```
-    // SAFETY: Safe by construction — backing storage uses only stdlib
-    // SAFETY: safe types; `@safe` documents that this type performs no
-    // SAFETY: unsafe operations.
+    ///
+    /// ## Safety Invariant
+    ///
+    /// Safe by construction — backing storage uses only stdlib safe types;
+    /// `@safe` documents that this type performs no unsafe operations.
     @safe
     public struct Batch: ~Escapable, ~Copyable,
         Sequence.Iterator.`Protocol`

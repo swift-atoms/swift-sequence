@@ -1,1 +1,1 @@
-@_exported import Sequence_Primitives_Core
+@_exported public import Sequence_Primitives_Core

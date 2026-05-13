@@ -70,6 +70,7 @@ extension Sequence.FlatMap where Base: ~Copyable & ~Escapable {
             }
             while true {
                 if _inner != nil {
+                    // swift-format-ignore: NeverForceUnwrap
                     if let element = _inner!.next() {
                         _element = element
                         let span = unsafe Span(_unsafeStart: ptr, count: 1)
@@ -90,6 +91,7 @@ extension Sequence.FlatMap where Base: ~Copyable & ~Escapable {
         public mutating func next() -> Element? {
             while true {
                 if _inner != nil {
+                    // swift-format-ignore: NeverForceUnwrap
                     if let element = _inner!.next() {
                         return element
                     }

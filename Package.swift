@@ -51,8 +51,8 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../swift-property-primitives"),
-        .package(path: "../swift-index-primitives"),
+        .package(url: "https://github.com/swift-primitives/swift-property-primitives.git", branch: "main"),
+        .package(url: "https://github.com/swift-primitives/swift-index-primitives.git", branch: "main"),
     ],
     targets: [
         // MARK: - Core

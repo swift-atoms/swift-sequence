@@ -72,9 +72,9 @@ extension Sequence.Difference.Change where Element: CustomStringConvertible {
     /// Returns this change with the element converted to `String`.
     public var stringified: Sequence.Difference.Change<String> {
         switch self {
-        case .first(let e): .first(String(describing: e))
-        case .second(let e): .second(String(describing: e))
-        case .both(let e): .both(String(describing: e))
+        case .first(let e): .first(e.description)
+        case .second(let e): .second(e.description)
+        case .both(let e): .both(e.description)
         }
     }
 }

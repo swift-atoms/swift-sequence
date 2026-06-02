@@ -1,0 +1,15 @@
+# .github/metadata.yaml
+# Triaged by AI-assisted bulk pass (2026-04-29).
+# Updated 2026-05-16 — Wave 2 readiness pass, description tightened + topics
+# expanded for Story 2 cohort discoverability per [GH-REPO-060] / [P1-M-1].
+description: "Sequence.Protocol with ~Copyable element support, lazy map/filter/flatMap/prefix/drop pipelines, fluent terminal ops, and a Myers-diff implementation."
+topics:
+  - primitives
+  - sequence
+  - iterator
+  - data-structures
+  - lazy
+homepage: "https://swift-institute.org"
+readme:
+  family: E
+discussion: https://github.com/orgs/swift-institute/discussions/32

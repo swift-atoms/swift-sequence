@@ -15,7 +15,6 @@
 /// |----------|-------------|
 /// | `Sequence.Protocol` | Iterable type (supports `~Copyable` containers) |
 /// | `Sequence.Iterator.Protocol` | Iterator type (supports `~Copyable` iterators) |
-/// | `Sequence.Clearable` | Adds `removeAll()` for consuming iteration |
 /// | `Sequence.Drain.Protocol` | Mutating drain (container survives empty) |
 ///
 /// ## ~Copyable Elements

@@ -28,14 +28,6 @@ extension Sequence.ForEach.Test.Unit {
         source.forEach.borrowing { visited.append($0) }
         #expect(visited == [10, 20, 30])
     }
-
-    @Test
-    func `forEach consuming drains and clears`() {
-        var source = Sequence.Fixture.Clearable.Source([1, 2, 3])
-        var visited: [Int] = []
-        source.forEach.consuming { visited.append($0) }
-        #expect(visited == [1, 2, 3])
-    }
 }
 
 // MARK: - Edge Case

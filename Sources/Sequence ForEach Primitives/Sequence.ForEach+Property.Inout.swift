@@ -1,5 +1,4 @@
 public import Property_Primitives
-public import Sequence_Clearable_Primitives
 
 /// Property.Inout extensions for borrowing iteration on `Sequence.Protocol` conformers.
 extension Property.Inout
@@ -43,35 +42,5 @@ where
         while let element = iterator.next() {
             body(element)
         }
-    }
-}
-
-/// Property.Inout extensions for consuming iteration on `Sequence.Clearable` conformers.
-extension Property.Inout
-where
-    Base: Sequence.Clearable,
-    Base.Element: Copyable,
-    Base.Iterator.Failure == Never,
-    Tag == Sequence.ForEach
-{
-
-    /// Consuming iteration via `.forEach.consuming { }`.
-    ///
-    /// Iterates over all elements and then clears the sequence.
-    ///
-    /// ```swift
-    /// var container = MyContainer([1, 2, 3])
-    /// container.forEach.consuming { print($0) }
-    /// // container is now empty
-    /// ```
-    ///
-    /// - Parameter body: A closure called with each element.
-    @inlinable
-    public mutating func consuming(_ body: (consuming Base.Element) -> Void) {
-        var iterator = base.value.makeIterator()
-        while let element = iterator.next() {
-            body(element)
-        }
-        base.value.removeAll()
     }
 }

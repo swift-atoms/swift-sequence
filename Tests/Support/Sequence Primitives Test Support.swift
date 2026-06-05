@@ -59,42 +59,6 @@ extension Sequence.Fixture.Source.Iterator {
     }
 }
 
-// MARK: - Clearable.Source
-
-extension Sequence.Fixture {
-    /// Namespace for `Sequence.Clearable`-conforming fixtures.
-    public enum Clearable {}
-}
-
-extension Sequence.Fixture.Clearable {
-    /// `Sequence.Clearable` conformer for testing consuming iteration via `forEach.consuming`.
-    public struct Source<Element>: Sequenceable, Sequence.`Clearable`, Sendable
-    where Element: Sendable {
-        @usableFromInline
-        var _elements: [Element]
-
-        /// Creates a clearable fixture source from a copy of the provided elements.
-        @inlinable
-        public init(_ elements: [Element]) {
-            self._elements = elements
-        }
-    }
-}
-
-extension Sequence.Fixture.Clearable.Source {
-    /// Creates a fresh iterator over the fixture elements (delegates to `Source.Iterator`).
-    @inlinable
-    public consuming func makeIterator() -> Sequence.Fixture.Source<Element>.Iterator {
-        .init(_elements)
-    }
-
-    /// Empties the fixture's backing storage in place.
-    @inlinable
-    public mutating func removeAll() {
-        _elements.removeAll()
-    }
-}
-
 // MARK: - Drainable.Source
 
 extension Sequence.Fixture {

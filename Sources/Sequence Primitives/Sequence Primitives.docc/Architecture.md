@@ -8,22 +8,22 @@ The package's product layout — 22 library products organized per sub-namespace
 
 ## Overview
 
-`Sequence_Primitives` ships the protocol family, the lazy wrapper algebra, the terminal-operation algebra, draining/clearing for consuming-side containers, a Myers diff, and the stdlib-bridge surface. The decomposition follows `[MOD-031]` — one library product per sub-namespace — so consumers tracking compile cost can pin to specific surfaces without paying for the rest.
+`Sequence_Primitives` ships the protocol family, the lazy wrapper algebra, the terminal-operation algebra, draining for consuming-side containers, a Myers diff, and the stdlib-bridge surface. The decomposition follows `[MOD-031]` — one library product per sub-namespace — so consumers tracking compile cost can pin to specific surfaces without paying for the rest.
 
 ## Product layout
 
-22 library products grouped by conceptual axis. Each row of the table corresponds to one importable target; each axis groups related targets.
+21 library products grouped by conceptual axis. Each row of the table corresponds to one importable target; each axis groups related targets.
 
 | Axis | Library products | Purpose |
 |---|---|---|
 | Protocol family | `Sequence Namespace`, `Sequence Iterator`, `Sequence Protocol`, `Sequence Borrowing`, `Sequence Span` | The `Sequence.Protocol` family, `Sequence.Iterator.Protocol`, `Sequence.Borrowing.Protocol`, and the `Sequence.Span` integration types. |
 | Lazy pipeline | `Sequence Map`, `Sequence Filter`, `Sequence Drop`, `Sequence Prefix` | Lazy wrappers — `Sequence.Map<Base>` (with nested `.Eager`/`.Compact`/`.Flat`), `Sequence.Filter`, `Sequence.Drop.First/While`, `Sequence.Prefix.First/While`. |
 | Terminal operations | `Sequence ForEach`, `Sequence Satisfies`, `Sequence Contains`, `Sequence First`, `Sequence Reduce`, `Sequence Hint` | Terminal ops via the fluent `.<op>` accessor surface (Property.Inout-backed). `Sequence.Hint` namespaces cheap-but-imprecise size hints (`hint.count`). |
-| Consuming-side | `Sequence Drain`, `Sequence Clearable` | Draining, the consuming `Sequenceable.consume(_:)` terminal (deinit-based cleanup on early exit), and the `Sequence.Clearable` refinement. |
+| Consuming-side | `Sequence Drain` | Draining via `Sequence.Drain.Protocol` and the consuming `Sequenceable.consume(_:)` terminal (deinit-based cleanup on early exit). |
 | Diff algorithm | `Sequence Difference` | Myers O(ND) diff — `Sequence.Difference`, `Steps`, `Changes`, `Change`, `Hunk`. |
 | Stdlib bridges | `Sequence Standard Library Integration` | `Swift.Span.Iterator`, `Swift.Span.Iterator.Batch`, and the `Sequence.Protocol` ⇄ `Swift.Sequence` adapter. |
 | Umbrella | `Sequence Primitives` | Re-exports every sub-namespace product. The default import for application code. |
-| Test infrastructure | `Sequence Primitives Test Support` | Fixture conformers — `Source`, `Clearable.Source`, `Drainable.Source` — for downstream test code. |
+| Test infrastructure | `Sequence Primitives Test Support` | Fixture conformers — `Source`, `Drainable.Source` — for downstream test code. |
 
 ## Why per-sub-namespace decomposition?
 

@@ -35,7 +35,6 @@ let package = Package(
 
         // MARK: - Consuming
         .library(name: "Sequence Drain Primitives", targets: ["Sequence Drain Primitives"]),
-        .library(name: "Sequence Clearable Primitives", targets: ["Sequence Clearable Primitives"]),
 
         // MARK: - Algorithms
         .library(name: "Sequence Difference Primitives", targets: ["Sequence Difference Primitives"]),
@@ -147,7 +146,6 @@ let package = Package(
             name: "Sequence ForEach Primitives",
             dependencies: [
                 "Sequence Protocol Primitives",
-                "Sequence Clearable Primitives",
                 .product(name: "Property Primitives", package: "swift-property-primitives"),
                 .product(name: "Either Primitives", package: "swift-either-primitives"),
             ]
@@ -205,8 +203,6 @@ let package = Package(
             ]
         ),
 
-        .target(name: "Sequence Clearable Primitives", dependencies: ["Sequence Protocol Primitives"]),
-
         // MARK: - Algorithms
 
         .target(
@@ -250,7 +246,6 @@ let package = Package(
                 "Sequence Reduce Primitives",
                 "Sequence Hint Primitives",
                 "Sequence Drain Primitives",
-                "Sequence Clearable Primitives",
                 "Sequence Difference Primitives",
                 "Sequence Primitives Standard Library Integration",
             ]
@@ -351,11 +346,6 @@ let package = Package(
         .testTarget(
             name: "Sequence Drain Primitives Tests",
             dependencies: ["Sequence Drain Primitives", "Sequence Primitives Test Support"]
-        ),
-
-        .testTarget(
-            name: "Sequence Clearable Primitives Tests",
-            dependencies: ["Sequence Clearable Primitives", "Sequence Primitives Test Support"]
         ),
 
         .testTarget(

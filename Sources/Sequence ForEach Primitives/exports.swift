@@ -10,5 +10,4 @@
 // ===----------------------------------------------------------------------===//
 
 @_exported public import Property_Primitives
-@_exported public import Sequence_Clearable_Primitives
 @_exported public import Sequence_Protocol_Primitives

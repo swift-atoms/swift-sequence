@@ -10,7 +10,6 @@
 // ===----------------------------------------------------------------------===//
 
 @_exported public import Sequence_Borrowing_Primitives
-@_exported public import Sequence_Clearable_Primitives
 @_exported public import Sequence_Contains_Primitives
 @_exported public import Sequence_Difference_Primitives
 @_exported public import Sequence_Drain_Primitives

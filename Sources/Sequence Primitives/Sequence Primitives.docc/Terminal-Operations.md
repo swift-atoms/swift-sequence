@@ -23,14 +23,14 @@ source.reduce.into(0) { $0 += $1 }   // Result — mutable accumulator
 source.reduce.from(1) { $0 * $1 }    // Result — immutable accumulator
 source.forEach { print($0) }         // Void — borrowing iteration
 source.forEach.borrowing { ... }     // Void — explicit borrowing form
-source.forEach.consuming { ... }     // Void — drains a Clearable
+source.drain { ... }                 // Void — consuming drain (Sequence.Drain.Protocol)
 ```
 
 ## Why the split shape?
 
 Terminal ops that have a **single canonical form** are direct properties (`count`) or direct methods (`count(where:)`, `contains { }`, `first { }`). Putting them under a `Property.Inout` namespace would add a level of indirection for no discoverability benefit — there's nothing else under `.count.` to surface.
 
-Terminal ops that **fan out into multiple related members** go through the fluent `Property.Inout` surface from `swift-property-primitives`. After typing `source.satisfies.` the IDE offers `.all`, `.any`, `.none`. After typing `source.reduce.` it offers `.into(_:) { }`, `.from(_:) { }`. After typing `source.forEach.` it offers `.borrowing { }`, `.consuming { }`. The fluent namespace earns its place when there's a family to surface.
+Terminal ops that **fan out into multiple related members** go through the fluent `Property.Inout` surface from `swift-property-primitives`. After typing `source.satisfies.` the IDE offers `.all`, `.any`, `.none`. After typing `source.reduce.` it offers `.into(_:) { }`, `.from(_:) { }`. After typing `source.forEach.` it offers `.borrowing { }`. The fluent namespace earns its place when there's a family to surface.
 
 The fluent mechanism is `Property<Tag, Base>.Inout`: each tag (`Sequence.Satisfies`, `Sequence.Reduce`, `Sequence.ForEach`, …) is a phantom-typed namespace enum. Extensions on `Property.Inout` parameterized by the tag attach methods to the fluent chain. The cost is one indirection per terminal call — every `Property.Inout` member is `@inlinable` so the optimizer dissolves it.
 
@@ -47,24 +47,23 @@ Each terminal operation either ships as direct protocol members or as a tag enum
 | `Sequence.First` | Tag + `(predicate)` direct method | First element matching the predicate → `Optional<Element>` |
 | `Sequence.Satisfies` | Tag + `.all { }`, `.any { }`, `.none { }` | Universal / existential / negative-existential checks → `Bool` |
 | `Sequence.Reduce` | Tag + `.into(_:) { }`, `.from(_:) { }` | Mutable / immutable accumulator reduction → `Result` |
-| `Sequence.ForEach` | Tag + `(body)`, `.borrowing { }`, `.consuming { }` | Iteration with optional explicit ownership |
+| `Sequence.ForEach` | Tag + `(body)`, `.borrowing { }` | Borrowing iteration (consuming drain lives on `Sequence.Drain`) |
 
 For tag-based operations, the `Property.Inout` entry points are uniform: each `Sequence.Protocol` conformer exposes `var <op>: Property<Sequence.X, Self>.Inout { mutating _read … mutating _modify … }` via an extension in the corresponding sub-namespace target (`Sequence ForEach`, `Sequence Satisfies`, etc.). The methods on each `Property.Inout` are constrained to the relevant tag plus any extra `Base` requirements (e.g., `Base.Element: Copyable` for predicate-taking ops).
 
-## ForEach's three forms
+## ForEach's two forms
 
-`forEach` is the one terminal op with three accessor forms:
+`forEach` borrows; both accessor forms are non-consuming:
 
 - **`source.forEach { body }`** — calls `body` with each element by `borrowing`. The default.
 - **`source.forEach.borrowing { body }`** — same semantics, explicit name for clarity.
-- **`source.forEach.consuming { body }`** — drains the sequence by `consuming` each element. Requires `Base: Sequence.Clearable`. The sequence survives but is empty.
 
-The consuming form is intended for moving ownership of `~Copyable` elements out of a sequence. The container itself isn't destroyed — its `removeAll()` runs after every element is yielded — so it can be repopulated via subsequent `append`/`insert` calls.
+Consuming iteration is a separate operation: **`source.drain { body }`** (on `Sequence.Drain.Protocol`) yields each element by `consuming` and leaves the container empty. It is the canonical path for moving ownership of `~Copyable` elements out of a sequence; the container survives and can be repopulated via subsequent `append`/`insert` calls.
 
 ## `~Copyable` element handling
 
 Predicate-taking terminal ops (`contains`, `first`, `satisfies`, `count(where:)`) constrain `Base.Element: Copyable`. The closure parameter is `borrowing Base.Element` so even Copyable elements aren't unnecessarily copied; the Copyable bound is required to spell the closure parameter at all.
 
-`reduce` works on Copyable elements only via the standard accumulator pattern. `forEach.borrowing` works on `~Copyable` elements directly; the consuming form additionally requires `Base: Sequence.Clearable` so the container can be safely drained.
+`reduce` works on Copyable elements only via the standard accumulator pattern. `forEach.borrowing` works on `~Copyable` elements directly; the consuming `drain` (on `Sequence.Drain.Protocol`) safely moves `~Copyable` elements out while leaving the container empty.
 
 A future API surface for `~Copyable`-element terminal ops (a `contains` that takes `(borrowing Base.Element) -> Bool` without the Copyable bound, etc.) is on the roadmap. The 0.1.0 surface concretizes the common case.

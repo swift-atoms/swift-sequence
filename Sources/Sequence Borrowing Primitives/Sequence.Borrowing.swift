@@ -5,7 +5,7 @@ extension Sequence {
     ///
     /// `Sequence.Borrowing` provides protocols and types for span-based
     /// borrowing iteration. Unlike element-at-a-time iteration, borrowing
-    /// sequences return `Span<Element>` chunks, enabling efficient bulk access.
+    /// sequences return `Swift.Span<Element>` chunks, enabling efficient bulk access.
     ///
     /// ## Protocol Hierarchy
     ///

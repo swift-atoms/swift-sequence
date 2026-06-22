@@ -82,7 +82,7 @@ where Base: ~Copyable & ~Escapable, Base.Iterator: Iterator.Chunk.`Protocol` {
     @inlinable
     public mutating func next(
         maximumCount: some Carrier.`Protocol`<Cardinal>
-    ) throws(Base.Iterator.Failure) -> Span<Base.Element> {
+    ) throws(Base.Iterator.Failure) -> Swift.Span<Base.Element> {
         let maximumCount = maximumCount.underlying
         while _remaining > .zero {
             let span = try _base.next(maximumCount: _remaining)

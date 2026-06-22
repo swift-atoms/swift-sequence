@@ -5,7 +5,7 @@ extension Swift.Span.Iterator {
     /// A batch iterator that produces sub-spans from a borrowed span.
     ///
     /// Unlike the single-element ``Swift/Span/Iterator``, this returns
-    /// `Span<Element>` chunks via `nextSpan(maximumCount:)`.
+    /// `Swift.Span<Element>` chunks via `nextSpan(maximumCount:)`.
     ///
     /// `Batch` implements `Iterator.Chunk.Protocol` via `next(maximumCount:)`,
     /// returning sub-span batches.

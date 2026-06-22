@@ -72,7 +72,7 @@ extension Sequence.Borrowing {
         ///   `Iterator` associated type permits `~Escapable` iterators;
         ///   without the annotation the compiler cannot infer the
         ///   lifetime relationship.
-        /// - Returns: An iterator that produces `Span<Element>` chunks.
+        /// - Returns: An iterator that produces `Swift.Span<Element>` chunks.
         @_lifetime(borrow self)
         borrowing func makeIterator() -> Iterator
     }

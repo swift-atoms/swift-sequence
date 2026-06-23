@@ -1,6 +1,6 @@
 # Sequence Protocol Surface Simplification
 
-> **Dissolution note (2026-06-23)**: `Memory.Contiguous` was dissolved — the typed contiguous tier is now `Storage.Contiguous`, the read-capability protocol is `Span.Protocol` (the renamed/relocated `Memory.Contiguous.Protocol`), and owned raw bytes are `Memory.Heap`. References below are retained as the pre-dissolution design record; see `swift-institute/Research/memory-contiguous-dissolution.md`.
+> **Note:** `Memory.Contiguous` was dissolved 2026-06-23 → `Storage.Contiguous` (typed) / `Span.Protocol` (read capability) / `Memory.Heap` (raw bytes). See `swift-institute/Research/memory-contiguous-dissolution.md`.
 
 <!--
 ---
@@ -236,6 +236,6 @@ Maintain the current six protocols with their current relationships.
 **Sequence.Borrowing.Protocol reframing.** The decision to detach `Collection.Protocol` from `Sequence.Protocol` (see `swift-primitives/Research/collection-sequence-protocol-detachment.md`, RECOMMENDATION, 2026-02-23) changes the role of `Sequence.Borrowing.Protocol`:
 
 - **Before**: The primary mechanism for borrowing iteration over collections with `~Copyable` elements.
-- **After**: A chunked span access optimization over `Memory.Contiguous.Protocol`, NOT a borrowing iteration mechanism. Borrowing iteration is now handled by `Collection.Protocol` via index/subscript (`Collection.ForEach`).
+- **After**: A chunked span access optimization over `Span.Protocol`, NOT a borrowing iteration mechanism. Borrowing iteration is now handled by `Collection.Protocol` via index/subscript (`Collection.ForEach`).
 
 This does NOT change the decision in v1.0.0 (all six protocols remain). It reframes one protocol's purpose. Doc updates to `Sequence.Borrowing.Protocol` are recommended to reflect this. Deletion is deferred pending audit of bounded-chunk usage (all current call sites pass `Cardinal(UInt.max)`).

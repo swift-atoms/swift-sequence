@@ -32,9 +32,6 @@ extension Swift.Span.Iterator {
     public struct Batch: ~Escapable, ~Copyable,
         __IteratorChunkProtocol
     {
-        /// The error type this iterator can throw; iteration over a borrowed span never fails.
-        public typealias Failure = Never
-
         @usableFromInline
         let _span: Swift.Span<Element>
 
@@ -58,6 +55,9 @@ extension Swift.Span.Iterator {
 }
 
 extension Swift.Span.Iterator.Batch {
+    /// The error type this iterator can throw; iteration over a borrowed span never fails.
+    public typealias Failure = Never
+
     /// Whether the iterator has no remaining elements.
     @inlinable
     public var isEmpty: Bool {

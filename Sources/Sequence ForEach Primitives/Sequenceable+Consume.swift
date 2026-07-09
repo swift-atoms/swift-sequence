@@ -62,13 +62,13 @@ extension Sequenceable where Self: ~Copyable, Element: Escapable {
         var iterator = makeIterator()
         while true {
             let step: Element?
-            do {
+            do throws(Iterator.Failure) {
                 step = try iterator.next()
             } catch {
                 throw Either.right(error)
             }
             guard let element = step else { return }
-            do {
+            do throws(E) {
                 try body(element)
             } catch {
                 throw Either.left(error)

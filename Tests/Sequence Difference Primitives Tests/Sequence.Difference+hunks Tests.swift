@@ -142,4 +142,41 @@ extension Sequence.Difference.`Hunks Test`.`Edge Case` {
         #expect(hunks.count == 1)
         #expect(hunks[0].lines.count == 3)
     }
+
+    @Test
+    func `two hunks split at the context boundary carry no duplicated context`() {
+        // Changes at both ends separated by exactly 2 * contextLines context
+        // lines: the first hunk closes on the last buffered context line, and
+        // that same line must appear exactly once in the second hunk's
+        // leading context.
+        let old = ["line1", "c1", "c2", "c3", "c4", "c5", "c6", "line8"]
+        var new = old
+        new[0] = "changed1"
+        new[7] = "changed8"
+
+        let hunks = Sequence.Difference.diff(old, new).hunks(contextLines: 3)
+        #expect(hunks.count == 2)
+
+        let first = hunks[0].lines
+        #expect(
+            first == [
+                .first("line1"), .second("changed1"),
+                .both("c1"), .both("c2"), .both("c3"),
+            ]
+        )
+
+        let second = hunks[1].lines
+        #expect(
+            second == [
+                .both("c4"), .both("c5"), .both("c6"),
+                .first("line8"), .second("changed8"),
+            ]
+        )
+        #expect(second.filter { $0 == .both("c6") }.count == 1)
+
+        // Header counts must match the emitted lines: 3 context + 1 removal
+        // on the old side, 3 context + 1 insertion on the new side.
+        #expect(hunks[1].old.count == 4)
+        #expect(hunks[1].new.count == 4)
+    }
 }

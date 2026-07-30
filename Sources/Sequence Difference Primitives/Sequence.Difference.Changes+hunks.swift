@@ -68,6 +68,8 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
                 trailingCount = .zero
                 contextBuffer.removeAll()
             } else {
+                var buffered = false
+
                 if inHunk {
                     if trailingCount < contextLines {
                         currentLines.append(stringChange)
@@ -76,6 +78,7 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
                         trailingCount += .one
                     } else {
                         contextBuffer.append((stringChange, oldLine, newLine))
+                        buffered = true
                         if Cardinal(UInt(contextBuffer.count)) > contextLines {
                             contextBuffer.removeFirst()
                         }
@@ -93,7 +96,10 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
                     }
                 }
 
-                if !inHunk {
+                // The hunk-close branch above has already buffered this
+                // change; appending it again would duplicate the leading
+                // context of the next hunk.
+                if !inHunk && !buffered {
                     contextBuffer.append((stringChange, oldLine, newLine))
                     if Cardinal(UInt(contextBuffer.count)) > contextLines {
                         contextBuffer.removeFirst()

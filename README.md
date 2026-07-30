@@ -73,7 +73,7 @@ The package decomposes into one library product per sub-namespace. Consumers can
 | Protocol family | `Sequence Namespace`, `Sequence Iterator`, `Sequence Protocol`, `Sequence Borrowing`, `Sequence Span` | The `Sequence.Protocol` family, `Sequence.Iterator.Protocol`, `Sequence.Borrowing.Protocol`, and the `Sequence.Span` integration types. |
 | Lazy pipeline | `Sequence Map`, `Sequence Filter`, `Sequence Drop`, `Sequence Prefix` | Lazy wrappers — `Sequence.Map<Base>` (with nested `.Eager`/`.Compact`/`.Flat`), `Sequence.Filter`, `Sequence.Drop.First/While`, `Sequence.Prefix.First/While`. |
 | Terminal operations | `Sequence ForEach`, `Sequence Satisfies`, `Sequence Contains`, `Sequence First`, `Sequence Reduce`, `Sequence Hint` | Terminal ops via the fluent `.<op>` Property.Inout surface. `Sequence.Hint` is the namespace for cheap-but-imprecise hints (`hint.count`). |
-| Consuming-side | `Sequence Drain`, `Sequence Consume`, `Sequence Clearable` | Draining, consuming-iteration, and clearable refinements for `~Copyable` containers. |
+| Consuming-side | `Sequence Drain` | Draining refinement for `~Copyable` containers. |
 | Diff algorithm | `Sequence Difference` | Myers O(ND) diff — `Sequence.Difference`, `Steps`, `Changes`, `Change`, `Hunk`. |
 | Stdlib bridges | `Sequence Standard Library Integration` | `Swift.Span.Iterator`, `Swift.Span.Iterator.Batch`, and the `Sequence.Protocol` ⇄ `Swift.Sequence` adapter. |
 | Umbrella | `Sequence Primitives` | Re-exports every sub-namespace product. The default for application code. |
@@ -81,7 +81,7 @@ The package decomposes into one library product per sub-namespace. Consumers can
 
 Foundation-free across every sub-target. Per-sub-namespace decomposition means an application that only needs `Sequence.Protocol` for its own conforming type imports `Sequence Protocol` and skips compilation of every other surface. Adding a new operation to one axis touches one target; cross-axis composition happens via the umbrella.
 
-Direct counts: 22 library products (5 protocol-family + 4 lazy + 6 terminal + 3 consuming + 1 diff + 1 SLI + 1 umbrella + 1 test support).
+Direct counts: 20 library products (5 protocol-family + 4 lazy + 6 terminal + 1 consuming + 1 diff + 1 SLI + 1 umbrella + 1 test support), matching the products declared in `Package.swift`.
 
 ---
 
@@ -107,7 +107,7 @@ Generating iterators that produce one element at a time (`Map.Iterator`, `Filter
 
 ## Safety surface
 
-The package carries 45 `unsafe`-marked sites concentrated in the SLI bridge to `Swift.Span` and in the inline-buffer pattern used by generating iterators (`@_rawLayout` / `withUnsafeMutablePointer` / `assumingMemoryBound`). Every `@safe`-attributed declaration carries a `## Safety Invariant` section in its doc comment disclosing the invariant relied on; every other `unsafe` site carries an adjacent invariant comment.
+Unsafe surface is concentrated in the SLI bridge to `Swift.Span` and in the inline-buffer pattern used by generating iterators (`@_rawLayout` / `withUnsafeMutablePointer` / `assumingMemoryBound`). Every `@safe`-attributed declaration carries a `## Safety Invariant` section in its doc comment disclosing the invariant relied on; every other `unsafe` site carries an adjacent invariant comment. This document does not state a fixed site count, since the count changes with the source and a stale number is worse than none — search the sources above for the current surface.
 
 ---
 

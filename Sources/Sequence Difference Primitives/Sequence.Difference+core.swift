@@ -109,7 +109,7 @@ extension Sequence.Difference {
         var y = m
         var steps: [Step] = []
 
-        for d in (0..<trace.count).reversed() {
+        (0..<trace.count).reversed().forEach { d in
             let v = trace[d]
             let k = x - y
 

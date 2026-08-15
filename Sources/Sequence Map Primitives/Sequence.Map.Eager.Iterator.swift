@@ -23,7 +23,8 @@ extension Sequence.Map.Eager where Base: ~Copyable & ~Escapable {
 
         @_lifetime(copy _base)
         @inlinable
-        package init(_base: consuming Base.Iterator, _transform: @escaping (Base.Element) -> Output) {
+        package init(_base: consuming Base.Iterator, _transform: @escaping (Base.Element) -> Output)
+        {
             self._base = _base
             self._transform = _transform
         }

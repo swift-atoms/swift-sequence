@@ -181,7 +181,8 @@ extension Sequence.Difference.Test.`Edge Case` {
 
     @Test
     func `completely different sequences`() {
-        let (removed, inserted) = Sequence.Difference.diff(["a", "b", "c"], ["x", "y", "z"]).counts()
+        let (removed, inserted) = Sequence.Difference.diff(["a", "b", "c"], ["x", "y", "z"])
+            .counts()
         #expect(removed == 3)
         #expect(inserted == 3)
     }

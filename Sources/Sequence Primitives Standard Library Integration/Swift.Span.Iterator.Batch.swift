@@ -79,7 +79,9 @@ extension Swift.Span.Iterator.Batch {
     /// - Returns: A span containing the next batch.
     @inlinable
     @_lifetime(&self)
-    public mutating func next(maximumCount: some Carrier.`Protocol`<Cardinal>) -> Swift.Span<Element> {
+    public mutating func next(
+        maximumCount: some Carrier.`Protocol`<Cardinal>
+    ) -> Swift.Span<Element> {
         let take = min(maximumCount.underlying, remaining)
         guard take > .zero else { return _span.extracting(first: 0) }
 

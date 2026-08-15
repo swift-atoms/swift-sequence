@@ -25,7 +25,8 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
 
         var oldLine: Ordinal = 1
         var newLine: Ordinal = 1
-        var contextBuffer: [(change: Sequence.Difference.Change<String>, oldLine: Ordinal, newLine: Ordinal)] = []
+        var contextBuffer:
+            [(change: Sequence.Difference.Change<String>, oldLine: Ordinal, newLine: Ordinal)] = []
         var trailingCount: Cardinal = .zero
 
         for change in _storage {

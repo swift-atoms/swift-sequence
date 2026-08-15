@@ -99,7 +99,9 @@ extension Sequence.ForEach.Test.Integration {
     }
 
     @Test
-    func `non-throwing closure resolves via accessor; typed-throws closure resolves via direct method`() {
+    func
+        `non-throwing closure resolves via accessor; typed-throws closure resolves via direct method`()
+    {
         // This test documents the overload-resolution split: the call-site
         // syntax `source.forEach { body }` resolves to the Property.Inout
         // accessor's callAsFunction for non-throwing closures (verified by

@@ -8,7 +8,8 @@
 /// (The `Swift.Sequence` conformance bridge itself is the deferred ecosystem-wide
 /// axis — one generic `where Element: Copyable` bridge vended once — not a per-type
 /// re-add; see `set-ordered-capability-composition.md` §2.8 / §3.)
-extension Sequenceable where Self: Copyable, Element: Copyable & Escapable, Iterator.Failure == Never {
+extension Sequenceable
+where Self: Copyable, Element: Copyable & Escapable, Iterator.Failure == Never {
     /// The first element of the sequence, or `nil` if empty.
     ///
     /// Constrained to infallible iterators (`Iterator.Failure == Never`) so the

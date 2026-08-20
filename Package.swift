@@ -1,15 +1,15 @@
-// swift-tools-version: 6.3.3
+// swift-tools-version: 6.4
 
 import PackageDescription
 
 let package = Package(
     name: "swift-sequence-primitives",
     platforms: [
-        .macOS("27"),
-        .iOS("27"),
-        .tvOS("27"),
-        .watchOS("27"),
-        .visionOS("27"),
+        .macOS(.v27),
+        .iOS(.v27),
+        .tvOS(.v27),
+        .watchOS(.v27),
+        .visionOS(.v27),
     ],
     products: [
         // MARK: - Namespace + foundational
@@ -37,7 +37,10 @@ let package = Package(
         .library(name: "Sequence Drain Primitives", targets: ["Sequence Drain Primitives"]),
 
         // MARK: - Algorithms
-        .library(name: "Sequence Difference Primitives", targets: ["Sequence Difference Primitives"]),
+        .library(
+            name: "Sequence Difference Primitives",
+            targets: ["Sequence Difference Primitives"]
+        ),
 
         // MARK: - Standard Library Integration
         .library(
@@ -55,11 +58,26 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-primitives/swift-iterator-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-either-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-property-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-index-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-cardinal-primitives.git", branch: "main"),
+        .package(
+            url: "https://github.com/swift-primitives/swift-iterator-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-either-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-property-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-index-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-cardinal-primitives.git",
+            branch: "main"
+        ),
     ],
     targets: [
         // MARK: - Namespace + foundational
@@ -189,7 +207,10 @@ let package = Package(
                 "Sequence Protocol Primitives",
                 .product(name: "Property Primitives", package: "swift-property-primitives"),
                 .product(name: "Index Primitives", package: "swift-index-primitives"),
-                .product(name: "Cardinal Primitives Standard Library Integration", package: "swift-cardinal-primitives"),
+                .product(
+                    name: "Cardinal Primitives Standard Library Integration",
+                    package: "swift-cardinal-primitives"
+                ),
             ]
         ),
 
@@ -391,7 +412,7 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
     ]
 
     let package: [SwiftSetting] = [
-        .enableExperimentalFeature("BuiltinModule"),
+        .enableExperimentalFeature("BuiltinModule")
     ]
 
     target.swiftSettings = (target.swiftSettings ?? []) + ecosystem + package

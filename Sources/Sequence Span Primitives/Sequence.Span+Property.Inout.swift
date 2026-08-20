@@ -1,6 +1,6 @@
 public import Index_Primitives
 public import Iterator_Chunk_Primitives
-public import Property_Primitives
+import Property_Primitives
 public import Sequence_Borrowing_Primitives
 
 /// Property.Inout extensions for span-based borrowing iteration.

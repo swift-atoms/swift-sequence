@@ -29,7 +29,15 @@ extension Sequence.Drop.While where Base: ~Copyable & ~Escapable {
     ///
     /// The `where Base: ~Copyable & ~Escapable` on this extension is
     /// required — same as `Map.Iterator`.
-    public struct Iterator: ~Copyable, ~Escapable, Iterator_Primitive.Iterator.`Protocol` {
+    public struct Iterator: ~Copyable, ~Escapable,
+        Iterator_Primitive.Iterator.`Protocol`<Base.Element, Base.Iterator.Failure>
+    {
+        @_implements(Iterator_Primitive.Iterator.`Protocol`, Element)
+        public typealias ScalarElement = Base.Element
+
+        @_implements(Iterator_Primitive.Iterator.`Protocol`, Failure)
+        public typealias ScalarFailure = Base.Iterator.Failure
+
         @usableFromInline
         var _base: Base.Iterator
 
@@ -51,14 +59,11 @@ extension Sequence.Drop.While where Base: ~Copyable & ~Escapable {
 
 extension Sequence.Drop.While.Iterator where Base: ~Copyable & ~Escapable {
     /// The element type produced by this iterator (forwarded from the base after the drop phase).
-    public typealias Element = Base.Element
-
     /// Returns the next base element once the predicate first fails, or `nil` when iteration completes.
     ///
     /// Tuned scalar override (preserved per the migration perf invariant): drives the base's
     /// scalar `next()` directly rather than routing through the foundation default
     /// `next(maximumCount: 1)`.
-    @_lifetime(&self)
     @inlinable
     public mutating func next() throws(Base.Iterator.Failure) -> Base.Element? {
         while let element = try _base.next() {
@@ -73,8 +78,21 @@ extension Sequence.Drop.While.Iterator where Base: ~Copyable & ~Escapable {
 }
 
 // Bulk tier — conditional on the base being bulk (§9 conditional-bulk).
-extension Sequence.Drop.While.Iterator: Iterator.Chunk.`Protocol`
-where Base: ~Copyable & ~Escapable, Base.Iterator: Iterator.Chunk.`Protocol` {
+extension Sequence.Drop.While.Iterator:
+    Iterator_Primitive.Iterator.Chunk.`Protocol`<Base.Element, Base.Iterator.Failure>
+where
+    Base: ~Copyable & ~Escapable,
+    Base.Element: Escapable,
+    Base.Iterator: Iterator_Primitive.Iterator.Chunk.`Protocol`<
+        Base.Element, Base.Iterator.Failure
+    >
+{
+    @_implements(__IteratorChunkProtocol, Element)
+    public typealias ChunkElement = Base.Element
+
+    @_implements(__IteratorChunkProtocol, Failure)
+    public typealias ChunkFailure = Base.Iterator.Failure
+
     /// Returns the next batch of base elements once the predicate first fails, forwarding the
     /// base's bulk spans.
     @_lifetime(&self)

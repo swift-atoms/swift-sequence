@@ -12,7 +12,9 @@ extension Sequence.Filter where Base: ~Copyable & ~Escapable {
     /// - `~Copyable` because the base iterator may be `~Copyable`.
     /// - `~Escapable` because its lifetime is derived from the base
     ///   iterator.
-    public struct Iterator: ~Copyable, ~Escapable, Iterator_Primitive.Iterator.`Protocol` {
+    public struct Iterator: ~Copyable, ~Escapable,
+        Iterator_Primitive.Iterator.`Protocol`<Base.Element, Base.Iterator.Failure>
+    {
         @usableFromInline
         var _base: Base.Iterator
 
@@ -33,7 +35,6 @@ extension Sequence.Filter.Iterator where Base: ~Copyable & ~Escapable {
     public typealias Element = Base.Element
 
     /// Returns the next matching element, or `nil` when iteration completes.
-    @_lifetime(&self)
     @inlinable
     public mutating func next() throws(Base.Iterator.Failure) -> Base.Element? {
         while let element = try _base.next() {

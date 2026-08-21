@@ -24,7 +24,9 @@ extension Sequence.Drop {
     ///   `where Base: ~Copyable & ~Escapable`
     ///
     /// Iterator uses forward-to-base (zero allocation).
-    public struct First<Base: Sequenceable & ~Copyable & ~Escapable>: ~Copyable, ~Escapable {
+    public struct First<
+        Base: Sequenceable<Base.Element> & ~Copyable & ~Escapable
+    >: ~Copyable, ~Escapable where Base.Element: ~Copyable & ~Escapable {
         @usableFromInline
         let _base: Base
 
@@ -40,10 +42,13 @@ extension Sequence.Drop {
     }
 }
 
-extension Sequence.Drop.First: Copyable where Base: Copyable & ~Escapable {}
-extension Sequence.Drop.First: Escapable where Base: Escapable & ~Copyable {}
+extension Sequence.Drop.First: Copyable
+where Base: Copyable & ~Escapable, Base.Element: ~Copyable & ~Escapable {}
+extension Sequence.Drop.First: Escapable
+where Base: Escapable & ~Copyable, Base.Element: ~Copyable & ~Escapable {}
 
-extension Sequence.Drop.First: Sequenceable where Base: ~Copyable & ~Escapable {
+extension Sequence.Drop.First: Sequenceable
+where Base: ~Copyable & ~Escapable, Base.Element: ~Copyable & ~Escapable {
     /// The element type produced by this lazy sequence (the same element type as the base).
     public typealias Element = Base.Element
 

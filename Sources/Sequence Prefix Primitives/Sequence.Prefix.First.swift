@@ -25,7 +25,9 @@ extension Sequence.Prefix {
     ///
     /// Iterator uses forward-to-base (zero allocation) with count
     /// clamping.
-    public struct First<Base: Sequenceable & ~Copyable & ~Escapable>: ~Copyable, ~Escapable {
+    public struct First<
+        Base: Sequenceable<Base.Element> & ~Copyable & ~Escapable
+    >: ~Copyable, ~Escapable where Base.Element: ~Copyable & ~Escapable {
         @usableFromInline
         let _base: Base
 
@@ -41,10 +43,13 @@ extension Sequence.Prefix {
     }
 }
 
-extension Sequence.Prefix.First: Copyable where Base: Copyable & ~Escapable {}
-extension Sequence.Prefix.First: Escapable where Base: Escapable & ~Copyable {}
+extension Sequence.Prefix.First: Copyable
+where Base: Copyable & ~Escapable, Base.Element: ~Copyable & ~Escapable {}
+extension Sequence.Prefix.First: Escapable
+where Base: Escapable & ~Copyable, Base.Element: ~Copyable & ~Escapable {}
 
-extension Sequence.Prefix.First: Sequenceable where Base: ~Copyable & ~Escapable {
+extension Sequence.Prefix.First: Sequenceable
+where Base: ~Copyable & ~Escapable, Base.Element: ~Copyable & ~Escapable {
     /// The element type produced by this lazy sequence (the same element type as the base).
     public typealias Element = Base.Element
 

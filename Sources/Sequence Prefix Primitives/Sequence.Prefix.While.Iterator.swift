@@ -26,7 +26,15 @@ extension Sequence.Prefix.While where Base: ~Copyable & ~Escapable {
     ///
     /// The `where Base: ~Copyable & ~Escapable` on this extension is
     /// required — same as `Map.Iterator`.
-    public struct Iterator: ~Copyable, ~Escapable, Iterator_Primitive.Iterator.`Protocol` {
+    public struct Iterator: ~Copyable, ~Escapable,
+        Iterator_Primitive.Iterator.`Protocol`<Base.Element, Base.Iterator.Failure>
+    {
+        @_implements(Iterator_Primitive.Iterator.`Protocol`, Element)
+        public typealias ScalarElement = Base.Element
+
+        @_implements(Iterator_Primitive.Iterator.`Protocol`, Failure)
+        public typealias ScalarFailure = Base.Iterator.Failure
+
         @usableFromInline
         var _base: Base.Iterator
 
@@ -48,12 +56,9 @@ extension Sequence.Prefix.While where Base: ~Copyable & ~Escapable {
 
 extension Sequence.Prefix.While.Iterator where Base: ~Copyable & ~Escapable {
     /// The element type produced by this iterator (base elements while the predicate holds).
-    public typealias Element = Base.Element
-
     /// Returns the next prefix element, or `nil` once the predicate first fails.
     ///
     /// Tuned scalar override (preserved per the migration perf invariant).
-    @_lifetime(&self)
     @inlinable
     public mutating func next() throws(Base.Iterator.Failure) -> Base.Element? {
         guard !_done else { return nil }
@@ -67,8 +72,21 @@ extension Sequence.Prefix.While.Iterator where Base: ~Copyable & ~Escapable {
 }
 
 // Bulk tier — conditional on the base being bulk (§9 conditional-bulk).
-extension Sequence.Prefix.While.Iterator: Iterator.Chunk.`Protocol`
-where Base: ~Copyable & ~Escapable, Base.Iterator: Iterator.Chunk.`Protocol` {
+extension Sequence.Prefix.While.Iterator:
+    Iterator_Primitive.Iterator.Chunk.`Protocol`<Base.Element, Base.Iterator.Failure>
+where
+    Base: ~Copyable & ~Escapable,
+    Base.Element: Escapable,
+    Base.Iterator: Iterator_Primitive.Iterator.Chunk.`Protocol`<
+        Base.Element, Base.Iterator.Failure
+    >
+{
+    @_implements(__IteratorChunkProtocol, Element)
+    public typealias ChunkElement = Base.Element
+
+    @_implements(__IteratorChunkProtocol, Failure)
+    public typealias ChunkFailure = Base.Iterator.Failure
+
     /// Returns the next batch of prefix elements, stopping at the first element where the predicate fails.
     @_lifetime(&self)
     @inlinable

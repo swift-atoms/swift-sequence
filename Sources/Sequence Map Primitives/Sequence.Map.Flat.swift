@@ -5,8 +5,10 @@ extension Sequence.Map where Base: ~Copyable & ~Escapable, Base.Element: Copyabl
     /// Created via `source.map.flat { transform }` or via the bridging
     /// method `source.flatMap { transform }`. The transform returns a
     /// sequence whose elements are concatenated.
-    public struct Flat<InnerSequence: Sequenceable>: ~Copyable, ~Escapable
-    where InnerSequence.Element: Copyable, InnerSequence.Iterator: Escapable {
+    public struct Flat<
+        InnerSequence: Sequenceable<InnerSequence.Element>
+    >: ~Copyable, ~Escapable
+    where InnerSequence.Element: Copyable & Escapable, InnerSequence.Iterator: Escapable {
         @usableFromInline
         var _base: Base  // var per the [compiler-bug workaround] noted on Sequence.Map.
 
@@ -25,11 +27,17 @@ extension Sequence.Map where Base: ~Copyable & ~Escapable, Base.Element: Copyabl
     }
 }
 
-extension Sequence.Map.Flat: Copyable where Base: Copyable & ~Escapable {}
-extension Sequence.Map.Flat: Escapable where Base: Escapable & ~Copyable {}
+extension Sequence.Map.Flat: Copyable
+where Base: Copyable & ~Escapable, InnerSequence.Element: Escapable {}
+extension Sequence.Map.Flat: Escapable
+where Base: Escapable & ~Copyable, InnerSequence.Element: Escapable {}
 
 extension Sequence.Map.Flat: Sequenceable
-where Base: ~Copyable & ~Escapable, InnerSequence.Iterator.Failure == Base.Iterator.Failure {
+where
+    Base: ~Copyable & ~Escapable,
+    InnerSequence.Element: Escapable,
+    InnerSequence.Iterator.Failure == Base.Iterator.Failure
+{
     /// The element type produced by this sequence (the inner sequence's element type, flattened).
     public typealias Element = InnerSequence.Element
 

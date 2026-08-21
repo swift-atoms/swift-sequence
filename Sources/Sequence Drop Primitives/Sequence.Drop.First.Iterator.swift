@@ -1,6 +1,7 @@
 public import Iterator_Chunk_Primitives
 
-extension Sequence.Drop.First where Base: ~Copyable & ~Escapable {
+extension Sequence.Drop.First
+where Base: ~Copyable & ~Escapable, Base.Element: ~Copyable & ~Escapable {
     /// Iterator for `Sequence.Drop.First` using the forward-to-base
     /// strategy.
     ///
@@ -32,7 +33,15 @@ extension Sequence.Drop.First where Base: ~Copyable & ~Escapable {
     /// required — same as `Map.Iterator`. Nested types in separate
     /// extension files must use the same `where` clause as the
     /// conformance extension.
-    public struct Iterator: ~Copyable, ~Escapable, Iterator_Primitive.Iterator.`Protocol` {
+    public struct Iterator: ~Copyable, ~Escapable,
+        Iterator_Primitive.Iterator.`Protocol`<Base.Element, Base.Iterator.Failure>
+    {
+        @_implements(Iterator_Primitive.Iterator.`Protocol`, Element)
+        public typealias ScalarElement = Base.Element
+
+        @_implements(Iterator_Primitive.Iterator.`Protocol`, Failure)
+        public typealias ScalarFailure = Base.Iterator.Failure
+
         @usableFromInline
         var _base: Base.Iterator
 
@@ -48,10 +57,8 @@ extension Sequence.Drop.First where Base: ~Copyable & ~Escapable {
     }
 }
 
-extension Sequence.Drop.First.Iterator where Base: ~Copyable & ~Escapable {
-    /// The element type produced by this iterator (forwarded from the base).
-    public typealias Element = Base.Element
-
+extension Sequence.Drop.First.Iterator
+where Base: ~Copyable & ~Escapable, Base.Element: ~Copyable & ~Escapable {
     /// Returns the next base element after the drop phase, or `nil` when iteration completes.
     ///
     /// Tuned scalar override (preserved per the migration perf invariant): drives the base's
@@ -72,8 +79,21 @@ extension Sequence.Drop.First.Iterator where Base: ~Copyable & ~Escapable {
 }
 
 // Bulk tier — conditional on the base being bulk (§9 conditional-bulk).
-extension Sequence.Drop.First.Iterator: Iterator.Chunk.`Protocol`
-where Base: ~Copyable & ~Escapable, Base.Iterator: Iterator.Chunk.`Protocol` {
+extension Sequence.Drop.First.Iterator:
+    Iterator_Primitive.Iterator.Chunk.`Protocol`<Base.Element, Base.Iterator.Failure>
+where
+    Base: ~Copyable & ~Escapable,
+    Base.Element: Escapable,
+    Base.Iterator: Iterator_Primitive.Iterator.Chunk.`Protocol`<
+        Base.Element, Base.Iterator.Failure
+    >
+{
+    @_implements(__IteratorChunkProtocol, Element)
+    public typealias ChunkElement = Base.Element
+
+    @_implements(__IteratorChunkProtocol, Failure)
+    public typealias ChunkFailure = Base.Iterator.Failure
+
     /// Returns the next batch of base elements after the drop phase, forwarding the base's bulk spans.
     ///
     /// The skip phase consumes (and discards) leading spans rather than relying on a base

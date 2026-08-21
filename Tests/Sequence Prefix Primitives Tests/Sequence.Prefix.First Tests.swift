@@ -10,8 +10,6 @@ extension Sequence.Prefix {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.Prefix.`First Test`.Unit {
     @Test
     func `prefix first N elements`() {
@@ -27,8 +25,6 @@ extension Sequence.Prefix.`First Test`.Unit {
         #expect(result == [10])
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.Prefix.`First Test`.`Edge Case` {
     @Test

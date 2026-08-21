@@ -10,8 +10,6 @@ extension Sequence {
     }
 }
 
-// MARK: - Integration
-
 extension Sequence.`Composition Test`.Integration {
     @Test
     func `map then filter then collect`() {

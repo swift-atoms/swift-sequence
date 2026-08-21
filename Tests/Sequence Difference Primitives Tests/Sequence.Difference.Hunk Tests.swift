@@ -10,8 +10,6 @@ extension Sequence.Difference.Hunk {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.Difference.Hunk.Test.Unit {
     @Test
     func `header formats standard hunk`() {
@@ -33,8 +31,6 @@ extension Sequence.Difference.Hunk.Test.Unit {
         #expect(hunk.header == "@@ -10,5 +12,7 @@")
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.Difference.Hunk.Test.`Edge Case` {
     @Test

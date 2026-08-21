@@ -10,8 +10,6 @@ extension Sequence.Difference.Step {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.Difference.Step.Test.Unit {
     @Test
     func `first isChange returns true`() {

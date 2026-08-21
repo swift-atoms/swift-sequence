@@ -10,8 +10,6 @@ extension Sequence {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.`Map Test`.Unit {
     @Test
     func `map transforms each element`() {
@@ -34,8 +32,6 @@ extension Sequence.`Map Test`.Unit {
         #expect(result == [10, 20, 30])
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.`Map Test`.`Edge Case` {
     @Test

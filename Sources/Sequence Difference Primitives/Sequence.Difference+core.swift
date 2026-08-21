@@ -1,42 +1,12 @@
-//
-//  Sequence.Difference+core.swift
-//  swift-sequence-primitives
-//
-//  Core Myers O(ND) difference algorithm — closure-based, zero element constraints.
-//
-
 extension Sequence.Difference {
-    /// Computes the minimal edit steps between two sequences using closure-based comparison.
-    ///
-    /// This is the core algorithm entry point. It places **zero constraints** on
-    /// element type — the caller provides a comparison closure that receives
-    /// ordinal indices into the old and new sequences. This enables diffing
-    /// of `~Copyable` containers, `Span`-backed data, or any indexed source.
-    ///
-    /// Uses Myers' O(ND) difference algorithm (1986) which guarantees
-    /// a minimal edit script — the fewest possible insertions and deletions
-    /// to transform the old sequence into the new one.
-    ///
-    /// - Complexity: O(ND) time and O(ND) space, where N is the total length
-    ///   of both sequences and D is the edit distance. For similar sequences
-    ///   (small D), this is nearly linear.
-    ///
-    /// - Parameters:
-    ///   - oldCount: Number of elements in the old sequence.
-    ///   - newCount: Number of elements in the new sequence.
-    ///   - equals: Closure comparing elements at ordinal positions in old and new.
-    /// - Returns: The edit steps describing how to transform old into new.
+
     @inlinable
     public static func diff(
         oldCount: Cardinal,
         newCount: Cardinal,
         equals: (Ordinal, Ordinal) -> Bool
     ) -> Steps {
-        // WORKAROUND: Myers algorithm operates in Int — array indices are not domain quantities
-        // WHY: Algorithm internals (v[k + offset], trace[d]) use 2D array indexing that doesn't
-        //      benefit from Ordinal/Cardinal typing
-        // WHEN TO REMOVE: If typed array indexing infrastructure emerges
-        // TRACKING: sequence-primitives implementation audit
+
         let n = Int(bitPattern: oldCount)
         let m = Int(bitPattern: newCount)
 
@@ -56,10 +26,6 @@ extension Sequence.Difference {
 
         var trace: [[Int]] = []
 
-        // Typed-while per [IMPL-033]: Myers' algorithm is iteration
-        // infrastructure. The outer loop sweeps edit-script depth `d`
-        // from 0 to the maximum possible (n + m); the inner stride
-        // sweeps diagonal `k`.
         var d = 0
         while d <= max {
             trace.append(v)
@@ -88,16 +54,12 @@ extension Sequence.Difference {
             d += 1
         }
 
-        // Unreachable for valid inputs — the algorithm always terminates
-        // within max = n + m steps.
         return Steps([Step](repeating: .first, count: n) + [Step](repeating: .second, count: m))
     }
 }
 
-// MARK: - Backtracking
-
 extension Sequence.Difference {
-    /// Reconstructs the edit steps by tracing back through saved states.
+
     @inlinable
     package static func backtrack(
         trace: [[Int]],

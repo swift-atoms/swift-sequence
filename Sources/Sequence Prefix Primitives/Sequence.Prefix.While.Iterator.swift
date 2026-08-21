@@ -1,38 +1,14 @@
 public import Iterator_Chunk_Primitives
 
 extension Sequence.Prefix.While where Base: ~Copyable & ~Escapable {
-    /// Iterator for `Sequence.Prefix.While` using the forward-to-base
-    /// strategy.
-    ///
-    /// Forwards base elements while the predicate holds, stopping at (and not
-    /// returning) the first element where the predicate fails.
-    ///
-    /// Zero allocation — element-preserving.
-    ///
-    /// ## Two iteration tiers
-    ///
-    /// Conforms unconditionally to the scalar `Iterator.`Protocol`` (via the
-    /// tuned `next()` below). It additionally conforms to the bulk
-    /// `Iterator.Chunk.`Protocol`` **only when the base iterator is bulk**
-    /// (§9 conditional-bulk): it scans base spans for the first failing element
-    /// and returns the prefix sub-span via `extracting(first:)`.
-    ///
-    /// ## Suppression
-    ///
-    /// `~Copyable` and `~Escapable` because it stores a `~Copyable`
-    /// base iterator and has lifetime dependency on it.
-    ///
-    /// ## Extension `where` Clause
-    ///
-    /// The `where Base: ~Copyable & ~Escapable` on this extension is
-    /// required — same as `Map.Iterator`.
+
     public struct Iterator: ~Copyable, ~Escapable,
         Iterator_Primitive.Iterator.`Protocol`<Base.Element, Base.Iterator.Failure>
     {
-        @_implements(Iterator_Primitive.Iterator.`Protocol`, Element)
+        @_implements(Iterator_Primitive.Iterator.`Protocol`,Element)
         public typealias ScalarElement = Base.Element
 
-        @_implements(Iterator_Primitive.Iterator.`Protocol`, Failure)
+        @_implements(Iterator_Primitive.Iterator.`Protocol`,Failure)
         public typealias ScalarFailure = Base.Iterator.Failure
 
         @usableFromInline
@@ -55,10 +31,7 @@ extension Sequence.Prefix.While where Base: ~Copyable & ~Escapable {
 }
 
 extension Sequence.Prefix.While.Iterator where Base: ~Copyable & ~Escapable {
-    /// The element type produced by this iterator (base elements while the predicate holds).
-    /// Returns the next prefix element, or `nil` once the predicate first fails.
-    ///
-    /// Tuned scalar override (preserved per the migration perf invariant).
+
     @inlinable
     public mutating func next() throws(Base.Iterator.Failure) -> Base.Element? {
         guard !_done else { return nil }
@@ -71,7 +44,6 @@ extension Sequence.Prefix.While.Iterator where Base: ~Copyable & ~Escapable {
     }
 }
 
-// Bulk tier — conditional on the base being bulk (§9 conditional-bulk).
 extension Sequence.Prefix.While.Iterator:
     Iterator_Primitive.Iterator.Chunk.`Protocol`<Base.Element, Base.Iterator.Failure>
 where
@@ -81,13 +53,12 @@ where
         Base.Element, Base.Iterator.Failure
     >
 {
-    @_implements(__IteratorChunkProtocol, Element)
+    @_implements(__IteratorChunkProtocol,Element)
     public typealias ChunkElement = Base.Element
 
-    @_implements(__IteratorChunkProtocol, Failure)
+    @_implements(__IteratorChunkProtocol,Failure)
     public typealias ChunkFailure = Base.Iterator.Failure
 
-    /// Returns the next batch of prefix elements, stopping at the first element where the predicate fails.
     @_lifetime(&self)
     @inlinable
     public mutating func next(

@@ -10,8 +10,6 @@ extension Sequence {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.`Filter Test`.Unit {
     @Test
     func `filter keeps matching elements`() {
@@ -27,8 +25,6 @@ extension Sequence.`Filter Test`.Unit {
         #expect(result == [5, 3, 4])
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.`Filter Test`.`Edge Case` {
     @Test

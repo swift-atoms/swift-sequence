@@ -10,8 +10,6 @@ extension Sequence {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.`Span Iterator Test`.Unit {
     @Test
     func `next returns elements in order`() {
@@ -70,8 +68,6 @@ extension Sequence.`Span Iterator Test`.Unit {
         }
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.`Span Iterator Test`.`Edge Case` {
     @Test

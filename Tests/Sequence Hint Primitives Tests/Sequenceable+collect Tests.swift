@@ -8,8 +8,6 @@ struct `Sequence.Protocol.Collect Test` {
     @Suite struct Integration {}
 }
 
-// MARK: - Unit
-
 extension `Sequence.Protocol.Collect Test`.Unit {
     @Test
     func `collect materializes sequence into array`() {
@@ -25,8 +23,6 @@ extension `Sequence.Protocol.Collect Test`.Unit {
         #expect(result == [5, 3, 1, 4, 2])
     }
 }
-
-// MARK: - Edge Case
 
 extension `Sequence.Protocol.Collect Test`.`Edge Case` {
     @Test

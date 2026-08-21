@@ -1,29 +1,7 @@
 public import Index_Primitives
 
 extension Sequence.Drop {
-    /// Lazy wrapper that skips the first N elements of a base sequence.
-    ///
-    /// Created by calling `.drop(first:)` on a `Sequence.Protocol`
-    /// conformer. Uses the simpler lazy wrapper pattern — no
-    /// `Element: Copyable` constraint because it is element-preserving
-    /// (doesn't inspect elements).
-    ///
-    /// ```swift
-    /// let tail = source.drop(first: Cardinal(2))
-    /// let result = tail.collect()  // [3, 4, 5] from [1, 2, 3, 4, 5]
-    /// ```
-    ///
-    /// ## Suppression Pattern
-    ///
-    /// Same full suppression + conditional restoration as
-    /// `Sequence.Map`:
-    /// - `~Copyable, ~Escapable` on the struct
-    /// - `Copyable where Base: Copyable & ~Escapable`
-    /// - `Escapable where Base: Escapable & ~Copyable`
-    /// - Conformance extension with
-    ///   `where Base: ~Copyable & ~Escapable`
-    ///
-    /// Iterator uses forward-to-base (zero allocation).
+
     public struct First<
         Base: Sequenceable<Base.Element> & ~Copyable & ~Escapable
     >: ~Copyable, ~Escapable where Base.Element: ~Copyable & ~Escapable {
@@ -49,10 +27,9 @@ where Base: Escapable & ~Copyable, Base.Element: ~Copyable & ~Escapable {}
 
 extension Sequence.Drop.First: Sequenceable
 where Base: ~Copyable & ~Escapable, Base.Element: ~Copyable & ~Escapable {
-    /// The element type produced by this lazy sequence (the same element type as the base).
+
     public typealias Element = Base.Element
 
-    /// Creates a fresh iterator that skips the first stored count of base elements.
     @_lifetime(copy self)
     @inlinable
     public consuming func makeIterator() -> Iterator {

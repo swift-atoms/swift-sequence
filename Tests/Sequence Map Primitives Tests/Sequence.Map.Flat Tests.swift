@@ -10,8 +10,6 @@ extension Sequence {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.`Map.Flat Test`.Unit {
     @Test
     func `flatMap transforms and flattens`() {
@@ -53,8 +51,6 @@ extension Sequence.`Map.Flat Test`.Unit {
         #expect(result == [2, 3, 4, 5, 6, 7])
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.`Map.Flat Test`.`Edge Case` {
     @Test

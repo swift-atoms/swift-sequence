@@ -12,20 +12,18 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        // MARK: - Namespace + foundational
+
         .library(name: "Sequence Primitive", targets: ["Sequence Primitive"]),
         .library(name: "Sequence Iterator Primitives", targets: ["Sequence Iterator Primitives"]),
         .library(name: "Sequence Protocol Primitives", targets: ["Sequence Protocol Primitives"]),
         .library(name: "Sequence Borrowing Primitives", targets: ["Sequence Borrowing Primitives"]),
         .library(name: "Sequence Span Primitives", targets: ["Sequence Span Primitives"]),
 
-        // MARK: - Lazy wrappers
         .library(name: "Sequence Map Primitives", targets: ["Sequence Map Primitives"]),
         .library(name: "Sequence Filter Primitives", targets: ["Sequence Filter Primitives"]),
         .library(name: "Sequence Drop Primitives", targets: ["Sequence Drop Primitives"]),
         .library(name: "Sequence Prefix Primitives", targets: ["Sequence Prefix Primitives"]),
 
-        // MARK: - Terminals
         .library(name: "Sequence ForEach Primitives", targets: ["Sequence ForEach Primitives"]),
         .library(name: "Sequence Satisfies Primitives", targets: ["Sequence Satisfies Primitives"]),
         .library(name: "Sequence Contains Primitives", targets: ["Sequence Contains Primitives"]),
@@ -33,25 +31,20 @@ let package = Package(
         .library(name: "Sequence Reduce Primitives", targets: ["Sequence Reduce Primitives"]),
         .library(name: "Sequence Hint Primitives", targets: ["Sequence Hint Primitives"]),
 
-        // MARK: - Consuming
         .library(name: "Sequence Drain Primitives", targets: ["Sequence Drain Primitives"]),
 
-        // MARK: - Algorithms
         .library(
             name: "Sequence Difference Primitives",
             targets: ["Sequence Difference Primitives"]
         ),
 
-        // MARK: - Standard Library Integration
         .library(
             name: "Sequence Primitives Standard Library Integration",
             targets: ["Sequence Primitives Standard Library Integration"]
         ),
 
-        // MARK: - Umbrella
         .library(name: "Sequence Primitives", targets: ["Sequence Primitives"]),
 
-        // MARK: - Test Support
         .library(
             name: "Sequence Primitives Test Support",
             targets: ["Sequence Primitives Test Support"]
@@ -80,7 +73,6 @@ let package = Package(
         ),
     ],
     targets: [
-        // MARK: - Namespace + foundational
 
         .target(
             name: "Sequence Primitive",
@@ -123,8 +115,6 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Lazy wrappers
-
         .target(
             name: "Sequence Map Primitives",
             dependencies: [
@@ -157,8 +147,6 @@ let package = Package(
                 .product(name: "Index Primitives", package: "swift-index-primitives"),
             ]
         ),
-
-        // MARK: - Terminals
 
         .target(
             name: "Sequence ForEach Primitives",
@@ -214,8 +202,6 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Consuming
-
         .target(
             name: "Sequence Drain Primitives",
             dependencies: [
@@ -224,8 +210,6 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Algorithms
-
         .target(
             name: "Sequence Difference Primitives",
             dependencies: [
@@ -233,8 +217,6 @@ let package = Package(
                 .product(name: "Index Primitives", package: "swift-index-primitives"),
             ]
         ),
-
-        // MARK: - Standard Library Integration
 
         .target(
             name: "Sequence Primitives Standard Library Integration",
@@ -245,8 +227,6 @@ let package = Package(
                 .product(name: "Iterator Chunk Primitives", package: "swift-iterator-primitives"),
             ]
         ),
-
-        // MARK: - Umbrella
 
         .target(
             name: "Sequence Primitives",
@@ -272,7 +252,6 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Test Support
         .target(
             name: "Sequence Primitives Test Support",
             dependencies: [
@@ -281,13 +260,6 @@ let package = Package(
             ],
             path: "Tests/Support"
         ),
-
-        // MARK: - Tests
-        //
-        // Per [TEST-033]: one test target per source target. Per [MOD-015]:
-        // each test target depends on its specific source target product +
-        // Sequence Primitives Test Support, not the umbrella. Composition
-        // tests are the exception (cross-cutting integration).
 
         .testTarget(
             name: "Sequence Primitive Tests",

@@ -10,8 +10,6 @@ extension Sequence.Drop {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.Drop.`First Test`.Unit {
     @Test
     func `drop first N elements`() {
@@ -27,8 +25,6 @@ extension Sequence.Drop.`First Test`.Unit {
         #expect(result == [20, 30])
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.Drop.`First Test`.`Edge Case` {
     @Test

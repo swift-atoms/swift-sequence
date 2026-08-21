@@ -10,8 +10,6 @@ extension Sequence.Drop {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.Drop.`While Test`.Unit {
     @Test
     func `drop while predicate holds`() {
@@ -27,8 +25,6 @@ extension Sequence.Drop.`While Test`.Unit {
         #expect(result == [5, 1, 2])
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.Drop.`While Test`.`Edge Case` {
     @Test

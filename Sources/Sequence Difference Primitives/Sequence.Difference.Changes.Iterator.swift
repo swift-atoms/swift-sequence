@@ -1,12 +1,5 @@
-//
-//  Sequence.Difference.Changes.Iterator.swift
-//  swift-sequence-primitives
-//
-//  Iterator for Sequence.Difference.Changes.
-//
-
 extension Sequence.Difference.Changes {
-    /// Iterator producing ``Change`` elements one at a time.
+
     public struct Iterator: Iterator_Primitive.Iterator.`Protocol` {
         @usableFromInline
         var _storage: [Sequence.Difference.Change<Value>]
@@ -27,7 +20,7 @@ extension Sequence.Difference.Changes {
 }
 
 extension Sequence.Difference.Changes.Iterator {
-    /// Returns the next element-carrying change, or `nil` when iteration completes.
+
     @inlinable
     public mutating func next() -> Sequence.Difference.Change<Value>? {
         guard _index < _count else { return nil }

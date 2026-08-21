@@ -10,8 +10,6 @@ extension Sequence.Difference {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.Difference.`Change Test`.Unit {
     @Test
     func `first element extracts value`() {

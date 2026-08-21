@@ -10,8 +10,6 @@ extension Sequence {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.`Map.Compact Test`.Unit {
     @Test
     func `compactMap removes nils`() {
@@ -27,8 +25,6 @@ extension Sequence.`Map.Compact Test`.Unit {
         #expect(result == [1, 3])
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.`Map.Compact Test`.`Edge Case` {
     @Test

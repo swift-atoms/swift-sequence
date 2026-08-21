@@ -10,8 +10,6 @@ extension Sequence.Contains {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.Contains.Test.Unit {
     @Test
     func `contains returns true when element matches`() {
@@ -25,8 +23,6 @@ extension Sequence.Contains.Test.Unit {
         #expect(!source.contains { $0 == 10 })
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.Contains.Test.`Edge Case` {
     @Test

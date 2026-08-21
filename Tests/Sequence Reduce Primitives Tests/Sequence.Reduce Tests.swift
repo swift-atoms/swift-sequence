@@ -10,8 +10,6 @@ extension Sequence.Reduce {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.Reduce.Test.Unit {
     @Test
     func `reduce into accumulates with mutable state`() {
@@ -34,8 +32,6 @@ extension Sequence.Reduce.Test.Unit {
         #expect(strings == ["1", "2", "3"])
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.Reduce.Test.`Edge Case` {
     @Test

@@ -9,8 +9,6 @@ extension Sequence {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.`Count Test`.Unit {
     @Test
     func `collect then count returns total element count`() {
@@ -26,8 +24,6 @@ extension Sequence.`Count Test`.Unit {
         #expect(evens == 3)
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.`Count Test`.`Edge Case` {
     @Test

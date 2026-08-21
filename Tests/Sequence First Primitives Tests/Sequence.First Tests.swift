@@ -10,8 +10,6 @@ extension Sequence.First {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.First.Test.Unit {
     @Test
     func `first matching element found`() {
@@ -27,8 +25,6 @@ extension Sequence.First.Test.Unit {
         #expect(result == 10)
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.First.Test.`Edge Case` {
     @Test

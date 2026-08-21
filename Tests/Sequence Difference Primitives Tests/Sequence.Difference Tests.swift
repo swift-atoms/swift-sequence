@@ -10,11 +10,7 @@ extension Sequence.Difference {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.Difference.Test.Unit {
-
-    // MARK: Core closure-based diff
 
     @Test
     func `core diff identical sequences produces all both`() {
@@ -64,8 +60,6 @@ extension Sequence.Difference.Test.Unit {
         #expect(steps.collect() == [.both, .first, .second])
     }
 
-    // MARK: Convenience array-based diff
-
     @Test
     func `diff annotates elements correctly for deletion`() {
         let changes = Sequence.Difference.diff(["a", "b", "c"], ["a", "c"])
@@ -86,8 +80,6 @@ extension Sequence.Difference.Test.Unit {
         let result = changes.collect()
         #expect(result == [.both("a"), .first("b"), .second("c")])
     }
-
-    // MARK: Steps.counts()
 
     @Test
     func `steps counts reports removed and inserted`() {
@@ -116,8 +108,6 @@ extension Sequence.Difference.Test.Unit {
         #expect(inserted == .zero)
     }
 
-    // MARK: Changes.counts()
-
     @Test
     func `changes counts reports removed and inserted`() {
         let (removed, inserted) = Sequence.Difference.diff(["a", "b", "c"], ["a", "d"]).counts()
@@ -132,19 +122,15 @@ extension Sequence.Difference.Test.Unit {
         #expect(inserted == .zero)
     }
 
-    // MARK: Minimality
-
     @Test
     func `diff produces minimal edit distance`() {
         let changes = Sequence.Difference.diff(["a", "b", "c", "d"], ["a", "x", "c", "y"])
         let (removed, inserted) = changes.counts()
-        // Minimum: remove "b" and "d", insert "x" and "y" → 2 removals, 2 insertions
+
         #expect(removed == 2)
         #expect(inserted == 2)
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.Difference.Test.`Edge Case` {
     @Test

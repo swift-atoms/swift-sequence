@@ -10,8 +10,6 @@ extension Sequence.Prefix {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.Prefix.`While Test`.Unit {
     @Test
     func `prefix while predicate holds`() {
@@ -27,8 +25,6 @@ extension Sequence.Prefix.`While Test`.Unit {
         #expect(result == [2, 4, 6])
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.Prefix.`While Test`.`Edge Case` {
     @Test

@@ -1,19 +1,5 @@
-//
-//  Sequence.Difference.Changes+hunks.swift
-//  swift-sequence-primitives
-//
-//  Unified diff hunk generation from Changes.
-//
-
 extension Sequence.Difference.Changes where Value: CustomStringConvertible {
-    /// Generates unified diff hunks from these changes.
-    ///
-    /// Groups changes into hunks with surrounding context lines.
-    /// Adjacent changes within `contextLines` distance are merged
-    /// into a single hunk.
-    ///
-    /// - Parameter contextLines: Number of context lines around changes (default: 3).
-    /// - Returns: Array of hunks.
+
     public func hunks(contextLines: Cardinal = 3) -> [Sequence.Difference.Hunk] {
         var hunks: [Sequence.Difference.Hunk] = []
         var currentLines: [Sequence.Difference.Change<String>] = []
@@ -97,9 +83,6 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
                     }
                 }
 
-                // The hunk-close branch above has already buffered this
-                // change; appending it again would duplicate the leading
-                // context of the next hunk.
                 if !inHunk && !buffered {
                     contextBuffer.append((stringChange, oldLine, newLine))
                     if Cardinal(UInt(contextBuffer.count)) > contextLines {

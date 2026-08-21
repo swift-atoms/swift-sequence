@@ -10,8 +10,6 @@ extension Sequence.Satisfies {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.Satisfies.Test.Unit {
     @Test
     func `satisfies all returns true when all match`() {
@@ -49,8 +47,6 @@ extension Sequence.Satisfies.Test.Unit {
         #expect(!source.satisfies.none { $0 % 2 == 0 })
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.Satisfies.Test.`Edge Case` {
     @Test

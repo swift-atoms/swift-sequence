@@ -10,8 +10,6 @@ extension Sequence.Difference {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.Difference.`Hunks Test`.Unit {
     @Test
     func `single change produces one hunk`() {
@@ -52,7 +50,7 @@ extension Sequence.Difference.`Hunks Test`.Unit {
 
     @Test
     func `distant changes produce multiple hunks`() {
-        // 10 lines with changes at positions 1 and 9 — more than 2*contextLines apart
+
         var old = (1...10).map { "line\($0)" }
         var new = old
         new[0] = "changed1"
@@ -85,9 +83,8 @@ extension Sequence.Difference.`Hunks Test`.Unit {
         let hunksSmall = Sequence.Difference.diff(old, new).hunks(contextLines: 1)
         let hunksLarge = Sequence.Difference.diff(old, new).hunks(contextLines: 10)
 
-        // Small context: distant changes should split
         #expect(hunksSmall.count == 2)
-        // Large context: distant changes should merge
+
         #expect(hunksLarge.count == 1)
     }
 
@@ -103,8 +100,6 @@ extension Sequence.Difference.`Hunks Test`.Unit {
         #expect(hunks[0].new.count >= 1)
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.Difference.`Hunks Test`.`Edge Case` {
     @Test
@@ -145,10 +140,7 @@ extension Sequence.Difference.`Hunks Test`.`Edge Case` {
 
     @Test
     func `two hunks split at the context boundary carry no duplicated context`() {
-        // Changes at both ends separated by exactly 2 * contextLines context
-        // lines: the first hunk closes on the last buffered context line, and
-        // that same line must appear exactly once in the second hunk's
-        // leading context.
+
         let old = ["line1", "c1", "c2", "c3", "c4", "c5", "c6", "line8"]
         var new = old
         new[0] = "changed1"
@@ -174,8 +166,6 @@ extension Sequence.Difference.`Hunks Test`.`Edge Case` {
         )
         #expect(second.filter { $0 == .both("c6") }.count == 1)
 
-        // Header counts must match the emitted lines: 3 context + 1 removal
-        // on the old side, 3 context + 1 insertion on the new side.
         #expect(hunks[1].old.count == 4)
         #expect(hunks[1].new.count == 4)
     }

@@ -10,8 +10,6 @@ extension Sequence.Drain {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.Drain.Test.Unit {
     @Test
     func `drain visits all elements and empties source`() {
@@ -29,8 +27,6 @@ extension Sequence.Drain.Test.Unit {
         #expect(sum == 60)
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.Drain.Test.`Edge Case` {
     @Test

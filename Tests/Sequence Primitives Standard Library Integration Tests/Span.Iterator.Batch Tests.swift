@@ -10,8 +10,6 @@ extension Sequence {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.`Span Iterator Batch Test`.Unit {
     @Test
     func `next(maximumCount:) returns batches of requested size`() {
@@ -81,8 +79,6 @@ extension Sequence.`Span Iterator Batch Test`.Unit {
         }
     }
 }
-
-// MARK: - Edge Case
 
 extension Sequence.`Span Iterator Batch Test`.`Edge Case` {
     @Test

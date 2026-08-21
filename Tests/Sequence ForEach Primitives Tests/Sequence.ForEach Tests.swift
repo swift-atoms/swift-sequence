@@ -10,8 +10,6 @@ extension Sequence.ForEach {
     }
 }
 
-// MARK: - Unit
-
 extension Sequence.ForEach.Test.Unit {
     @Test
     func `forEach visits every element in order`() {
@@ -30,8 +28,6 @@ extension Sequence.ForEach.Test.Unit {
     }
 }
 
-// MARK: - Edge Case
-
 extension Sequence.ForEach.Test.`Edge Case` {
     @Test
     func `forEach on empty sequence does nothing`() {
@@ -42,10 +38,8 @@ extension Sequence.ForEach.Test.`Edge Case` {
     }
 }
 
-// MARK: - Integration
-
 extension Sequence.ForEach.Test.Integration {
-    /// Custom error type used to verify typed-throws preservation across iteration.
+
     enum Stop: Swift.Error, Equatable {
         case at(Int)
     }
@@ -61,16 +55,16 @@ extension Sequence.ForEach.Test.Integration {
             }
             Issue.record("forEach should have thrown Stop.at(3)")
         } catch {
-            // The catch binding's static type is Stop — typed throws preserved.
+
             #expect(error == .at(3))
         }
-        // Iteration stops at the throw — elements before are visited, after are not.
+
         #expect(visited == [1, 2])
     }
 
     @Test
     func `typed-throws forEach with non-throwing closure visits every element`() {
-        // A typed-throws function whose closure never throws still iterates fully.
+
         let source = Sequence.Fixture.Source([10, 20, 30])
         var visited: [Int] = []
         do throws(Stop) {
@@ -90,7 +84,7 @@ extension Sequence.ForEach.Test.Integration {
         do throws(Stop) {
             try source.forEach { _ throws(Stop) in
                 visitCount += 1
-                throw Stop.at(0)  // would throw on any element, but there are none
+                throw Stop.at(0)
             }
         } catch {
             Issue.record("forEach on empty sequence should not throw; got \(error)")
@@ -102,21 +96,13 @@ extension Sequence.ForEach.Test.Integration {
     func
         `non-throwing closure resolves via accessor; typed-throws closure resolves via direct method`()
     {
-        // This test documents the overload-resolution split: the call-site
-        // syntax `source.forEach { body }` resolves to the Property.Inout
-        // accessor's callAsFunction for non-throwing closures (verified by
-        // the Unit-suite tests above) and to the typed-throws direct method
-        // for closures with a typed `throws(E)` clause (verified here).
+
         var source = Sequence.Fixture.Source([7, 8, 9])
         var visited: [Int] = []
 
-        // Non-throwing call (Property.Inout accessor path).
         source.forEach { visited.append($0) }
         #expect(visited == [7, 8, 9])
 
-        // Typed-throws call (direct method path) — same syntax, different
-        // resolution. The fact that this compiles confirms the typed-throws
-        // overload is reachable on `Sequence.Protocol where Self: Copyable`.
         visited.removeAll()
         do throws(Stop) {
             try source.forEach { element throws(Stop) in

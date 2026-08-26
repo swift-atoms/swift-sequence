@@ -1,4 +1,4 @@
-# Sequence Primitives
+# Sequence
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
@@ -13,10 +13,10 @@ Stdlib's `Swift.Sequence` requires `Element: Copyable` (per SE-0427). `Sequence.
 ## Quick Start
 
 ```swift
-import Sequence_Primitives
+import Sequence
 
 // `source` here is any `Sequence.Protocol` conformer — your own type, or
-// a concrete container from a downstream package (Vector_Primitives, etc.).
+// a concrete container from a downstream package (Vector, etc.).
 let source: some Sequence.`Protocol`<Int> = makeSource([1, 2, 3, 4, 5, 6])
 
 // Lazy pipeline — each stage produces a new Sequence.Protocol conformer
@@ -47,7 +47,7 @@ Add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-primitives/swift-sequence-primitives.git", branch: "main"),
+    .package(url: "https://github.com/swift-molecules/swift-sequence.git", branch: "main"),
 ]
 ```
 
@@ -55,7 +55,7 @@ dependencies: [
 .target(
     name: "App",
     dependencies: [
-        .product(name: "Sequence Primitives", package: "swift-sequence-primitives"),
+        .product(name: "Sequence", package: "swift-sequence"),
     ]
 )
 ```
@@ -76,8 +76,8 @@ The package decomposes into one library product per sub-namespace. Consumers can
 | Consuming-side | `Sequence Drain` | Draining refinement for `~Copyable` containers. |
 | Diff algorithm | `Sequence Difference` | Myers O(ND) diff — `Sequence.Difference`, `Steps`, `Changes`, `Change`, `Hunk`. |
 | Stdlib bridges | `Sequence Standard Library Integration` | `Swift.Span.Iterator`, `Swift.Span.Iterator.Batch`, and the `Sequence.Protocol` ⇄ `Swift.Sequence` adapter. |
-| Umbrella | `Sequence Primitives` | Re-exports every sub-namespace product. The default for application code. |
-| Test infrastructure | `Sequence Primitives Test Support` | Fixture conformers — `Source`, `Clearable.Source`, `Drainable.Source` — for downstream test code. |
+| Umbrella | `Sequence` | Re-exports every sub-namespace product. The default for application code. |
+| Test infrastructure | `Sequence Test Support` | Fixture conformers — `Source`, `Clearable.Source`, `Drainable.Source` — for downstream test code. |
 
 Foundation-free across every sub-target. Per-sub-namespace decomposition means an application that only needs `Sequence.Protocol` for its own conforming type imports `Sequence Protocol` and skips compilation of every other surface. Adding a new operation to one axis touches one target; cross-axis composition happens via the umbrella.
 
@@ -135,8 +135,8 @@ The package is sync-only by design. `Sequence.Protocol` carries no async surface
 
 Direct dependencies:
 
-- [swift-index-primitives](https://github.com/swift-primitives/swift-index-primitives) — `Index<Element>`, `Ordinal`, `Cardinal` (via index's re-export chain), the typed-indexing surface the iterator family builds on.
-- [swift-property-primitives](https://github.com/swift-primitives/swift-property-primitives) — `Property<Tag, Base>` and `Property.Inout`, the phantom-tagged fluent-accessor machinery that powers `.contains { }`, `.satisfies.all { }`, `.forEach.borrowing { }`, and the rest of the terminal surface.
+- [swift-index](https://github.com/swift-molecules/swift-index) — `Index<Element>`, `Ordinal`, `Cardinal` (via index's re-export chain), the typed-indexing surface the iterator family builds on.
+- [swift-property](https://github.com/swift-molecules/swift-property) — `Property<Tag, Base>` and `Property.Inout`, the phantom-tagged fluent-accessor machinery that powers `.contains { }`, `.satisfies.all { }`, `.forEach.borrowing { }`, and the rest of the terminal surface.
 
 ---
 

@@ -1,3 +1,5 @@
+public import Iterator
+
 extension Sequenceable where Self: ~Copyable, Element: Escapable, Iterator.Failure == Never {
 
     @inlinable

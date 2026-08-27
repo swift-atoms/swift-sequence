@@ -1,3 +1,6 @@
+import Cardinal
+import Ordinal
+
 extension Sequence.Difference {
 
     public static func diff<Element: Equatable>(
@@ -7,29 +10,31 @@ extension Sequence.Difference {
         let steps = diff(
             oldCount: Cardinal(UInt(old.count)),
             newCount: Cardinal(UInt(new.count)),
-            equals: { old[$0] == new[$1] }
+            equals: {
+                old[Int(clamping: $0.rawValue)] == new[Int(clamping: $1.rawValue)]
+            }
         )
 
         var changes: [Change<Element>] = []
         changes.reserveCapacity(steps._storage.count)
 
-        var oldPosition: Ordinal = .zero
-        var newPosition: Ordinal = .zero
+        var oldPosition = 0
+        var newPosition = 0
 
         for step in steps._storage {
             switch step {
             case .first:
                 changes.append(.first(old[oldPosition]))
-                oldPosition = oldPosition.successor.saturating()
+                oldPosition += 1
 
             case .second:
                 changes.append(.second(new[newPosition]))
-                newPosition = newPosition.successor.saturating()
+                newPosition += 1
 
             case .both:
                 changes.append(.both(old[oldPosition]))
-                oldPosition = oldPosition.successor.saturating()
-                newPosition = newPosition.successor.saturating()
+                oldPosition += 1
+                newPosition += 1
             }
         }
 

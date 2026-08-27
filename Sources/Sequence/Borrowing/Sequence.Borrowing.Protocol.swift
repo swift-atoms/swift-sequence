@@ -1,4 +1,4 @@
-public import Iterator_Chunk
+public import Iterator
 
 extension Sequence.Borrowing {
 

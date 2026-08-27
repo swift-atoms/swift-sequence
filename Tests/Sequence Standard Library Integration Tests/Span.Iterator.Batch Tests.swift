@@ -1,3 +1,4 @@
+import Cardinal
 import Sequence
 import Sequence_Standard_Library_Integration
 import Testing
@@ -53,10 +54,10 @@ extension Sequence.`Span Iterator Batch Test`.Unit {
             var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
 
             let skipped = iterator.skip(by: Cardinal(2))
-            #expect(skipped == 2)
+            #expect(skipped == Cardinal(2))
 
             let rem = iterator.remaining
-            #expect(rem == 3)
+            #expect(rem == Cardinal(3))
         }
     }
 
@@ -68,15 +69,15 @@ extension Sequence.`Span Iterator Batch Test`.Unit {
             var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
 
             var rem = iterator.remaining
-            #expect(rem == 4)
+            #expect(rem == Cardinal(4))
 
             _ = iterator.next(maximumCount: Cardinal(2))
             rem = iterator.remaining
-            #expect(rem == 2)
+            #expect(rem == Cardinal(2))
 
             _ = iterator.next(maximumCount: Cardinal(2))
             rem = iterator.remaining
-            #expect(rem == .zero)
+            #expect(rem == Cardinal(0))
         }
     }
 }
@@ -93,7 +94,7 @@ extension Sequence.`Span Iterator Batch Test`.`Edge Case` {
             #expect(empty)
 
             let rem = iterator.remaining
-            #expect(rem == .zero)
+            #expect(rem == Cardinal(0))
 
             let count = iterator.next(maximumCount: Cardinal(5)).count
             #expect(count == 0)
@@ -108,7 +109,7 @@ extension Sequence.`Span Iterator Batch Test`.`Edge Case` {
             var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
 
             let skipped = iterator.skip(by: Cardinal(10))
-            #expect(skipped == 3)
+            #expect(skipped == Cardinal(3))
 
             let empty = iterator.isEmpty
             #expect(empty)

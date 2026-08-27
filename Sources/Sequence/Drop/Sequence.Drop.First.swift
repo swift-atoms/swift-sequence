@@ -1,4 +1,4 @@
-public import Index
+public import Cardinal
 
 extension Sequence.Drop {
 

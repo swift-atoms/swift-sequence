@@ -1,3 +1,5 @@
+public import Ordinal
+
 extension Sequence.Difference {
 
     public enum Change<Element> {
@@ -35,13 +37,13 @@ extension Sequence.Difference.Change {
 
     public func advance(old: inout Ordinal, new: inout Ordinal) {
         switch self {
-        case .first: old += .one
+        case .first: old = Ordinal(old.rawValue + 1)
 
-        case .second: new += .one
+        case .second: new = Ordinal(new.rawValue + 1)
 
         case .both:
-            old += .one
-            new += .one
+            old = Ordinal(old.rawValue + 1)
+            new = Ordinal(new.rawValue + 1)
         }
     }
 }

@@ -1,3 +1,4 @@
+import Cardinal
 import Sequence
 import Testing
 
@@ -21,7 +22,7 @@ extension Sequence.Prefix.`First Test`.Unit {
     @Test
     func `prefix first 1 element`() {
         let source = Sequence.Fixture.Source([10, 20, 30])
-        let result = source.prefix(first: .one).collect()
+        let result = source.prefix(first: Cardinal(1)).collect()
         #expect(result == [10])
     }
 }
@@ -30,7 +31,7 @@ extension Sequence.Prefix.`First Test`.`Edge Case` {
     @Test
     func `prefix zero elements returns empty`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
-        let result = source.prefix(first: .zero).collect()
+        let result = source.prefix(first: Cardinal(0)).collect()
         #expect(result.isEmpty)
     }
 

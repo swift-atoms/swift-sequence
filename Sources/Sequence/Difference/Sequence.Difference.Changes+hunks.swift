@@ -1,76 +1,79 @@
+public import Cardinal
+import Ordinal
+
 extension Sequence.Difference.Changes where Value: CustomStringConvertible {
 
-    public func hunks(contextLines: Cardinal = 3) -> [Sequence.Difference.Hunk] {
+    public func hunks(contextLines: Cardinal = Cardinal(3)) -> [Sequence.Difference.Hunk] {
+        let contextLimit = Int(clamping: contextLines.rawValue)
         var hunks: [Sequence.Difference.Hunk] = []
         var currentLines: [Sequence.Difference.Change<String>] = []
         var oldStart: Ordinal = .zero
-        var oldCount: Cardinal = .zero
+        var oldCount = Cardinal(0)
         var newStart: Ordinal = .zero
-        var newCount: Cardinal = .zero
+        var newCount = Cardinal(0)
         var inHunk = false
 
-        var oldLine: Ordinal = 1
-        var newLine: Ordinal = 1
+        var oldLine = Ordinal(1)
+        var newLine = Ordinal(1)
         var contextBuffer:
             [(change: Sequence.Difference.Change<String>, oldLine: Ordinal, newLine: Ordinal)] = []
-        var trailingCount: Cardinal = .zero
+        var trailingCount = 0
 
         for change in _storage {
             let stringChange = change.stringified
 
             if change.isChange {
                 if !inHunk {
-                    let bufferCount = Cardinal(UInt(contextBuffer.count))
-                    let skip = bufferCount.subtract.saturating(contextLines)
+                    let skip = Swift.max(contextBuffer.count - contextLimit, 0)
                     let leading = Array(contextBuffer.dropFirst(skip))
 
                     oldStart = leading.first?.oldLine ?? oldLine
                     newStart = leading.first?.newLine ?? newLine
-                    oldCount = .zero
-                    newCount = .zero
+                    oldCount = Cardinal(0)
+                    newCount = Cardinal(0)
                     currentLines = []
 
                     for c in leading {
                         currentLines.append(c.change)
-                        oldCount += .one
-                        newCount += .one
+                        oldCount += Cardinal(1)
+                        newCount += Cardinal(1)
                     }
 
                     inHunk = true
                 } else if !contextBuffer.isEmpty {
                     for c in contextBuffer {
                         currentLines.append(c.change)
-                        oldCount += .one
-                        newCount += .one
+                        oldCount += Cardinal(1)
+                        newCount += Cardinal(1)
                     }
                 }
 
                 currentLines.append(stringChange)
                 switch change {
-                case .first: oldCount += .one
-                case .second: newCount += .one
+                case .first: oldCount += Cardinal(1)
+                case .second: newCount += Cardinal(1)
                 case .both: break
                 }
 
-                trailingCount = .zero
+                trailingCount = 0
                 contextBuffer.removeAll()
             } else {
                 var buffered = false
 
                 if inHunk {
-                    if trailingCount < contextLines {
+                    if trailingCount < contextLimit {
                         currentLines.append(stringChange)
-                        oldCount += .one
-                        newCount += .one
-                        trailingCount += .one
+                        oldCount += Cardinal(1)
+                        newCount += Cardinal(1)
+                        trailingCount += 1
                     } else {
                         contextBuffer.append((stringChange, oldLine, newLine))
                         buffered = true
-                        if Cardinal(UInt(contextBuffer.count)) > contextLines {
+                        if contextBuffer.count > contextLimit {
                             contextBuffer.removeFirst()
                         }
 
-                        if Cardinal(UInt(contextBuffer.count)) >= contextLines {
+                        if contextBuffer.count >= contextLimit {
                             hunks.append(
                                 Sequence.Difference.Hunk(
                                     old: .init(start: oldStart, count: oldCount),
@@ -85,7 +88,7 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
 
                 if !inHunk && !buffered {
                     contextBuffer.append((stringChange, oldLine, newLine))
-                    if Cardinal(UInt(contextBuffer.count)) > contextLines {
+                    if contextBuffer.count > contextLimit {
                         contextBuffer.removeFirst()
                     }
                 }

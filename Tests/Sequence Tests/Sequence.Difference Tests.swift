@@ -1,3 +1,5 @@
+import Cardinal
+import Ordinal
 import Sequence
 import Testing
 
@@ -19,7 +21,7 @@ extension Sequence.Difference.Test.Unit {
         let steps = Sequence.Difference.diff(
             oldCount: Cardinal(UInt(old.count)),
             newCount: Cardinal(UInt(new.count)),
-            equals: { old[Int(bitPattern: $0)] == new[Int(bitPattern: $1)] }
+            equals: { old[Int(clamping: $0.rawValue)] == new[Int(clamping: $1.rawValue)] }
         )
         #expect(steps.collect() == [.both, .both, .both])
     }
@@ -31,7 +33,7 @@ extension Sequence.Difference.Test.Unit {
         let steps = Sequence.Difference.diff(
             oldCount: Cardinal(UInt(old.count)),
             newCount: Cardinal(UInt(new.count)),
-            equals: { old[Int(bitPattern: $0)] == new[Int(bitPattern: $1)] }
+            equals: { old[Int(clamping: $0.rawValue)] == new[Int(clamping: $1.rawValue)] }
         )
         #expect(steps.collect() == [.both, .first, .both])
     }
@@ -43,7 +45,7 @@ extension Sequence.Difference.Test.Unit {
         let steps = Sequence.Difference.diff(
             oldCount: Cardinal(UInt(old.count)),
             newCount: Cardinal(UInt(new.count)),
-            equals: { old[Int(bitPattern: $0)] == new[Int(bitPattern: $1)] }
+            equals: { old[Int(clamping: $0.rawValue)] == new[Int(clamping: $1.rawValue)] }
         )
         #expect(steps.collect() == [.both, .second, .both])
     }
@@ -55,7 +57,7 @@ extension Sequence.Difference.Test.Unit {
         let steps = Sequence.Difference.diff(
             oldCount: Cardinal(UInt(old.count)),
             newCount: Cardinal(UInt(new.count)),
-            equals: { old[Int(bitPattern: $0)] == new[Int(bitPattern: $1)] }
+            equals: { old[Int(clamping: $0.rawValue)] == new[Int(clamping: $1.rawValue)] }
         )
         #expect(steps.collect() == [.both, .first, .second])
     }
@@ -88,11 +90,11 @@ extension Sequence.Difference.Test.Unit {
         let steps = Sequence.Difference.diff(
             oldCount: Cardinal(UInt(old.count)),
             newCount: Cardinal(UInt(new.count)),
-            equals: { old[Int(bitPattern: $0)] == new[Int(bitPattern: $1)] }
+            equals: { old[Int(clamping: $0.rawValue)] == new[Int(clamping: $1.rawValue)] }
         )
         let (removed, inserted) = steps.counts()
-        #expect(removed >= 1)
-        #expect(inserted >= 1)
+        #expect(removed >= Cardinal(1))
+        #expect(inserted >= Cardinal(1))
     }
 
     @Test
@@ -101,25 +103,27 @@ extension Sequence.Difference.Test.Unit {
         let steps = Sequence.Difference.diff(
             oldCount: Cardinal(UInt(values.count)),
             newCount: Cardinal(UInt(values.count)),
-            equals: { values[Int(bitPattern: $0)] == values[Int(bitPattern: $1)] }
+            equals: {
+                values[Int(clamping: $0.rawValue)] == values[Int(clamping: $1.rawValue)]
+            }
         )
         let (removed, inserted) = steps.counts()
-        #expect(removed == .zero)
-        #expect(inserted == .zero)
+        #expect(removed == Cardinal(0))
+        #expect(inserted == Cardinal(0))
     }
 
     @Test
     func `changes counts reports removed and inserted`() {
         let (removed, inserted) = Sequence.Difference.diff(["a", "b", "c"], ["a", "d"]).counts()
-        #expect(removed >= 1)
-        #expect(inserted >= 1)
+        #expect(removed >= Cardinal(1))
+        #expect(inserted >= Cardinal(1))
     }
 
     @Test
     func `changes counts identical sequences reports zero`() {
         let (removed, inserted) = Sequence.Difference.diff(["x", "y"], ["x", "y"]).counts()
-        #expect(removed == .zero)
-        #expect(inserted == .zero)
+        #expect(removed == Cardinal(0))
+        #expect(inserted == Cardinal(0))
     }
 
     @Test
@@ -127,8 +131,8 @@ extension Sequence.Difference.Test.Unit {
         let changes = Sequence.Difference.diff(["a", "b", "c", "d"], ["a", "x", "c", "y"])
         let (removed, inserted) = changes.counts()
 
-        #expect(removed == 2)
-        #expect(inserted == 2)
+        #expect(removed == Cardinal(2))
+        #expect(inserted == Cardinal(2))
     }
 }
 
@@ -136,8 +140,8 @@ extension Sequence.Difference.Test.`Edge Case` {
     @Test
     func `both empty sequences`() {
         let steps = Sequence.Difference.diff(
-            oldCount: .zero,
-            newCount: .zero,
+            oldCount: Cardinal(0),
+            newCount: Cardinal(0),
             equals: { _, _ in true }
         )
         #expect(steps.collect().isEmpty)
@@ -147,7 +151,7 @@ extension Sequence.Difference.Test.`Edge Case` {
     func `old empty produces all second`() {
         let new = ["a", "b"]
         let steps = Sequence.Difference.diff(
-            oldCount: .zero,
+            oldCount: Cardinal(0),
             newCount: Cardinal(UInt(new.count)),
             equals: { _, _ in false }
         )
@@ -159,7 +163,7 @@ extension Sequence.Difference.Test.`Edge Case` {
         let old = ["a", "b"]
         let steps = Sequence.Difference.diff(
             oldCount: Cardinal(UInt(old.count)),
-            newCount: .zero,
+            newCount: Cardinal(0),
             equals: { _, _ in false }
         )
         #expect(steps.collect() == [.first, .first])
@@ -169,8 +173,8 @@ extension Sequence.Difference.Test.`Edge Case` {
     func `completely different sequences`() {
         let (removed, inserted) = Sequence.Difference.diff(["a", "b", "c"], ["x", "y", "z"])
             .counts()
-        #expect(removed == 3)
-        #expect(inserted == 3)
+        #expect(removed == Cardinal(3))
+        #expect(inserted == Cardinal(3))
     }
 
     @Test
@@ -183,8 +187,8 @@ extension Sequence.Difference.Test.`Edge Case` {
     func `single element different`() {
         let changes = Sequence.Difference.diff(["a"], ["b"])
         let (removed, inserted) = changes.counts()
-        #expect(removed == 1)
-        #expect(inserted == 1)
+        #expect(removed == Cardinal(1))
+        #expect(inserted == Cardinal(1))
     }
 
     @Test

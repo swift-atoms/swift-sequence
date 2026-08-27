@@ -1,9 +1,9 @@
-public import Iterator_Protocol
+public import Iterator
 
 extension Sequence.Filter where Base: ~Copyable & ~Escapable {
 
     public struct Iterator: ~Copyable, ~Escapable,
-        Iterator_Primitive.Iterator.`Protocol`<Base.Element, Base.Iterator.Failure>
+        Iterating<Base.Element, Base.Iterator.Failure>
     {
         @usableFromInline
         var _base: Base.Iterator

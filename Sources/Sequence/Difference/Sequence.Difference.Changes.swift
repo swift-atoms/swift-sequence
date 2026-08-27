@@ -1,3 +1,5 @@
+public import Cardinal
+
 extension Sequence.Difference {
 
     public struct Changes<Value> {
@@ -25,12 +27,12 @@ extension Sequence.Difference.Changes {
 
     @inlinable
     public func counts() -> (removed: Cardinal, inserted: Cardinal) {
-        var removed: Cardinal = .zero
-        var inserted: Cardinal = .zero
+        var removed = Cardinal(0)
+        var inserted = Cardinal(0)
         for change in _storage {
             switch change {
-            case .first: removed += .one
-            case .second: inserted += .one
+            case .first: removed += Cardinal(1)
+            case .second: inserted += Cardinal(1)
             case .both: break
             }
         }

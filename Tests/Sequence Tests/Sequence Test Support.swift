@@ -1,20 +1,18 @@
-import Iterator_Protocol
+import Iterator
 import Sequence
 
 extension Sequence {
 
-    public enum Fixture {}
+    enum Fixture {}
 }
 
 extension Sequence.Fixture {
 
-    public struct Source<Element>: Sequenceable, Sendable
+    struct Source<Element>: Sequenceable, Sendable
     where Element: Sendable {
-        @usableFromInline
         let _elements: [Element]
 
-        @inlinable
-        public init(_ elements: [Element]) {
+        init(_ elements: [Element]) {
             self._elements = elements
         }
     }
@@ -22,23 +20,19 @@ extension Sequence.Fixture {
 
 extension Sequence.Fixture.Source {
 
-    @inlinable
-    public consuming func makeIterator() -> Iterator {
+    consuming func makeIterator() -> Iterator {
         Iterator(_elements)
     }
 }
 
 extension Sequence.Fixture.Source {
 
-    public struct Iterator: Iterator_Primitive.Iterator.`Protocol` {
-        @usableFromInline
+    struct Iterator: Iterating {
         var _elements: [Element]
 
-        @usableFromInline
         var _index: Int
 
-        @inlinable
-        package init(_ elements: [Element]) {
+        init(_ elements: [Element]) {
             self._elements = elements
             self._index = 0
         }
@@ -47,27 +41,36 @@ extension Sequence.Fixture.Source {
 
 extension Sequence.Fixture.Source.Iterator {
 
-    @inlinable
-    public mutating func next() -> Element? {
+    mutating func next() -> Element? {
         guard _index < _elements.count else { return nil }
         defer { _index += 1 }
         return _elements[_index]
     }
 }
 
+extension Sequenceable where Self: ~Copyable, Element: Copyable, Iterator.Failure == Never {
+
+    consuming func collect() -> [Element] {
+        var elements: [Element] = []
+        var iterator = makeIterator()
+        while let element = iterator.next() {
+            elements.append(element)
+        }
+        return elements
+    }
+}
+
 extension Sequence.Fixture {
 
-    public enum Drainable {}
+    enum Drainable {}
 }
 
 extension Sequence.Fixture.Drainable {
 
-    public struct Source<Element>: Sequence.Drain.`Protocol` {
-        @usableFromInline
+    struct Source<Element>: Sequence.Drain.`Protocol` {
         var _elements: [Element]
 
-        @inlinable
-        public init(_ elements: [Element]) {
+        init(_ elements: [Element]) {
             self._elements = elements
         }
     }
@@ -75,8 +78,7 @@ extension Sequence.Fixture.Drainable {
 
 extension Sequence.Fixture.Drainable.Source {
 
-    @inlinable
-    public mutating func drain(_ body: (consuming Element) -> Void) {
+    mutating func drain(_ body: (consuming Element) -> Void) {
         while !_elements.isEmpty {
             body(_elements.removeFirst())
         }

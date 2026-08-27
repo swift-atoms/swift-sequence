@@ -1,3 +1,4 @@
+import Cardinal
 import Sequence
 import Testing
 
@@ -21,7 +22,7 @@ extension Sequence.Drop.`First Test`.Unit {
     @Test
     func `drop first 1 element`() {
         let source = Sequence.Fixture.Source([10, 20, 30])
-        let result = source.drop(first: .one).collect()
+        let result = source.drop(first: Cardinal(1)).collect()
         #expect(result == [20, 30])
     }
 }
@@ -30,7 +31,7 @@ extension Sequence.Drop.`First Test`.`Edge Case` {
     @Test
     func `drop zero elements returns all`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
-        let result = source.drop(first: .zero).collect()
+        let result = source.drop(first: Cardinal(0)).collect()
         #expect(result == [1, 2, 3])
     }
 

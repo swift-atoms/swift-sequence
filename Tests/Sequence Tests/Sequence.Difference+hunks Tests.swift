@@ -1,3 +1,4 @@
+import Cardinal
 import Sequence
 import Testing
 
@@ -51,19 +52,19 @@ extension Sequence.Difference.`Hunks Test`.Unit {
     @Test
     func `distant changes produce multiple hunks`() {
 
-        var old = (1...10).map { "line\($0)" }
+        let old = (1...10).map { "line\($0)" }
         var new = old
         new[0] = "changed1"
         new[9] = "changed10"
 
         let changes = Sequence.Difference.diff(old, new)
-        let hunks = changes.hunks(contextLines: 1)
+        let hunks = changes.hunks(contextLines: Cardinal(1))
         #expect(hunks.count == 2)
     }
 
     @Test
     func `adjacent changes merge into single hunk`() {
-        var old = (1...10).map { "line\($0)" }
+        let old = (1...10).map { "line\($0)" }
         var new = old
         new[0] = "changed1"
         new[1] = "changed2"
@@ -75,13 +76,13 @@ extension Sequence.Difference.`Hunks Test`.Unit {
 
     @Test
     func `custom context lines respected`() {
-        var old = (1...20).map { "line\($0)" }
+        let old = (1...20).map { "line\($0)" }
         var new = old
         new[0] = "changed1"
         new[19] = "changed20"
 
-        let hunksSmall = Sequence.Difference.diff(old, new).hunks(contextLines: 1)
-        let hunksLarge = Sequence.Difference.diff(old, new).hunks(contextLines: 10)
+        let hunksSmall = Sequence.Difference.diff(old, new).hunks(contextLines: Cardinal(1))
+        let hunksLarge = Sequence.Difference.diff(old, new).hunks(contextLines: Cardinal(10))
 
         #expect(hunksSmall.count == 2)
 
@@ -96,8 +97,8 @@ extension Sequence.Difference.`Hunks Test`.Unit {
         )
         let hunks = changes.hunks()
         #expect(hunks.count == 1)
-        #expect(hunks[0].old.count >= 1)
-        #expect(hunks[0].new.count >= 1)
+        #expect(hunks[0].old.count >= Cardinal(1))
+        #expect(hunks[0].new.count >= Cardinal(1))
     }
 }
 
@@ -146,7 +147,7 @@ extension Sequence.Difference.`Hunks Test`.`Edge Case` {
         new[0] = "changed1"
         new[7] = "changed8"
 
-        let hunks = Sequence.Difference.diff(old, new).hunks(contextLines: 3)
+        let hunks = Sequence.Difference.diff(old, new).hunks(contextLines: Cardinal(3))
         #expect(hunks.count == 2)
 
         let first = hunks[0].lines
@@ -166,7 +167,7 @@ extension Sequence.Difference.`Hunks Test`.`Edge Case` {
         )
         #expect(second.filter { $0 == .both("c6") }.count == 1)
 
-        #expect(hunks[1].old.count == 4)
-        #expect(hunks[1].new.count == 4)
+        #expect(hunks[1].old.count == Cardinal(4))
+        #expect(hunks[1].new.count == Cardinal(4))
     }
 }

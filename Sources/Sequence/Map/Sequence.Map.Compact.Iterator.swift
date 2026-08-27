@@ -1,8 +1,8 @@
-public import Iterator_Protocol
+public import Iterator
 
 extension Sequence.Map.Compact where Base: ~Copyable & ~Escapable {
 
-    public struct Iterator: ~Copyable, ~Escapable, Iterator_Primitive.Iterator.`Protocol` {
+    public struct Iterator: ~Copyable, ~Escapable, Iterating {
         @usableFromInline
         var _base: Base.Iterator
 

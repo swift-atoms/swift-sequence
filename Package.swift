@@ -31,7 +31,11 @@ let package = Package(
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-atoms/swift-index.git",
+            url: "https://github.com/swift-atoms/swift-cardinal.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-ordinal.git",
             branch: "main"
         ),
     ],
@@ -39,14 +43,18 @@ let package = Package(
         .target(
             name: "Sequence",
             dependencies: [
-                .product(name: "Iterator Protocol", package: "swift-iterator"),
-                .product(name: "Iterator Chunk", package: "swift-iterator"),
-                .product(name: "Index", package: "swift-index"),
+                .product(name: "Iterator", package: "swift-iterator"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Ordinal", package: "swift-ordinal"),
             ]
         ),
         .target(
             name: "Sequence Standard Library Integration",
-            dependencies: ["Sequence"]
+            dependencies: [
+                "Sequence",
+                .product(name: "Iterator", package: "swift-iterator"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+            ]
         ),
         .target(
             name: "Sequence Apple Foundation Integration",
@@ -57,13 +65,20 @@ let package = Package(
         ),
         .testTarget(
             name: "Sequence Tests",
-            dependencies: ["Sequence"]
+            dependencies: [
+                "Sequence",
+                .product(name: "Iterator", package: "swift-iterator"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Ordinal", package: "swift-ordinal"),
+            ]
         ),
         .testTarget(
             name: "Sequence Standard Library Integration Tests",
             dependencies: [
                 "Sequence",
                 "Sequence Standard Library Integration",
+                .product(name: "Iterator", package: "swift-iterator"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
             ]
         ),
     ],

@@ -1,14 +1,15 @@
-public import Iterator_Chunk
+public import Cardinal
+public import Iterator
 
 extension Sequence.Prefix.While where Base: ~Copyable & ~Escapable {
 
     public struct Iterator: ~Copyable, ~Escapable,
-        Iterator_Primitive.Iterator.`Protocol`<Base.Element, Base.Iterator.Failure>
+        Iterating<Base.Element, Base.Iterator.Failure>
     {
-        @_implements(Iterator_Primitive.Iterator.`Protocol`,Element)
+        @_implements(Iterating,Element)
         public typealias ScalarElement = Base.Element
 
-        @_implements(Iterator_Primitive.Iterator.`Protocol`,Failure)
+        @_implements(Iterating,Failure)
         public typealias ScalarFailure = Base.Iterator.Failure
 
         @usableFromInline
@@ -45,11 +46,11 @@ extension Sequence.Prefix.While.Iterator where Base: ~Copyable & ~Escapable {
 }
 
 extension Sequence.Prefix.While.Iterator:
-    Iterator_Primitive.Iterator.Chunk.`Protocol`<Base.Element, Base.Iterator.Failure>
+    __IteratorChunkProtocol<Base.Element, Base.Iterator.Failure>
 where
     Base: ~Copyable & ~Escapable,
     Base.Element: Escapable,
-    Base.Iterator: Iterator_Primitive.Iterator.Chunk.`Protocol`<
+    Base.Iterator: __IteratorChunkProtocol<
         Base.Element, Base.Iterator.Failure
     >
 {
@@ -62,11 +63,10 @@ where
     @_lifetime(&self)
     @inlinable
     public mutating func next(
-        maximumCount: some Carrier.`Protocol`<Cardinal>
+        maximumCount: Cardinal
     ) throws(Base.Iterator.Failure) -> Swift.Span<Base.Element> {
-        let maximumCount = maximumCount.underlying
         guard !_done else {
-            return try _base.next(maximumCount: Cardinal.zero)
+            return try _base.next(maximumCount: Cardinal(0))
         }
         let span = try _base.next(maximumCount: maximumCount)
         if span.isEmpty {

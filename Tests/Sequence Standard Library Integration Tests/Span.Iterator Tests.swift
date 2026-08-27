@@ -1,3 +1,4 @@
+import Cardinal
 import Sequence
 import Sequence_Standard_Library_Integration
 import Testing
@@ -53,19 +54,19 @@ extension Sequence.`Span Iterator Test`.Unit {
             var iterator = Swift.Span<Int>.Iterator(span: span)
 
             var rem = iterator.remaining
-            #expect(rem == 3)
+            #expect(rem == Cardinal(3))
 
             _ = iterator.next()
             rem = iterator.remaining
-            #expect(rem == 2)
+            #expect(rem == Cardinal(2))
 
             _ = iterator.next()
             rem = iterator.remaining
-            #expect(rem == 1)
+            #expect(rem == Cardinal(1))
 
             _ = iterator.next()
             rem = iterator.remaining
-            #expect(rem == .zero)
+            #expect(rem == Cardinal(0))
         }
     }
 }
@@ -82,7 +83,7 @@ extension Sequence.`Span Iterator Test`.`Edge Case` {
             #expect(empty)
 
             let rem = iterator.remaining
-            #expect(rem == .zero)
+            #expect(rem == Cardinal(0))
 
             #expect(iterator.next() == nil)
         }

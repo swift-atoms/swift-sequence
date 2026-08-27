@@ -1,3 +1,4 @@
+import Cardinal
 import Sequence
 import Testing
 
@@ -21,7 +22,7 @@ extension Sequence.`Count Test`.Unit {
     func `count(where:) returns matching count`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5, 6])
         let evens = source.count { $0 % 2 == 0 }
-        #expect(evens == 3)
+        #expect(evens == Cardinal(3))
     }
 }
 
@@ -35,12 +36,12 @@ extension Sequence.`Count Test`.`Edge Case` {
     @Test
     func `count(where:) with no matches returns zero`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
-        #expect(source.count { $0 > 100 } == .zero)
+        #expect(source.count { $0 > 100 } == Cardinal(0))
     }
 
     @Test
     func `count(where:) with all matching returns total`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
-        #expect(source.count { _ in true } == 3)
+        #expect(source.count { _ in true } == Cardinal(3))
     }
 }

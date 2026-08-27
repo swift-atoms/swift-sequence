@@ -1,3 +1,5 @@
+public import Iterator
+
 extension Sequenceable where Self: Swift.Sequence, Iterator.Failure == Never {
 
     @inline(always)

@@ -1,5 +1,5 @@
-public import Index
-public import Iterator_Chunk
+public import Cardinal
+public import Iterator
 
 extension Swift.Span.Iterator {
 
@@ -11,17 +11,17 @@ extension Swift.Span.Iterator {
         let _span: Swift.Span<Element>
 
         @usableFromInline
-        var _position: Ordinal
+        var _position: Int
 
         @usableFromInline
-        let _count: Cardinal
+        let _count: Int
 
         @inlinable
         @_lifetime(copy span)
         public init(span: Swift.Span<Element>) {
             self._span = span
-            self._position = .zero
-            self._count = Cardinal(UInt(bitPattern: span.count))
+            self._position = 0
+            self._count = span.count
         }
     }
 }
@@ -37,31 +37,31 @@ extension Swift.Span.Iterator.Batch {
 
     @inlinable
     public var remaining: Cardinal {
-        _count.subtract.saturating(Cardinal(_position))
+        Cardinal(UInt(_count - _position))
     }
 
     @inlinable
     @_lifetime(&self)
     public mutating func next(
-        maximumCount: some Carrier.`Protocol`<Cardinal>
+        maximumCount: Cardinal
     ) -> Swift.Span<Element> {
-        let take = min(maximumCount.underlying, remaining)
-        guard take > .zero else { return _span.extracting(first: 0) }
+        let take = Swift.min(Int(clamping: maximumCount.rawValue), _count - _position)
+        guard take > 0 else { return _span.extracting(first: 0) }
 
         let result =
             _span
-            .extracting(droppingFirst: Cardinal(_position))
+            .extracting(droppingFirst: _position)
             .extracting(first: take)
 
-        _position = _position.advance.saturating(by: take)
+        _position += take
         return result
     }
 
     @inlinable
     @_lifetime(self: immortal)
     public mutating func skip(by maximumCount: Cardinal) -> Cardinal {
-        let skip = min(maximumCount, remaining)
-        _position = _position.advance.saturating(by: skip)
-        return skip
+        let skip = Swift.min(Int(clamping: maximumCount.rawValue), _count - _position)
+        _position += skip
+        return Cardinal(UInt(skip))
     }
 }

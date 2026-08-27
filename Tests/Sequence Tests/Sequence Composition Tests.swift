@@ -1,3 +1,4 @@
+import Cardinal
 import Sequence
 import Testing
 
@@ -118,7 +119,7 @@ extension Sequence.`Composition Test`.Integration {
             source
             .map { $0 * 2 }
             .filter { $0 > 0 }
-            .drop(first: .one)
+            .drop(first: Cardinal(1))
             .prefix(first: Cardinal(5))
             .collect()
         #expect(result.isEmpty)

@@ -1,3 +1,6 @@
+import Cardinal
+import Ordinal
+
 extension Sequence.Difference {
 
     public struct Hunk: Sendable, Hashable {
@@ -23,6 +26,6 @@ extension Sequence.Difference {
 extension Sequence.Difference.Hunk {
 
     public var header: String {
-        "@@ -\(old.start),\(old.count) +\(new.start),\(new.count) @@"
+        "@@ -\(old.start.rawValue),\(old.count.rawValue) +\(new.start.rawValue),\(new.count.rawValue) @@"
     }
 }

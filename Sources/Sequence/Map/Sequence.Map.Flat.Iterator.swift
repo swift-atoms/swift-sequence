@@ -1,4 +1,4 @@
-public import Iterator_Protocol
+public import Iterator
 
 extension Sequence.Map.Flat where Base: ~Copyable & ~Escapable {
 
@@ -25,7 +25,7 @@ extension Sequence.Map.Flat where Base: ~Copyable & ~Escapable {
 }
 
 extension Sequence.Map.Flat.Iterator:
-    Iterator_Primitive.Iterator.`Protocol`<InnerSequence.Element, Base.Iterator.Failure>
+    Iterating<InnerSequence.Element, Base.Iterator.Failure>
 where
     Base: ~Copyable & ~Escapable,
     InnerSequence.Element: Escapable,

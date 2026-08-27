@@ -1,3 +1,6 @@
+public import Cardinal
+public import Ordinal
+
 extension Sequence.Difference {
 
     @inlinable
@@ -7,8 +10,8 @@ extension Sequence.Difference {
         equals: (Ordinal, Ordinal) -> Bool
     ) -> Steps {
 
-        let n = Int(bitPattern: oldCount)
-        let m = Int(bitPattern: newCount)
+        let n = Int(clamping: oldCount.rawValue)
+        let m = Int(clamping: newCount.rawValue)
 
         if n == 0 {
             return Steps([Step](repeating: .second, count: m))

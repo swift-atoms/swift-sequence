@@ -1,4 +1,5 @@
-import Sequence_Test_Support
+import Sequence
+import Sequence_Standard_Library_Integration
 import Testing
 
 extension Sequence {

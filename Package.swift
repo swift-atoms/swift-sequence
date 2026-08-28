@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-sequence-primitives",
+    name: "swift-sequence",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -13,356 +13,331 @@ let package = Package(
     ],
     products: [
 
-        .library(name: "Sequence Primitive", targets: ["Sequence Primitive"]),
-        .library(name: "Sequence Iterator Primitives", targets: ["Sequence Iterator Primitives"]),
-        .library(name: "Sequence Protocol Primitives", targets: ["Sequence Protocol Primitives"]),
-        .library(name: "Sequence Borrowing Primitives", targets: ["Sequence Borrowing Primitives"]),
-        .library(name: "Sequence Span Primitives", targets: ["Sequence Span Primitives"]),
+        .library(name: "Sequence Iterator", targets: ["Sequence Iterator"]),
+        .library(name: "Sequence Protocol", targets: ["Sequence Protocol"]),
+        .library(name: "Sequence Borrowing", targets: ["Sequence Borrowing"]),
+        .library(name: "Sequence Span", targets: ["Sequence Span"]),
 
-        .library(name: "Sequence Map Primitives", targets: ["Sequence Map Primitives"]),
-        .library(name: "Sequence Filter Primitives", targets: ["Sequence Filter Primitives"]),
-        .library(name: "Sequence Drop Primitives", targets: ["Sequence Drop Primitives"]),
-        .library(name: "Sequence Prefix Primitives", targets: ["Sequence Prefix Primitives"]),
+        .library(name: "Sequence Map", targets: ["Sequence Map"]),
+        .library(name: "Sequence Filter", targets: ["Sequence Filter"]),
+        .library(name: "Sequence Drop", targets: ["Sequence Drop"]),
+        .library(name: "Sequence Prefix", targets: ["Sequence Prefix"]),
 
-        .library(name: "Sequence ForEach Primitives", targets: ["Sequence ForEach Primitives"]),
-        .library(name: "Sequence Satisfies Primitives", targets: ["Sequence Satisfies Primitives"]),
-        .library(name: "Sequence Contains Primitives", targets: ["Sequence Contains Primitives"]),
-        .library(name: "Sequence First Primitives", targets: ["Sequence First Primitives"]),
-        .library(name: "Sequence Reduce Primitives", targets: ["Sequence Reduce Primitives"]),
-        .library(name: "Sequence Hint Primitives", targets: ["Sequence Hint Primitives"]),
+        .library(name: "Sequence ForEach", targets: ["Sequence ForEach"]),
+        .library(name: "Sequence Satisfies", targets: ["Sequence Satisfies"]),
+        .library(name: "Sequence Contains", targets: ["Sequence Contains"]),
+        .library(name: "Sequence First", targets: ["Sequence First"]),
+        .library(name: "Sequence Reduce", targets: ["Sequence Reduce"]),
+        .library(name: "Sequence Hint", targets: ["Sequence Hint"]),
 
-        .library(name: "Sequence Drain Primitives", targets: ["Sequence Drain Primitives"]),
+        .library(name: "Sequence Drain", targets: ["Sequence Drain"]),
 
         .library(
-            name: "Sequence Difference Primitives",
-            targets: ["Sequence Difference Primitives"]
+            name: "Sequence Difference",
+            targets: ["Sequence Difference"]
         ),
 
         .library(
-            name: "Sequence Primitives Standard Library Integration",
-            targets: ["Sequence Primitives Standard Library Integration"]
+            name: "Sequence Standard Library Integration",
+            targets: ["Sequence Standard Library Integration"]
         ),
 
-        .library(name: "Sequence Primitives", targets: ["Sequence Primitives"]),
+        .library(name: "Sequence", targets: ["Sequence"]),
 
         .library(
-            name: "Sequence Primitives Test Support",
-            targets: ["Sequence Primitives Test Support"]
+            name: "Sequence Test Support",
+            targets: ["Sequence Test Support"]
         ),
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-iterator-primitives.git",
+            url: "https://github.com/swift-atoms/swift-iterator.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-either-primitives.git",
+            url: "https://github.com/swift-atoms/swift-either.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-property-primitives.git",
+            url: "https://github.com/swift-atoms/swift-property.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-index-primitives.git",
+            url: "https://github.com/swift-atoms/swift-index.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-cardinal-primitives.git",
+            url: "https://github.com/swift-atoms/swift-cardinal.git",
             branch: "main"
         ),
     ],
     targets: [
 
         .target(
-            name: "Sequence Primitive",
+            name: "Sequence",
             dependencies: []
         ),
 
         .target(
-            name: "Sequence Iterator Primitives",
+            name: "Sequence Iterator",
             dependencies: [
-                "Sequence Primitive",
-                .product(name: "Index Primitives", package: "swift-index-primitives"),
+                .target(name: "Sequence"),
+                .product(name: "Index", package: "swift-index"),
             ]
         ),
 
         .target(
-            name: "Sequence Protocol Primitives",
+            name: "Sequence Protocol",
             dependencies: [
-                "Sequence Primitive",
-                .product(name: "Iterator Protocol", package: "swift-iterator-primitives"),
-                .product(name: "Index Primitives", package: "swift-index-primitives"),
+                .target(name: "Sequence"),
+                .product(name: "Iterator Protocol", package: "swift-iterator"),
+                .product(name: "Index", package: "swift-index"),
             ]
         ),
 
         .target(
-            name: "Sequence Borrowing Primitives",
+            name: "Sequence Borrowing",
             dependencies: [
-                "Sequence Iterator Primitives",
-                .product(name: "Iterator Chunk Primitives", package: "swift-iterator-primitives"),
+                .target(name: "Sequence Iterator"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
             ]
         ),
 
         .target(
-            name: "Sequence Span Primitives",
+            name: "Sequence Span",
             dependencies: [
-                "Sequence Protocol Primitives",
-                "Sequence Borrowing Primitives",
-                .product(name: "Property Primitives", package: "swift-property-primitives"),
-                .product(name: "Index Primitives", package: "swift-index-primitives"),
-                .product(name: "Iterator Chunk Primitives", package: "swift-iterator-primitives"),
+                .target(name: "Sequence Protocol"),
+                .target(name: "Sequence Borrowing"),
+                .product(name: "Property", package: "swift-property"),
+                .product(name: "Index", package: "swift-index"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
             ]
         ),
 
         .target(
-            name: "Sequence Map Primitives",
+            name: "Sequence Map",
             dependencies: [
-                "Sequence Protocol Primitives",
-                .product(name: "Iterator Protocol", package: "swift-iterator-primitives"),
+                .target(name: "Sequence Protocol"),
+                .product(name: "Iterator Protocol", package: "swift-iterator"),
             ]
         ),
         .target(
-            name: "Sequence Filter Primitives",
+            name: "Sequence Filter",
             dependencies: [
-                "Sequence Protocol Primitives",
-                .product(name: "Iterator Protocol", package: "swift-iterator-primitives"),
-            ]
-        ),
-
-        .target(
-            name: "Sequence Drop Primitives",
-            dependencies: [
-                "Sequence Protocol Primitives",
-                .product(name: "Iterator Chunk Primitives", package: "swift-iterator-primitives"),
-                .product(name: "Index Primitives", package: "swift-index-primitives"),
+                .target(name: "Sequence Protocol"),
+                .product(name: "Iterator Protocol", package: "swift-iterator"),
             ]
         ),
 
         .target(
-            name: "Sequence Prefix Primitives",
+            name: "Sequence Drop",
             dependencies: [
-                "Sequence Protocol Primitives",
-                .product(name: "Iterator Chunk Primitives", package: "swift-iterator-primitives"),
-                .product(name: "Index Primitives", package: "swift-index-primitives"),
+                .target(name: "Sequence Protocol"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
+                .product(name: "Index", package: "swift-index"),
             ]
         ),
 
         .target(
-            name: "Sequence ForEach Primitives",
+            name: "Sequence Prefix",
             dependencies: [
-                "Sequence Protocol Primitives",
-                .product(name: "Property Primitives", package: "swift-property-primitives"),
-                .product(name: "Either Primitives", package: "swift-either-primitives"),
+                .target(name: "Sequence Protocol"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
+                .product(name: "Index", package: "swift-index"),
             ]
         ),
 
         .target(
-            name: "Sequence Satisfies Primitives",
+            name: "Sequence ForEach",
             dependencies: [
-                "Sequence Protocol Primitives",
-                .product(name: "Property Primitives", package: "swift-property-primitives"),
+                .target(name: "Sequence Protocol"),
+                .product(name: "Property", package: "swift-property"),
+                .product(name: "Either", package: "swift-either"),
             ]
         ),
 
         .target(
-            name: "Sequence Contains Primitives",
+            name: "Sequence Satisfies",
             dependencies: [
-                "Sequence Protocol Primitives",
-                .product(name: "Property Primitives", package: "swift-property-primitives"),
+                .target(name: "Sequence Protocol"),
+                .product(name: "Property", package: "swift-property"),
             ]
         ),
 
         .target(
-            name: "Sequence First Primitives",
+            name: "Sequence Contains",
             dependencies: [
-                "Sequence Protocol Primitives",
-                .product(name: "Property Primitives", package: "swift-property-primitives"),
+                .target(name: "Sequence Protocol"),
+                .product(name: "Property", package: "swift-property"),
             ]
         ),
 
         .target(
-            name: "Sequence Reduce Primitives",
+            name: "Sequence First",
             dependencies: [
-                "Sequence Protocol Primitives",
-                .product(name: "Property Primitives", package: "swift-property-primitives"),
+                .target(name: "Sequence Protocol"),
+                .product(name: "Property", package: "swift-property"),
             ]
         ),
 
         .target(
-            name: "Sequence Hint Primitives",
+            name: "Sequence Reduce",
             dependencies: [
-                "Sequence Protocol Primitives",
-                .product(name: "Property Primitives", package: "swift-property-primitives"),
-                .product(name: "Index Primitives", package: "swift-index-primitives"),
+                .target(name: "Sequence Protocol"),
+                .product(name: "Property", package: "swift-property"),
+            ]
+        ),
+
+        .target(
+            name: "Sequence Hint",
+            dependencies: [
+                .target(name: "Sequence Protocol"),
+                .product(name: "Property", package: "swift-property"),
+                .product(name: "Index", package: "swift-index"),
                 .product(
-                    name: "Cardinal Primitives Standard Library Integration",
-                    package: "swift-cardinal-primitives"
+                    name: "Cardinal Standard Library Integration",
+                    package: "swift-cardinal"
                 ),
             ]
         ),
 
         .target(
-            name: "Sequence Drain Primitives",
+            name: "Sequence Drain",
             dependencies: [
-                "Sequence Protocol Primitives",
-                .product(name: "Property Primitives", package: "swift-property-primitives"),
+                .target(name: "Sequence Protocol"),
+                .product(name: "Property", package: "swift-property"),
             ]
         ),
 
         .target(
-            name: "Sequence Difference Primitives",
+            name: "Sequence Difference",
             dependencies: [
-                "Sequence Protocol Primitives",
-                .product(name: "Index Primitives", package: "swift-index-primitives"),
+                .target(name: "Sequence Protocol"),
+                .product(name: "Index", package: "swift-index"),
             ]
         ),
 
         .target(
-            name: "Sequence Primitives Standard Library Integration",
+            name: "Sequence Standard Library Integration",
             dependencies: [
-                "Sequence Protocol Primitives",
-                "Sequence Borrowing Primitives",
-                .product(name: "Index Primitives", package: "swift-index-primitives"),
-                .product(name: "Iterator Chunk Primitives", package: "swift-iterator-primitives"),
+                .target(name: "Sequence Protocol"),
+                .target(name: "Sequence Borrowing"),
+                .product(name: "Index", package: "swift-index"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
             ]
         ),
 
         .target(
-            name: "Sequence Primitives",
+            name: "Sequence Test Support",
             dependencies: [
-                "Sequence Primitive",
-                "Sequence Iterator Primitives",
-                "Sequence Protocol Primitives",
-                "Sequence Borrowing Primitives",
-                "Sequence Span Primitives",
-                "Sequence Map Primitives",
-                "Sequence Filter Primitives",
-                "Sequence Drop Primitives",
-                "Sequence Prefix Primitives",
-                "Sequence ForEach Primitives",
-                "Sequence Satisfies Primitives",
-                "Sequence Contains Primitives",
-                "Sequence First Primitives",
-                "Sequence Reduce Primitives",
-                "Sequence Hint Primitives",
-                "Sequence Drain Primitives",
-                "Sequence Difference Primitives",
-                "Sequence Primitives Standard Library Integration",
-            ]
-        ),
-
-        .target(
-            name: "Sequence Primitives Test Support",
-            dependencies: [
-                "Sequence Primitives",
-                .product(name: "Index Primitives Test Support", package: "swift-index-primitives"),
+                .target(name: "Sequence"),
+                .product(name: "Index Test Support", package: "swift-index"),
             ],
             path: "Tests/Support"
         ),
 
         .testTarget(
-            name: "Sequence Primitive Tests",
-            dependencies: ["Sequence Primitive", "Sequence Primitives Test Support"]
+            name: "Sequence Tests",
+            dependencies: [.target(name: "Sequence"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Iterator Primitives Tests",
-            dependencies: ["Sequence Iterator Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Iterator Tests",
+            dependencies: [.target(name: "Sequence Iterator"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Protocol Primitives Tests",
-            dependencies: ["Sequence Protocol Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Protocol Tests",
+            dependencies: [.target(name: "Sequence Protocol"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Borrowing Primitives Tests",
-            dependencies: ["Sequence Borrowing Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Borrowing Tests",
+            dependencies: [.target(name: "Sequence Borrowing"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Span Primitives Tests",
-            dependencies: ["Sequence Span Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Span Tests",
+            dependencies: [.target(name: "Sequence Span"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Map Primitives Tests",
-            dependencies: ["Sequence Map Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Map Tests",
+            dependencies: [.target(name: "Sequence Map"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Filter Primitives Tests",
-            dependencies: ["Sequence Filter Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Filter Tests",
+            dependencies: [.target(name: "Sequence Filter"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Drop Primitives Tests",
-            dependencies: ["Sequence Drop Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Drop Tests",
+            dependencies: [.target(name: "Sequence Drop"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Prefix Primitives Tests",
-            dependencies: ["Sequence Prefix Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Prefix Tests",
+            dependencies: [.target(name: "Sequence Prefix"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence ForEach Primitives Tests",
-            dependencies: ["Sequence ForEach Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence ForEach Tests",
+            dependencies: [.target(name: "Sequence ForEach"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Satisfies Primitives Tests",
-            dependencies: ["Sequence Satisfies Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Satisfies Tests",
+            dependencies: [.target(name: "Sequence Satisfies"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Contains Primitives Tests",
-            dependencies: ["Sequence Contains Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Contains Tests",
+            dependencies: [.target(name: "Sequence Contains"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence First Primitives Tests",
-            dependencies: ["Sequence First Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence First Tests",
+            dependencies: [.target(name: "Sequence First"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Reduce Primitives Tests",
-            dependencies: ["Sequence Reduce Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Reduce Tests",
+            dependencies: [.target(name: "Sequence Reduce"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Hint Primitives Tests",
-            dependencies: ["Sequence Hint Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Hint Tests",
+            dependencies: [.target(name: "Sequence Hint"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Drain Primitives Tests",
-            dependencies: ["Sequence Drain Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Drain Tests",
+            dependencies: [.target(name: "Sequence Drain"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Difference Primitives Tests",
-            dependencies: ["Sequence Difference Primitives", "Sequence Primitives Test Support"]
+            name: "Sequence Difference Tests",
+            dependencies: [.target(name: "Sequence Difference"), .target(name: "Sequence Test Support")]
         ),
 
         .testTarget(
-            name: "Sequence Primitives Standard Library Integration Tests",
+            name: "Sequence Standard Library Integration Tests",
             dependencies: [
-                "Sequence Primitives Standard Library Integration",
-                "Sequence Primitives Test Support",
+                .target(name: "Sequence Standard Library Integration"),
+                .target(name: "Sequence Test Support"),
             ]
         ),
 
         .testTarget(
             name: "Sequence Composition Tests",
             dependencies: [
-                "Sequence Map Primitives",
-                "Sequence Filter Primitives",
-                "Sequence Drop Primitives",
-                "Sequence Prefix Primitives",
-                "Sequence Hint Primitives",
-                "Sequence Primitives Test Support",
+                .target(name: "Sequence Map"),
+                .target(name: "Sequence Filter"),
+                .target(name: "Sequence Drop"),
+                .target(name: "Sequence Prefix"),
+                .target(name: "Sequence Hint"),
+                .target(name: "Sequence Test Support"),
             ]
         ),
     ],

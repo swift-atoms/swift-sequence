@@ -1,5 +1,7 @@
-public import Index
+public import Cardinal
+public import Carrier_Protocol
 public import Iterator_Chunk
+public import Ordinal
 
 extension Swift.Span {
 
@@ -32,12 +34,13 @@ extension Swift.Span.Iterator {
 
     @inlinable
     public var isEmpty: Bool {
-        _position >= _count
+        _position.rawValue >= _count.rawValue
     }
 
     @inlinable
     public var remaining: Cardinal {
-        _count.subtract.saturating(Cardinal(_position))
+        guard _position.rawValue < _count.rawValue else { return Cardinal(0) }
+        return Cardinal(_count.rawValue - _position.rawValue)
     }
 
     @inlinable
@@ -46,23 +49,23 @@ extension Swift.Span.Iterator {
         maximumCount: some Carrier.`Protocol`<Cardinal>
     ) -> Swift.Span<Element> {
         let take = min(maximumCount.underlying, remaining)
-        guard take > .zero else { return _span.extracting(first: 0) }
+        guard take > Cardinal(0) else { return _span.extracting(first: 0) }
 
         let result =
             _span
-            .extracting(droppingFirst: Cardinal(_position))
+            .extracting(droppingFirst: Cardinal(_position.rawValue))
             .extracting(first: take)
 
-        _position = _position.advance.saturating(by: take)
+        _position = Ordinal(_position.rawValue + take.rawValue)
         return result
     }
 
     @inlinable
     @_lifetime(self: immortal)
     public mutating func next() -> Element? {
-        guard _position < _count else { return nil }
+        guard _position.rawValue < _count.rawValue else { return nil }
         let element = _span[_position]
-        _position = _position.successor.saturating()
+        _position = Ordinal(_position.rawValue + 1)
         return element
     }
 }

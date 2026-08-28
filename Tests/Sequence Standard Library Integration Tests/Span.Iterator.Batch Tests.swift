@@ -1,3 +1,5 @@
+import Cardinal
+import Sequence_Standard_Library_Integration
 import Sequence_Test_Support
 import Testing
 
@@ -14,7 +16,7 @@ extension Sequence.`Span Iterator Batch Test`.Unit {
     @Test
     func `next(maximumCount:) returns batches of requested size`() {
         let array = [1, 2, 3, 4, 5, 6]
-        unsafe array.withUnsafeBufferPointer { buffer in
+        array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
             var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
 
@@ -32,7 +34,7 @@ extension Sequence.`Span Iterator Batch Test`.Unit {
     @Test
     func `next(maximumCount:) returns partial last batch`() {
         let array = [1, 2, 3, 4, 5]
-        unsafe array.withUnsafeBufferPointer { buffer in
+        array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
             var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
 
@@ -47,7 +49,7 @@ extension Sequence.`Span Iterator Batch Test`.Unit {
     @Test
     func `skip advances past elements`() {
         let array = [1, 2, 3, 4, 5]
-        unsafe array.withUnsafeBufferPointer { buffer in
+        array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
             var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
 
@@ -62,7 +64,7 @@ extension Sequence.`Span Iterator Batch Test`.Unit {
     @Test
     func `remaining tracks available elements`() {
         let array = [1, 2, 3, 4]
-        unsafe array.withUnsafeBufferPointer { buffer in
+        array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
             var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
 
@@ -75,7 +77,7 @@ extension Sequence.`Span Iterator Batch Test`.Unit {
 
             _ = iterator.next(maximumCount: Cardinal(2))
             rem = iterator.remaining
-            #expect(rem == .zero)
+            #expect(rem == Cardinal(0))
         }
     }
 }
@@ -84,7 +86,7 @@ extension Sequence.`Span Iterator Batch Test`.`Edge Case` {
     @Test
     func `batch iterator over empty span`() {
         let array: [Int] = []
-        unsafe array.withUnsafeBufferPointer { buffer in
+        array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
             var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
 
@@ -92,7 +94,7 @@ extension Sequence.`Span Iterator Batch Test`.`Edge Case` {
             #expect(empty)
 
             let rem = iterator.remaining
-            #expect(rem == .zero)
+            #expect(rem == Cardinal(0))
 
             let count = iterator.next(maximumCount: Cardinal(5)).count
             #expect(count == 0)
@@ -102,7 +104,7 @@ extension Sequence.`Span Iterator Batch Test`.`Edge Case` {
     @Test
     func `skip more than remaining returns actual skipped`() {
         let array = [1, 2, 3]
-        unsafe array.withUnsafeBufferPointer { buffer in
+        array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
             var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
 

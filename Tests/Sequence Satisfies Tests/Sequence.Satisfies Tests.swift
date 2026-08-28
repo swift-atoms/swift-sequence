@@ -1,3 +1,4 @@
+import Sequence_Satisfies
 import Sequence_Test_Support
 import Testing
 
@@ -11,6 +12,14 @@ extension Sequence.Satisfies {
 }
 
 extension Sequence.Satisfies.Test.Unit {
+    @Test
+    func `borrowing allSatisfy preserves throwing predicates`() throws {
+        enum Stop: Swift.Error { case stop }
+        let source = Sequence.Fixture.Borrowing.Source([2, 4, 6])
+
+        #expect(try source.allSatisfy { element throws(Stop) in element.isMultiple(of: 2) })
+    }
+
     @Test
     func `satisfies all returns true when all match`() {
         var source = Sequence.Fixture.Source([2, 4, 6, 8])

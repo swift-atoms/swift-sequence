@@ -1,3 +1,6 @@
+import Cardinal
+import Either
+import Sequence_ForEach
 import Sequence_Test_Support
 import Testing
 
@@ -11,6 +14,14 @@ extension Sequence.ForEach {
 }
 
 extension Sequence.ForEach.Test.Unit {
+    @Test
+    func `borrowing forEach visits every element in order`() {
+        let source = Sequence.Fixture.Borrowing.Source([1, 2, 3, 4, 5])
+        var visited: [Int] = []
+        source.forEach { visited.append($0) }
+        #expect(visited == [1, 2, 3, 4, 5])
+    }
+
     @Test
     func `forEach visits every element in order`() {
         var source = Sequence.Fixture.Source([1, 2, 3, 4, 5])
@@ -42,6 +53,47 @@ extension Sequence.ForEach.Test.Integration {
 
     enum Stop: Swift.Error, Equatable {
         case at(Int)
+    }
+
+    @Test
+    func `borrowing forEach distinguishes iterator failure and stops`() {
+        let source = Sequence.Fixture.Borrowing.FailingSource(
+            [10, 20, 30],
+            failAt: Cardinal(2)
+        )
+        var visited: [Int] = []
+        var receivedIteratorFailure = false
+
+        do throws(Either<Never, Sequence.Fixture.Borrowing.IteratorFailure>) {
+            try source.forEach { visited.append($0) }
+        } catch {
+            if case .right(.failure) = error { receivedIteratorFailure = true }
+        }
+
+        #expect(receivedIteratorFailure)
+        #expect(visited == [10, 20])
+    }
+
+    @Test
+    func `borrowing forEach distinguishes callback failure and short circuits`() {
+        let source = Sequence.Fixture.Borrowing.FailingSource(
+            [10, 20, 30],
+            failAt: Cardinal(99)
+        )
+        var visited: [Int] = []
+        var receivedCallbackFailure = false
+
+        do throws(Either<Stop, Sequence.Fixture.Borrowing.IteratorFailure>) {
+            try source.forEach { element throws(Stop) in
+                visited.append(element)
+                if element == 20 { throw .at(element) }
+            }
+        } catch {
+            if case .left(.at(20)) = error { receivedCallbackFailure = true }
+        }
+
+        #expect(receivedCallbackFailure)
+        #expect(visited == [10, 20])
     }
 
     @Test

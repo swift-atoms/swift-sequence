@@ -1,6 +1,6 @@
-public import Property
+public import Property_Inout
 
-extension Property.Inout
+extension Property::Property.Inout
 where
     Base: Sequenceable,
     Base.Element: Copyable,

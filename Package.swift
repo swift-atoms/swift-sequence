@@ -70,6 +70,10 @@ let package = Package(
             url: "https://github.com/swift-atoms/swift-cardinal.git",
             branch: "main"
         ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-carrier.git",
+            branch: "main"
+        ),
     ],
     targets: [
 
@@ -91,6 +95,7 @@ let package = Package(
             dependencies: [
                 .target(name: "Sequence"),
                 .product(name: "Iterator Protocol", package: "swift-iterator"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
                 .product(name: "Index", package: "swift-index"),
             ]
         ),
@@ -151,7 +156,12 @@ let package = Package(
             name: "Sequence ForEach",
             dependencies: [
                 .target(name: "Sequence Protocol"),
+                .target(name: "Sequence Borrowing"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
                 .product(name: "Property", package: "swift-property"),
+                .product(name: "Property Inout", package: "swift-property"),
                 .product(name: "Either", package: "swift-either"),
             ]
         ),
@@ -160,7 +170,12 @@ let package = Package(
             name: "Sequence Satisfies",
             dependencies: [
                 .target(name: "Sequence Protocol"),
+                .target(name: "Sequence Borrowing"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
                 .product(name: "Property", package: "swift-property"),
+                .product(name: "Property Inout", package: "swift-property"),
             ]
         ),
 
@@ -168,7 +183,13 @@ let package = Package(
             name: "Sequence Contains",
             dependencies: [
                 .target(name: "Sequence Protocol"),
+                .target(name: "Sequence Borrowing"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
                 .product(name: "Property", package: "swift-property"),
+                .product(name: "Property Inout", package: "swift-property"),
+                .product(name: "Either", package: "swift-either"),
             ]
         ),
 
@@ -176,7 +197,13 @@ let package = Package(
             name: "Sequence First",
             dependencies: [
                 .target(name: "Sequence Protocol"),
+                .target(name: "Sequence Borrowing"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
                 .product(name: "Property", package: "swift-property"),
+                .product(name: "Property Inout", package: "swift-property"),
+                .product(name: "Either", package: "swift-either"),
             ]
         ),
 
@@ -184,7 +211,13 @@ let package = Package(
             name: "Sequence Reduce",
             dependencies: [
                 .target(name: "Sequence Protocol"),
+                .target(name: "Sequence Borrowing"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
                 .product(name: "Property", package: "swift-property"),
+                .product(name: "Property Inout", package: "swift-property"),
+                .product(name: "Either", package: "swift-either"),
             ]
         ),
 
@@ -206,6 +239,7 @@ let package = Package(
             dependencies: [
                 .target(name: "Sequence Protocol"),
                 .product(name: "Property", package: "swift-property"),
+                .product(name: "Property Inout", package: "swift-property"),
             ]
         ),
 
@@ -231,6 +265,13 @@ let package = Package(
             name: "Sequence Test Support",
             dependencies: [
                 .target(name: "Sequence"),
+                .target(name: "Sequence Protocol"),
+                .target(name: "Sequence Borrowing"),
+                .target(name: "Sequence Drain"),
+                .product(name: "Carrier Protocol", package: "swift-carrier"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Iterator Protocol", package: "swift-iterator"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
                 .product(name: "Index Test Support", package: "swift-index"),
             ],
             path: "Tests/Support"
@@ -248,7 +289,11 @@ let package = Package(
 
         .testTarget(
             name: "Sequence Protocol Tests",
-            dependencies: [.target(name: "Sequence Protocol"), .target(name: "Sequence Test Support")]
+            dependencies: [
+                .target(name: "Sequence Protocol"),
+                .target(name: "Sequence Test Support"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+            ]
         ),
 
         .testTarget(
@@ -283,27 +328,60 @@ let package = Package(
 
         .testTarget(
             name: "Sequence ForEach Tests",
-            dependencies: [.target(name: "Sequence ForEach"), .target(name: "Sequence Test Support")]
+            dependencies: [
+                .target(name: "Sequence ForEach"),
+                .target(name: "Sequence Borrowing"),
+                .target(name: "Sequence Test Support"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Either", package: "swift-either"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
+            ]
         ),
 
         .testTarget(
             name: "Sequence Satisfies Tests",
-            dependencies: [.target(name: "Sequence Satisfies"), .target(name: "Sequence Test Support")]
+            dependencies: [
+                .target(name: "Sequence Satisfies"),
+                .target(name: "Sequence Borrowing"),
+                .target(name: "Sequence Test Support"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
+            ]
         ),
 
         .testTarget(
             name: "Sequence Contains Tests",
-            dependencies: [.target(name: "Sequence Contains"), .target(name: "Sequence Test Support")]
+            dependencies: [
+                .target(name: "Sequence Contains"),
+                .target(name: "Sequence Borrowing"),
+                .target(name: "Sequence Test Support"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Either", package: "swift-either"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
+            ]
         ),
 
         .testTarget(
             name: "Sequence First Tests",
-            dependencies: [.target(name: "Sequence First"), .target(name: "Sequence Test Support")]
+            dependencies: [
+                .target(name: "Sequence First"),
+                .target(name: "Sequence Borrowing"),
+                .target(name: "Sequence Test Support"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Either", package: "swift-either"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
+            ]
         ),
 
         .testTarget(
             name: "Sequence Reduce Tests",
-            dependencies: [.target(name: "Sequence Reduce"), .target(name: "Sequence Test Support")]
+            dependencies: [
+                .target(name: "Sequence Reduce"),
+                .target(name: "Sequence Borrowing"),
+                .target(name: "Sequence Test Support"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Either", package: "swift-either"),
+                .product(name: "Iterator Chunk", package: "swift-iterator"),
+            ]
         ),
 
         .testTarget(

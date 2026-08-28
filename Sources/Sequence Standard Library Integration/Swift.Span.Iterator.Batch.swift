@@ -1,5 +1,5 @@
-public import Cardinal
-public import Iterator
+public import Index
+public import Iterator_Chunk
 
 extension Swift.Span.Iterator {
 
@@ -11,17 +11,17 @@ extension Swift.Span.Iterator {
         let _span: Swift.Span<Element>
 
         @usableFromInline
-        var _position: Int
+        var _position: Ordinal
 
         @usableFromInline
-        let _count: Int
+        let _count: Cardinal
 
         @inlinable
         @_lifetime(copy span)
         public init(span: Swift.Span<Element>) {
             self._span = span
-            self._position = 0
-            self._count = span.count
+            self._position = .zero
+            self._count = Cardinal(UInt(bitPattern: span.count))
         }
     }
 }
@@ -37,31 +37,31 @@ extension Swift.Span.Iterator.Batch {
 
     @inlinable
     public var remaining: Cardinal {
-        Cardinal(UInt(_count - _position))
+        _count.subtract.saturating(Cardinal(_position))
     }
 
     @inlinable
     @_lifetime(&self)
     public mutating func next(
-        maximumCount: Cardinal
+        maximumCount: some Carrier.`Protocol`<Cardinal>
     ) -> Swift.Span<Element> {
-        let take = Swift.min(Int(clamping: maximumCount.rawValue), _count - _position)
-        guard take > 0 else { return _span.extracting(first: 0) }
+        let take = min(maximumCount.underlying, remaining)
+        guard take > .zero else { return _span.extracting(first: 0) }
 
         let result =
             _span
-            .extracting(droppingFirst: _position)
+            .extracting(droppingFirst: Cardinal(_position))
             .extracting(first: take)
 
-        _position += take
+        _position = _position.advance.saturating(by: take)
         return result
     }
 
     @inlinable
     @_lifetime(self: immortal)
     public mutating func skip(by maximumCount: Cardinal) -> Cardinal {
-        let skip = Swift.min(Int(clamping: maximumCount.rawValue), _count - _position)
-        _position += skip
-        return Cardinal(UInt(skip))
+        let skip = min(maximumCount, remaining)
+        _position = _position.advance.saturating(by: skip)
+        return skip
     }
 }

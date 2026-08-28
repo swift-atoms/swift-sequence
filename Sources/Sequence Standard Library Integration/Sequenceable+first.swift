@@ -1,6 +1,3 @@
-public import Iterator
-public import Sequence
-
 extension Sequenceable
 where Self: Copyable, Element: Copyable & Escapable, Iterator.Failure == Never {
 

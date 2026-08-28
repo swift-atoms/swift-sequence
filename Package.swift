@@ -67,6 +67,10 @@ let package = Package(
             branch: "main"
         ),
         .package(
+            url: "https://github.com/swift-atoms/swift-ordinal.git",
+            branch: "main"
+        ),
+        .package(
             url: "https://github.com/swift-atoms/swift-cardinal.git",
             branch: "main"
         ),
@@ -254,10 +258,10 @@ let package = Package(
         .target(
             name: "Sequence Standard Library Integration",
             dependencies: [
-                .target(name: "Sequence Protocol"),
-                .target(name: "Sequence Borrowing"),
-                .product(name: "Index", package: "swift-index"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Carrier Protocol", package: "swift-carrier"),
                 .product(name: "Iterator Chunk", package: "swift-iterator"),
+                .product(name: "Ordinal", package: "swift-ordinal"),
             ]
         ),
 
@@ -404,6 +408,7 @@ let package = Package(
             dependencies: [
                 .target(name: "Sequence Standard Library Integration"),
                 .target(name: "Sequence Test Support"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
             ]
         ),
 

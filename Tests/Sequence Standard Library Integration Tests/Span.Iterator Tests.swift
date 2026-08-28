@@ -1,3 +1,5 @@
+import Cardinal
+import Sequence_Standard_Library_Integration
 import Sequence_Test_Support
 import Testing
 
@@ -14,7 +16,7 @@ extension Sequence.`Span Iterator Test`.Unit {
     @Test
     func `next returns elements in order`() {
         let array = [10, 20, 30]
-        unsafe array.withUnsafeBufferPointer { buffer in
+        array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
             var iterator = Swift.Span<Int>.Iterator(span: span)
             #expect(iterator.next() == 10)
@@ -27,7 +29,7 @@ extension Sequence.`Span Iterator Test`.Unit {
     @Test
     func `isEmpty reflects exhaustion state`() {
         let array = [1, 2]
-        unsafe array.withUnsafeBufferPointer { buffer in
+        array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
             var iterator = Swift.Span<Int>.Iterator(span: span)
 
@@ -47,7 +49,7 @@ extension Sequence.`Span Iterator Test`.Unit {
     @Test
     func `remaining decrements with each next`() {
         let array = [1, 2, 3]
-        unsafe array.withUnsafeBufferPointer { buffer in
+        array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
             var iterator = Swift.Span<Int>.Iterator(span: span)
 
@@ -64,7 +66,7 @@ extension Sequence.`Span Iterator Test`.Unit {
 
             _ = iterator.next()
             rem = iterator.remaining
-            #expect(rem == .zero)
+            #expect(rem == Cardinal(0))
         }
     }
 }
@@ -73,7 +75,7 @@ extension Sequence.`Span Iterator Test`.`Edge Case` {
     @Test
     func `iterator over empty span`() {
         let array: [Int] = []
-        unsafe array.withUnsafeBufferPointer { buffer in
+        array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
             var iterator = Swift.Span<Int>.Iterator(span: span)
 
@@ -81,7 +83,7 @@ extension Sequence.`Span Iterator Test`.`Edge Case` {
             #expect(empty)
 
             let rem = iterator.remaining
-            #expect(rem == .zero)
+            #expect(rem == Cardinal(0))
 
             #expect(iterator.next() == nil)
         }

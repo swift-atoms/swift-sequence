@@ -6,7 +6,7 @@ extension Swift.Span where Element: Copyable {
     @inlinable
     @_lifetime(copy self)
     public subscript(position: Ordinal) -> Element {
-        self[Int(bitPattern: position)]
+        self[Int(bitPattern: position.rawValue)]
     }
 }
 
@@ -15,12 +15,12 @@ extension Swift.Span {
     @inlinable
     @_lifetime(copy self)
     public func extracting(first count: Cardinal) -> Self {
-        self.extracting(first: Int(bitPattern: count))
+        self.extracting(first: Int(bitPattern: count.rawValue))
     }
 
     @inlinable
     @_lifetime(copy self)
     public func extracting(droppingFirst count: Cardinal) -> Self {
-        self.extracting(droppingFirst: Int(bitPattern: count))
+        self.extracting(droppingFirst: Int(bitPattern: count.rawValue))
     }
 }

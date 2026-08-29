@@ -3,7 +3,7 @@ public import Iterator_Protocol
 extension Sequence.Filter where Base: ~Copyable & ~Escapable {
 
     public struct Iterator: ~Copyable, ~Escapable,
-        Iterator.Iterator.`Protocol`<Base.Element, Base.Iterator.Failure>
+        Iterator::Iterator.`Protocol`<Base.Element, Base.Iterator.Failure>
     {
         @usableFromInline
         var _base: Base.Iterator

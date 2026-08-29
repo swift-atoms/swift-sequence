@@ -1,3 +1,10 @@
+public import Cardinal
+internal import Cardinal_Carrier
+internal import Cardinal_Standard_Library_Integration
+internal import Cardinal_Subtract
+internal import Ordinal
+internal import Ordinal_Protocol
+
 extension Sequence.Difference.Changes where Value: CustomStringConvertible {
 
     public func hunks(contextLines: Cardinal = 3) -> [Sequence.Difference.Hunk] {

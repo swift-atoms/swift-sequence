@@ -1,3 +1,8 @@
+internal import Cardinal
+internal import Ordinal
+internal import Ordinal_Standard_Library_Integration
+internal import Ordinal_Successor
+
 extension Sequence.Difference {
 
     public static func diff<Element: Equatable>(

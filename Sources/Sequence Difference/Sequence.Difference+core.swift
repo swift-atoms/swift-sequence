@@ -1,3 +1,7 @@
+public import Cardinal
+public import Cardinal_Standard_Library_Integration
+public import Ordinal
+
 extension Sequence.Difference {
 
     @inlinable

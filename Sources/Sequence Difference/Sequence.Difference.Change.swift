@@ -1,3 +1,7 @@
+internal import Cardinal_Carrier
+public import Ordinal
+internal import Ordinal_Protocol
+
 extension Sequence.Difference {
 
     public enum Change<Element> {

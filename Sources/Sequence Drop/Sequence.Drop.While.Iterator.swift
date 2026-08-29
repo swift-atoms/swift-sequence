@@ -1,14 +1,17 @@
+public import Cardinal
+public import Cardinal_Carrier
+public import Carrier_Protocol
 public import Iterator_Chunk
 
 extension Sequence.Drop.While where Base: ~Copyable & ~Escapable {
 
     public struct Iterator: ~Copyable, ~Escapable,
-        Iterator.Iterator.`Protocol`<Base.Element, Base.Iterator.Failure>
+        Iterator::Iterator.`Protocol`<Base.Element, Base.Iterator.Failure>
     {
-        @_implements(Iterator.Iterator.`Protocol`,Element)
+        @_implements(Iterator::Iterator.`Protocol`,Element)
         public typealias ScalarElement = Base.Element
 
-        @_implements(Iterator.Iterator.`Protocol`,Failure)
+        @_implements(Iterator::Iterator.`Protocol`,Failure)
         public typealias ScalarFailure = Base.Iterator.Failure
 
         @usableFromInline
@@ -46,11 +49,11 @@ extension Sequence.Drop.While.Iterator where Base: ~Copyable & ~Escapable {
 }
 
 extension Sequence.Drop.While.Iterator:
-    Iterator.Iterator.Chunk.`Protocol`<Base.Element, Base.Iterator.Failure>
+    Iterator::Iterator.Chunk.`Protocol`<Base.Element, Base.Iterator.Failure>
 where
     Base: ~Copyable & ~Escapable,
     Base.Element: Escapable,
-    Base.Iterator: Iterator.Iterator.Chunk.`Protocol`<
+    Base.Iterator: Iterator::Iterator.Chunk.`Protocol`<
         Base.Element, Base.Iterator.Failure
     >
 {

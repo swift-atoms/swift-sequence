@@ -1,3 +1,6 @@
+public import Cardinal
+public import Ordinal
+
 extension Sequence.Difference.Hunk {
 
     public struct Side: Sendable, Hashable {

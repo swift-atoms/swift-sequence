@@ -1,3 +1,4 @@
+import Sequence_Hint
 import Sequence_Test_Support
 import Testing
 

@@ -25,7 +25,7 @@ extension Sequence.Map.Flat where Base: ~Copyable & ~Escapable {
 }
 
 extension Sequence.Map.Flat.Iterator:
-    Iterator.Iterator.`Protocol`<InnerSequence.Element, Base.Iterator.Failure>
+    Iterator::Iterator.`Protocol`<InnerSequence.Element, Base.Iterator.Failure>
 where
     Base: ~Copyable & ~Escapable,
     InnerSequence.Element: Escapable,

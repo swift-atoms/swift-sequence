@@ -1,3 +1,7 @@
+public import Cardinal
+public import Cardinal_Carrier
+public import Sequence_Protocol
+
 extension Sequence.Difference {
 
     public struct Changes<Value> {

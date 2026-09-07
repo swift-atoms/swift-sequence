@@ -21,7 +21,7 @@ extension Sequence.Difference.Changes: Sequenceable {
     }
 }
 
-extension Sequence.Difference.Changes: Sendable where Value: Sendable {}
+extension Sequence.Difference.Changes: Swift.Sendable where Value: Swift.Sendable {}
 
 extension Sequence.Difference.Changes {
 

@@ -60,19 +60,8 @@ extension Sequence.Difference.Change where Element: CustomStringConvertible {
     }
 }
 
-extension Sequence.Difference.Change: Sendable where Element: Sendable {}
+extension Sequence.Difference.Change: Swift.Sendable where Element: Swift.Sendable {}
 
-extension Sequence.Difference.Change: Equatable where Element: Equatable {}
+extension Sequence.Difference.Change: Swift.Equatable where Element: Swift.Equatable {}
 
-extension Sequence.Difference.Change: Hashable where Element: Hashable {}
-
-extension Sequence.Difference.Change: CustomStringConvertible {
-
-    public var description: String {
-        switch self {
-        case .first(let e): ".first(\(e))"
-        case .second(let e): ".second(\(e))"
-        case .both(let e): ".both(\(e))"
-        }
-    }
-}
+extension Sequence.Difference.Change: Swift.Hashable where Element: Swift.Hashable {}

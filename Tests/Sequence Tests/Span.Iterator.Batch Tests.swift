@@ -1,5 +1,5 @@
 import Cardinal
-import Sequence_Standard_Library_Integration
+import Sequence
 import Sequence_Test_Support
 import Testing
 

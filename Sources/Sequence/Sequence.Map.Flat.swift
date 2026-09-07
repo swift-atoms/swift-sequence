@@ -22,10 +22,11 @@ extension Sequence.Map where Base: ~Copyable & ~Escapable, Base.Element: Copyabl
     }
 }
 
-extension Sequence.Map.Flat: Copyable
-where Base: Copyable & ~Escapable, InnerSequence.Element: Escapable {}
-extension Sequence.Map.Flat: Escapable
-where Base: Escapable & ~Copyable, InnerSequence.Element: Escapable {}
+extension Sequence.Map.Flat: Swift.Copyable
+where Base: Swift.Copyable & ~Escapable, InnerSequence.Element: Escapable {}
+
+extension Sequence.Map.Flat: Swift.Escapable
+where Base: Swift.Escapable & ~Copyable, InnerSequence.Element: Swift.Escapable {}
 
 extension Sequence.Map.Flat: Sequenceable
 where

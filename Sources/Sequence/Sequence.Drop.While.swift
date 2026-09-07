@@ -18,10 +18,11 @@ extension Sequence.Drop {
     }
 }
 
-extension Sequence.Drop.While: Copyable
-where Base: Copyable & ~Escapable, Base.Element: Escapable {}
-extension Sequence.Drop.While: Escapable
-where Base: Escapable & ~Copyable, Base.Element: Escapable {}
+extension Sequence.Drop.While: Swift.Copyable
+where Base: Swift.Copyable & ~Escapable, Base.Element: Escapable {}
+
+extension Sequence.Drop.While: Swift.Escapable
+where Base: Swift.Escapable & ~Copyable, Base.Element: Swift.Escapable {}
 
 extension Sequence.Drop.While: Sequenceable
 where Base: ~Copyable & ~Escapable, Base.Element: Escapable {

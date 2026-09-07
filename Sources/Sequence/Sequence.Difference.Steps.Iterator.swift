@@ -1,7 +1,6 @@
 public import Cardinal
 public import Iterator
 public import Ordinal
-public import Ordinal_Standard_Library_Integration
 
 extension Sequence.Difference.Steps {
 

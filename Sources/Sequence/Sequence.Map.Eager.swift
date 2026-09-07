@@ -16,8 +16,9 @@ extension Sequence.Map where Base: ~Copyable & ~Escapable, Base.Element: Copyabl
     }
 }
 
-extension Sequence.Map.Eager: Copyable where Base: Copyable & ~Escapable {}
-extension Sequence.Map.Eager: Escapable where Base: Escapable & ~Copyable {}
+extension Sequence.Map.Eager: Swift.Copyable where Base: Swift.Copyable & ~Escapable {}
+
+extension Sequence.Map.Eager: Swift.Escapable where Base: Swift.Escapable & ~Copyable {}
 
 extension Sequence.Map.Eager: Sequenceable where Base: ~Copyable & ~Escapable {
 

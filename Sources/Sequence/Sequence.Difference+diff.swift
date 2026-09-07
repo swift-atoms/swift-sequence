@@ -1,6 +1,5 @@
 internal import Cardinal
 internal import Ordinal
-internal import Ordinal_Standard_Library_Integration
 
 extension Sequence.Difference {
 

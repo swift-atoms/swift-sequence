@@ -20,10 +20,11 @@ extension Sequence.Prefix {
     }
 }
 
-extension Sequence.Prefix.First: Copyable
-where Base: Copyable & ~Escapable, Base.Element: ~Copyable & ~Escapable {}
-extension Sequence.Prefix.First: Escapable
-where Base: Escapable & ~Copyable, Base.Element: ~Copyable & ~Escapable {}
+extension Sequence.Prefix.First: Swift.Copyable
+where Base: Swift.Copyable & ~Escapable, Base.Element: ~Swift.Copyable & ~Escapable {}
+
+extension Sequence.Prefix.First: Swift.Escapable
+where Base: Swift.Escapable & ~Copyable, Base.Element: ~Copyable & ~Swift.Escapable {}
 
 extension Sequence.Prefix.First: Sequenceable
 where Base: ~Copyable & ~Escapable, Base.Element: ~Copyable & ~Escapable {

@@ -16,8 +16,9 @@ extension Sequence.Map where Base: ~Copyable & ~Escapable, Base.Element: Copyabl
     }
 }
 
-extension Sequence.Map.Compact: Copyable where Base: Copyable & ~Escapable {}
-extension Sequence.Map.Compact: Escapable where Base: Escapable & ~Copyable {}
+extension Sequence.Map.Compact: Swift.Copyable where Base: Swift.Copyable & ~Escapable {}
+
+extension Sequence.Map.Compact: Swift.Escapable where Base: Swift.Escapable & ~Copyable {}
 
 extension Sequence.Map.Compact: Sequenceable where Base: ~Copyable & ~Escapable {
 

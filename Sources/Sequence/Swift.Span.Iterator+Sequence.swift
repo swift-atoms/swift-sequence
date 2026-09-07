@@ -3,10 +3,10 @@ public import Carrier
 public import Iterator
 public import Ordinal
 
-extension Swift.Span {
+extension Swift.Span.Iterator {
 
     @safe
-    public struct Iterator: ~Escapable, ~Copyable,
+    public struct Batch: ~Escapable, ~Copyable,
         __IteratorChunkProtocol
     {
         @usableFromInline
@@ -27,6 +27,7 @@ extension Swift.Span {
         }
     }
 }
+
 
 extension Swift.Span.Iterator {
 

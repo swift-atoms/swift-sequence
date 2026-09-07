@@ -18,10 +18,11 @@ extension Sequence.Prefix {
     }
 }
 
-extension Sequence.Prefix.While: Copyable
-where Base: Copyable & ~Escapable, Base.Element: Escapable {}
-extension Sequence.Prefix.While: Escapable
-where Base: Escapable & ~Copyable, Base.Element: Escapable {}
+extension Sequence.Prefix.While: Swift.Copyable
+where Base: Swift.Copyable & ~Escapable, Base.Element: Escapable {}
+
+extension Sequence.Prefix.While: Swift.Escapable
+where Base: Swift.Escapable & ~Copyable, Base.Element: Swift.Escapable {}
 
 extension Sequence.Prefix.While: Sequenceable
 where Base: ~Copyable & ~Escapable, Base.Element: Escapable {

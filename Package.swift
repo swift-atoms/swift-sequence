@@ -13,8 +13,8 @@ let package = Package(
     ],
     products: [
         .library(name: "Sequence", targets: ["Sequence"]),
-        .library(name: "Sequence Standard Library Integration", targets: ["Sequence Standard Library Integration"]),
-        .library(name: "Sequence Foundation Library Integration", targets: ["Sequence Foundation Library Integration"]),
+
+        .library(name: "Sequence Foundation Integration", targets: ["Sequence Foundation Integration"]),
         .library(name: "Sequence Test Support", targets: ["Sequence Test Support"]),
     ],
     dependencies: [
@@ -56,30 +56,17 @@ let package = Package(
                 .product(name: "Property", package: "swift-property"),
                 .product(name: "Carrier", package: "swift-carrier"),
                 .product(name: "Either", package: "swift-either"),
-                .product(name: "Cardinal Standard Library Integration", package: "swift-cardinal"),
                 .product(name: "Ordinal", package: "swift-ordinal"),
-                .product(name: "Ordinal Standard Library Integration", package: "swift-ordinal"),
             ],
             path: "Sources/Sequence"
         ),
+        
         .target(
-            name: "Sequence Standard Library Integration",
-            dependencies: [
-                .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Carrier", package: "swift-carrier"),
-                .product(name: "Iterator", package: "swift-iterator"),
-                .product(name: "Ordinal", package: "swift-ordinal"),
-                .target(name: "Sequence"),
-            ],
-            path: "Sources/Sequence Standard Library Integration"
-        ),
-        .target(
-            name: "Sequence Foundation Library Integration",
+            name: "Sequence Foundation Integration",
             dependencies: [
                 .target(name: "Sequence"),
-                .target(name: "Sequence Standard Library Integration"),
             ],
-            path: "Sources/Sequence Foundation Library Integration"
+            path: "Sources/Sequence Foundation Integration"
         ),
         .target(
             name: "Sequence Test Support",
@@ -101,9 +88,7 @@ let package = Package(
                 .product(name: "Either", package: "swift-either"),
                 .product(name: "Iterator", package: "swift-iterator"),
                 .product(name: "Ordinal", package: "swift-ordinal"),
-                .product(name: "Ordinal Standard Library Integration", package: "swift-ordinal"),
-                .target(name: "Sequence Standard Library Integration"),
-                .target(name: "Sequence Foundation Library Integration"),
+                .target(name: "Sequence Foundation Integration"),
             ],
             path: "Tests/Sequence Tests"
         ),

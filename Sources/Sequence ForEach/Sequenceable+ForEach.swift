@@ -1,5 +1,5 @@
 public import Either
-public import Property_Inout
+public import Property
 
 extension Sequenceable where Self: ~Copyable {
 

@@ -1,4 +1,4 @@
-public import Property_Inout
+public import Property
 public import Sequence_Protocol
 
 extension Sequenceable where Self: ~Copyable {

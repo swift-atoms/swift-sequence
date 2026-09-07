@@ -1,6 +1,5 @@
 public import Cardinal
-public import Cardinal_Carrier
-public import Carrier_Protocol
+public import Carrier
 public import Iterator_Chunk
 
 extension Sequence.Prefix.While where Base: ~Copyable & ~Escapable {

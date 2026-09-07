@@ -1,6 +1,5 @@
 public import Cardinal
-public import Cardinal_Carrier
-public import Property_Inout
+public import Property
 
 extension Property.Inout
 where Base: Sequenceable, Base: ~Copyable, Tag == Sequence.Hint {

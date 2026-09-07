@@ -1,8 +1,6 @@
 public import Cardinal
-public import Cardinal_Carrier
 public import Iterator_Chunk
 public import Property
-public import Property_Inout
 public import Sequence_Borrowing
 
 extension Property.Inout

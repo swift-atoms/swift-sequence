@@ -99,7 +99,6 @@ let package = Package(
                 .target(name: "Sequence"),
                 .product(name: "Iterator Protocol", package: "swift-iterator"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
             ]
         ),
 
@@ -117,9 +116,7 @@ let package = Package(
                 .target(name: "Sequence Protocol"),
                 .target(name: "Sequence Borrowing"),
                 .product(name: "Property", package: "swift-property"),
-                .product(name: "Property Inout", package: "swift-property"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
                 .product(name: "Iterator Chunk", package: "swift-iterator"),
             ]
         ),
@@ -145,9 +142,7 @@ let package = Package(
                 .target(name: "Sequence Protocol"),
                 .product(name: "Iterator Chunk", package: "swift-iterator"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
-                .product(name: "Cardinal Subtract", package: "swift-cardinal"),
-                .product(name: "Carrier Protocol", package: "swift-carrier"),
+                .product(name: "Carrier", package: "swift-carrier"),
             ]
         ),
 
@@ -157,9 +152,7 @@ let package = Package(
                 .target(name: "Sequence Protocol"),
                 .product(name: "Iterator Chunk", package: "swift-iterator"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
-                .product(name: "Cardinal Subtract", package: "swift-cardinal"),
-                .product(name: "Carrier Protocol", package: "swift-carrier"),
+                .product(name: "Carrier", package: "swift-carrier"),
             ]
         ),
 
@@ -170,9 +163,7 @@ let package = Package(
                 .target(name: "Sequence Borrowing"),
                 .product(name: "Iterator Chunk", package: "swift-iterator"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
                 .product(name: "Property", package: "swift-property"),
-                .product(name: "Property Inout", package: "swift-property"),
                 .product(name: "Either", package: "swift-either"),
             ]
         ),
@@ -184,9 +175,7 @@ let package = Package(
                 .target(name: "Sequence Borrowing"),
                 .product(name: "Iterator Chunk", package: "swift-iterator"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
                 .product(name: "Property", package: "swift-property"),
-                .product(name: "Property Inout", package: "swift-property"),
             ]
         ),
 
@@ -197,9 +186,7 @@ let package = Package(
                 .target(name: "Sequence Borrowing"),
                 .product(name: "Iterator Chunk", package: "swift-iterator"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
                 .product(name: "Property", package: "swift-property"),
-                .product(name: "Property Inout", package: "swift-property"),
                 .product(name: "Either", package: "swift-either"),
             ]
         ),
@@ -211,9 +198,7 @@ let package = Package(
                 .target(name: "Sequence Borrowing"),
                 .product(name: "Iterator Chunk", package: "swift-iterator"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
                 .product(name: "Property", package: "swift-property"),
-                .product(name: "Property Inout", package: "swift-property"),
                 .product(name: "Either", package: "swift-either"),
             ]
         ),
@@ -225,9 +210,7 @@ let package = Package(
                 .target(name: "Sequence Borrowing"),
                 .product(name: "Iterator Chunk", package: "swift-iterator"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
                 .product(name: "Property", package: "swift-property"),
-                .product(name: "Property Inout", package: "swift-property"),
                 .product(name: "Either", package: "swift-either"),
             ]
         ),
@@ -237,7 +220,6 @@ let package = Package(
             dependencies: [
                 .target(name: "Sequence Protocol"),
                 .product(name: "Property", package: "swift-property"),
-                .product(name: "Property Inout", package: "swift-property"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
                 .product(
                     name: "Cardinal Standard Library Integration",
@@ -251,7 +233,6 @@ let package = Package(
             dependencies: [
                 .target(name: "Sequence Protocol"),
                 .product(name: "Property", package: "swift-property"),
-                .product(name: "Property Inout", package: "swift-property"),
             ]
         ),
 
@@ -260,20 +241,16 @@ let package = Package(
             dependencies: [
                 .target(name: "Sequence Protocol"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
                 .product(
                     name: "Cardinal Standard Library Integration",
                     package: "swift-cardinal"
                 ),
-                .product(name: "Cardinal Subtract", package: "swift-cardinal"),
                 .product(name: "Iterator Protocol", package: "swift-iterator"),
                 .product(name: "Ordinal", package: "swift-ordinal"),
-                .product(name: "Ordinal Protocol", package: "swift-ordinal"),
                 .product(
                     name: "Ordinal Standard Library Integration",
                     package: "swift-ordinal"
                 ),
-                .product(name: "Ordinal Successor", package: "swift-ordinal"),
             ]
         ),
 
@@ -281,7 +258,7 @@ let package = Package(
             name: "Sequence Standard Library Integration",
             dependencies: [
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Carrier Protocol", package: "swift-carrier"),
+                .product(name: "Carrier", package: "swift-carrier"),
                 .product(name: "Iterator Chunk", package: "swift-iterator"),
                 .product(name: "Ordinal", package: "swift-ordinal"),
             ]
@@ -294,7 +271,7 @@ let package = Package(
                 .target(name: "Sequence Protocol"),
                 .target(name: "Sequence Borrowing"),
                 .target(name: "Sequence Drain"),
-                .product(name: "Carrier Protocol", package: "swift-carrier"),
+                .product(name: "Carrier", package: "swift-carrier"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
                 .product(name: "Iterator Protocol", package: "swift-iterator"),
                 .product(name: "Iterator Chunk", package: "swift-iterator"),
@@ -358,7 +335,6 @@ let package = Package(
                 .target(name: "Sequence Hint"),
                 .target(name: "Sequence Test Support"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
             ]
         ),
 
@@ -369,7 +345,6 @@ let package = Package(
                 .target(name: "Sequence Prefix"),
                 .target(name: "Sequence Test Support"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
             ]
         ),
 
@@ -448,7 +423,6 @@ let package = Package(
                 .target(name: "Sequence Hint"),
                 .target(name: "Sequence Test Support"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
                 .product(name: "Ordinal", package: "swift-ordinal"),
                 .product(
                     name: "Ordinal Standard Library Integration",
@@ -476,7 +450,6 @@ let package = Package(
                 .target(name: "Sequence Hint"),
                 .target(name: "Sequence Test Support"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
             ]
         ),
     ],

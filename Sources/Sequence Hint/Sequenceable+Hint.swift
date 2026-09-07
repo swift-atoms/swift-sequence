@@ -1,5 +1,4 @@
 public import Property
-public import Property_Inout
 
 extension Sequenceable where Self: ~Copyable {
 

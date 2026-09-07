@@ -1,4 +1,4 @@
-public import Property_Inout
+public import Property
 
 extension Property::Property.Inout
 where Base: Sequence.Drain.`Protocol` & ~Copyable, Tag == Sequence.Drain {

@@ -1,6 +1,6 @@
 public import Cardinal
 public import Carrier
-public import Iterator_Chunk
+public import Iterator
 public import Ordinal
 
 extension Swift.Span {

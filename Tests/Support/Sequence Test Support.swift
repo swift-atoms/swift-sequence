@@ -1,11 +1,7 @@
 public import Cardinal
 public import Carrier
-public import Iterator_Chunk
-public import Iterator_Protocol
+public import Iterator
 public import Sequence
-public import Sequence_Borrowing
-public import Sequence_Drain
-public import Sequence_Protocol
 
 extension Sequence {
 

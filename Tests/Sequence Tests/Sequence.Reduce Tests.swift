@@ -6,14 +6,14 @@ import Testing
 
 extension Sequence.Reduce {
     @Suite
-    struct Test {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Sequence reductions preserve accumulated values and typed failures` {
+        @Suite struct `Sequence reductions support borrowed mutable and immutable accumulation` {}
+        @Suite struct `Reducing an empty sequence preserves its initial value` {}
+        @Suite struct `Borrowed reductions distinguish iterator and callback failures` {}
     }
 }
 
-extension Sequence.Reduce.Test.Unit {
+extension Sequence.Reduce.`Sequence reductions preserve accumulated values and typed failures`.`Sequence reductions support borrowed mutable and immutable accumulation` {
     @Test
     func `borrowing reduce accumulates without copying the source`() {
         let source = Sequence.Fixture.Borrowing.Source([1, 2, 3, 4])
@@ -46,7 +46,7 @@ extension Sequence.Reduce.Test.Unit {
     }
 }
 
-extension Sequence.Reduce.Test.`Edge Case` {
+extension Sequence.Reduce.`Sequence reductions preserve accumulated values and typed failures`.`Reducing an empty sequence preserves its initial value` {
     @Test
     func `reduce into on empty sequence returns initial`() {
         var source = Sequence.Fixture.Source<Int>([])
@@ -62,7 +62,7 @@ extension Sequence.Reduce.Test.`Edge Case` {
     }
 }
 
-extension Sequence.Reduce.Test.Integration {
+extension Sequence.Reduce.`Sequence reductions preserve accumulated values and typed failures`.`Borrowed reductions distinguish iterator and callback failures` {
 
     enum AccumulatorFailure: Swift.Error {
         case stop

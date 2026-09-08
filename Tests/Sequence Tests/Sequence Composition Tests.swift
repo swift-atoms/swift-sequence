@@ -5,16 +5,16 @@ import Testing
 
 extension Sequence {
     @Suite
-    struct `Composition Test` {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Sequence compositions preserve transformation order` {
+        @Suite struct `No sequence composition unit cases are defined` {}
+        @Suite struct `No sequence composition boundary cases are defined` {}
+        @Suite struct `Composed sequence operations produce the expected ordered values` {}
     }
 }
 
-extension Sequence.`Composition Test`.Integration {
+extension Sequence.`Sequence compositions preserve transformation order`.`Composed sequence operations produce the expected ordered values` {
     @Test
-    func `map then filter then collect`() {
+    func `Mapping before filtering collects the matching transformed values`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
         let result =
             source
@@ -25,7 +25,7 @@ extension Sequence.`Composition Test`.Integration {
     }
 
     @Test
-    func `filter then map`() {
+    func `Filtering before mapping transforms only the matching values`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5])
         let result =
             source
@@ -36,7 +36,7 @@ extension Sequence.`Composition Test`.Integration {
     }
 
     @Test
-    func `drop then prefix`() {
+    func `Dropping before taking a prefix selects the expected middle values`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5, 6, 7, 8])
         let result =
             source
@@ -47,7 +47,7 @@ extension Sequence.`Composition Test`.Integration {
     }
 
     @Test
-    func `prefix then map`() {
+    func `Taking a prefix before mapping transforms only the retained values`() {
         let source = Sequence.Fixture.Source([10, 20, 30, 40, 50])
         let result =
             source
@@ -58,7 +58,7 @@ extension Sequence.`Composition Test`.Integration {
     }
 
     @Test
-    func `chained maps`() {
+    func `Chained sequence maps apply transformations in order`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
         let result =
             source
@@ -70,7 +70,7 @@ extension Sequence.`Composition Test`.Integration {
     }
 
     @Test
-    func `drop while then filter`() {
+    func `Predicate dropping before filtering preserves the remaining matches`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5, 6])
         let result =
             source
@@ -81,7 +81,7 @@ extension Sequence.`Composition Test`.Integration {
     }
 
     @Test
-    func `compactMap then prefix`() {
+    func `Compact mapping before taking a prefix counts only nonnil results`() {
         let source = Sequence.Fixture.Source(["1", "two", "3", "four", "5", "6"])
         let result =
             source
@@ -92,7 +92,7 @@ extension Sequence.`Composition Test`.Integration {
     }
 
     @Test
-    func `map then flatMap then collect`() {
+    func `Mapping before flat mapping collects the transformed inner sequences`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
         let result =
             source
@@ -103,7 +103,7 @@ extension Sequence.`Composition Test`.Integration {
     }
 
     @Test
-    func `flatMap then filter then collect`() {
+    func `Flat mapping before filtering collects matching flattened elements`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
         let result =
             source
@@ -114,7 +114,7 @@ extension Sequence.`Composition Test`.Integration {
     }
 
     @Test
-    func `full pipeline on empty sequence`() {
+    func `Composed sequence transformations preserve an empty source`() {
         let source = Sequence.Fixture.Source<Int>([])
         let result =
             source

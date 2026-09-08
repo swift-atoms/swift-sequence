@@ -4,14 +4,14 @@ import Testing
 
 extension Sequence {
     @Suite
-    struct `Filter Test` {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Sequence filtering preserves matching elements in source order` {
+        @Suite struct `Sequence filtering selects matches without reordering them` {}
+        @Suite struct `Sequence filtering handles empty sources and predicates matching none or all` {}
+        @Suite struct `No sequence filter integration cases are defined` {}
     }
 }
 
-extension Sequence.`Filter Test`.Unit {
+extension Sequence.`Sequence filtering preserves matching elements in source order`.`Sequence filtering selects matches without reordering them` {
     @Test
     func `filter keeps matching elements`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5, 6])
@@ -27,7 +27,7 @@ extension Sequence.`Filter Test`.Unit {
     }
 }
 
-extension Sequence.`Filter Test`.`Edge Case` {
+extension Sequence.`Sequence filtering preserves matching elements in source order`.`Sequence filtering handles empty sources and predicates matching none or all` {
     @Test
     func `filter over empty sequence produces empty array`() {
         let source = Sequence.Fixture.Source<Int>([])
@@ -36,14 +36,14 @@ extension Sequence.`Filter Test`.`Edge Case` {
     }
 
     @Test
-    func `filter that matches all elements`() {
+    func `An always matching sequence filter preserves every element`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
         let result = source.filter { _ in true }.collect()
         #expect(result == [1, 2, 3])
     }
 
     @Test
-    func `filter that matches no elements`() {
+    func `A never matching sequence filter produces no elements`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
         let result = source.filter { _ in false }.collect()
         #expect(result.isEmpty)

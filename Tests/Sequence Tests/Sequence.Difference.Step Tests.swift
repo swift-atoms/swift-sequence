@@ -6,14 +6,14 @@ import Testing
 
 extension Sequence.Difference.Step {
     @Suite
-    struct Test {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Difference steps expose change status and edit markers` {
+        @Suite struct `Difference step predicates and markers distinguish edit cases` {}
+        @Suite struct `No difference step boundary cases are defined` {}
+        @Suite struct `No difference step integration cases are defined` {}
     }
 }
 
-extension Sequence.Difference.Step.Test.Unit {
+extension Sequence.Difference.Step.`Difference steps expose change status and edit markers`.`Difference step predicates and markers distinguish edit cases` {
     @Test
     func `first isChange returns true`() {
         #expect(Sequence.Difference.Step.first.isChange)

@@ -5,16 +5,16 @@ import Testing
 
 extension Sequence.Prefix {
     @Suite
-    struct `While Test` {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Predicate prefixes retain the matching leading sequence elements` {
+        @Suite struct `Predicate prefixes stop at the first nonmatching element` {}
+        @Suite struct `Predicate prefixes preserve empty and uniformly matching cases` {}
+        @Suite struct `No sequence predicate prefix integration cases are defined` {}
     }
 }
 
-extension Sequence.Prefix.`While Test`.Unit {
+extension Sequence.Prefix.`Predicate prefixes retain the matching leading sequence elements`.`Predicate prefixes stop at the first nonmatching element` {
     @Test
-    func `prefix while predicate holds`() {
+    func `A predicate prefix retains the leading matching elements`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5])
         let result = source.prefix(while: { $0 < 4 }).collect()
         #expect(result == [1, 2, 3])
@@ -28,7 +28,7 @@ extension Sequence.Prefix.`While Test`.Unit {
     }
 }
 
-extension Sequence.Prefix.`While Test`.`Edge Case` {
+extension Sequence.Prefix.`Predicate prefixes retain the matching leading sequence elements`.`Predicate prefixes preserve empty and uniformly matching cases` {
     @Test
     func `predicate always true takes all elements`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
@@ -44,7 +44,7 @@ extension Sequence.Prefix.`While Test`.`Edge Case` {
     }
 
     @Test
-    func `prefix while on empty sequence`() {
+    func `Taking a predicate prefix preserves an empty sequence`() {
         let source = Sequence.Fixture.Source<Int>([])
         let result = source.prefix(while: { _ in true }).collect()
         #expect(result.isEmpty)

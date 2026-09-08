@@ -4,14 +4,14 @@ import Testing
 
 extension Sequence.Satisfies {
     @Suite
-    struct Test {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Sequence quantifiers preserve universal existential and negative matching` {
+        @Suite struct `Sequence quantifiers evaluate matching conditions and preserve throwing predicates` {}
+        @Suite struct `Empty sequences preserve quantifier identity values` {}
+        @Suite struct `No sequence quantification integration cases are defined` {}
     }
 }
 
-extension Sequence.Satisfies.Test.Unit {
+extension Sequence.Satisfies.`Sequence quantifiers preserve universal existential and negative matching`.`Sequence quantifiers evaluate matching conditions and preserve throwing predicates` {
     @Test
     func `borrowing allSatisfy preserves throwing predicates`() throws {
         enum Stop: Swift.Error { case stop }
@@ -57,7 +57,7 @@ extension Sequence.Satisfies.Test.Unit {
     }
 }
 
-extension Sequence.Satisfies.Test.`Edge Case` {
+extension Sequence.Satisfies.`Sequence quantifiers preserve universal existential and negative matching`.`Empty sequences preserve quantifier identity values` {
     @Test
     func `satisfies all on empty sequence returns true`() {
         var source = Sequence.Fixture.Source<Int>([])

@@ -6,14 +6,14 @@ import Testing
 
 extension Sequence.Difference.Hunk {
     @Suite
-    struct Test {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Difference hunk descriptions preserve line positions and counts` {
+        @Suite struct `Difference hunk headers format ordinary and larger positions` {}
+        @Suite struct `Difference hunk headers preserve zero line counts` {}
+        @Suite struct `No difference hunk header integration cases are defined` {}
     }
 }
 
-extension Sequence.Difference.Hunk.Test.Unit {
+extension Sequence.Difference.Hunk.`Difference hunk descriptions preserve line positions and counts`.`Difference hunk headers format ordinary and larger positions` {
     @Test
     func `header formats standard hunk`() {
         let hunk = Sequence.Difference.Hunk(
@@ -35,9 +35,9 @@ extension Sequence.Difference.Hunk.Test.Unit {
     }
 }
 
-extension Sequence.Difference.Hunk.Test.`Edge Case` {
+extension Sequence.Difference.Hunk.`Difference hunk descriptions preserve line positions and counts`.`Difference hunk headers preserve zero line counts` {
     @Test
-    func `header with zero counts`() {
+    func `A difference hunk header formats zero line counts`() {
         let hunk = Sequence.Difference.Hunk(
             old: .init(start: 1, count: 0),
             new: .init(start: 1, count: 0),

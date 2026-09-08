@@ -4,14 +4,14 @@ import Testing
 
 extension Sequence {
     @Suite
-    struct `Map.Flat Test` {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Flat mapping preserves outer and inner sequence order` {
+        @Suite struct `Flat mapping transforms flattens and composes sequence elements` {}
+        @Suite struct `Flat mapping preserves empty and singleton sequence shapes` {}
+        @Suite struct `No sequence flat mapping integration cases are defined` {}
     }
 }
 
-extension Sequence.`Map.Flat Test`.Unit {
+extension Sequence.`Flat mapping preserves outer and inner sequence order`.`Flat mapping transforms flattens and composes sequence elements` {
     @Test
     func `flatMap transforms and flattens`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
@@ -42,7 +42,7 @@ extension Sequence.`Map.Flat Test`.Unit {
     }
 
     @Test
-    func `flatMap after map`() {
+    func `Flat mapping after mapping preserves the transformed inner element order`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
         let result =
             source
@@ -53,9 +53,9 @@ extension Sequence.`Map.Flat Test`.Unit {
     }
 }
 
-extension Sequence.`Map.Flat Test`.`Edge Case` {
+extension Sequence.`Flat mapping preserves outer and inner sequence order`.`Flat mapping preserves empty and singleton sequence shapes` {
     @Test
-    func `flatMap over empty sequence`() {
+    func `Flat mapping preserves an empty outer sequence`() {
         let source = Sequence.Fixture.Source<Int>([])
         let result = source.flatMap { n in
             Sequence.Fixture.Source([n])
@@ -64,7 +64,7 @@ extension Sequence.`Map.Flat Test`.`Edge Case` {
     }
 
     @Test
-    func `flatMap with empty inner sequences`() {
+    func `Flat mapping discards empty inner sequences`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
         let result = source.flatMap { _ in
             Sequence.Fixture.Source<Int>([])
@@ -73,7 +73,7 @@ extension Sequence.`Map.Flat Test`.`Edge Case` {
     }
 
     @Test
-    func `flatMap with mixed empty and non-empty inners`() {
+    func `Flat mapping preserves nonempty inner elements among empty sequences`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4])
         let result = source.flatMap { n in
             n % 2 == 0
@@ -84,7 +84,7 @@ extension Sequence.`Map.Flat Test`.`Edge Case` {
     }
 
     @Test
-    func `flatMap single element outer`() {
+    func `Flat mapping a singleton outer sequence yields its inner elements`() {
         let source = Sequence.Fixture.Source([42])
         let result = source.flatMap { n in
             Sequence.Fixture.Source([n, n + 1, n + 2])
@@ -93,7 +93,7 @@ extension Sequence.`Map.Flat Test`.`Edge Case` {
     }
 
     @Test
-    func `flatMap single element inners`() {
+    func `Flat mapping singleton inner sequences preserves their outer order`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
         let result = source.flatMap { n in
             Sequence.Fixture.Source([n * 100])

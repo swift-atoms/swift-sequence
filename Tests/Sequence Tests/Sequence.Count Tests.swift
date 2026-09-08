@@ -5,13 +5,13 @@ import Testing
 
 extension Sequence {
     @Suite
-    struct `Count Test` {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
+    struct `Sequence counting reports the number of matching elements` {
+        @Suite struct `Sequence counting includes exactly the matching elements` {}
+        @Suite struct `Sequence counting handles predicates matching none or all elements` {}
     }
 }
 
-extension Sequence.`Count Test`.Unit {
+extension Sequence.`Sequence counting reports the number of matching elements`.`Sequence counting includes exactly the matching elements` {
     @Test
     func `count(where:) returns matching count`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5, 6])
@@ -20,7 +20,7 @@ extension Sequence.`Count Test`.Unit {
     }
 }
 
-extension Sequence.`Count Test`.`Edge Case` {
+extension Sequence.`Sequence counting reports the number of matching elements`.`Sequence counting handles predicates matching none or all elements` {
     @Test
     func `count(where:) with no matches returns zero`() {
         let source = Sequence.Fixture.Source([1, 2, 3])

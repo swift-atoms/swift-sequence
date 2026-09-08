@@ -6,14 +6,14 @@ import Testing
 
 extension Sequence.Contains {
     @Suite
-    struct Test {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Sequence containment finds matching elements and preserves typed failures` {
+        @Suite struct `Sequence containment identifies present and absent matches` {}
+        @Suite struct `Sequence containment preserves empty results and short circuits` {}
+        @Suite struct `Borrowed containment distinguishes iterator and predicate failures` {}
     }
 }
 
-extension Sequence.Contains.Test.Unit {
+extension Sequence.Contains.`Sequence containment finds matching elements and preserves typed failures`.`Sequence containment identifies present and absent matches` {
     @Test
     func `borrowing contains short circuits`() {
         let source = Sequence.Fixture.Borrowing.Source([1, 2, 3, 4])
@@ -40,7 +40,7 @@ extension Sequence.Contains.Test.Unit {
     }
 }
 
-extension Sequence.Contains.Test.`Edge Case` {
+extension Sequence.Contains.`Sequence containment finds matching elements and preserves typed failures`.`Sequence containment preserves empty results and short circuits` {
     @Test
     func `contains on empty sequence returns false`() {
         var source = Sequence.Fixture.Source<Int>([])
@@ -59,7 +59,7 @@ extension Sequence.Contains.Test.`Edge Case` {
     }
 }
 
-extension Sequence.Contains.Test.Integration {
+extension Sequence.Contains.`Sequence containment finds matching elements and preserves typed failures`.`Borrowed containment distinguishes iterator and predicate failures` {
 
     enum PredicateFailure: Swift.Error {
         case stop

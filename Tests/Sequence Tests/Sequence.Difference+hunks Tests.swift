@@ -6,14 +6,14 @@ import Testing
 
 extension Sequence.Difference {
     @Suite
-    struct `Hunks Test` {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Difference hunks group nearby edits with bounded context` {
+        @Suite struct `Difference hunks preserve headers context and edit counts` {}
+        @Suite struct `Difference hunks preserve empty pure edit and context boundary cases` {}
+        @Suite struct `No difference hunk integration cases are defined` {}
     }
 }
 
-extension Sequence.Difference.`Hunks Test`.Unit {
+extension Sequence.Difference.`Difference hunks group nearby edits with bounded context`.`Difference hunks preserve headers context and edit counts` {
     @Test
     func `single change produces one hunk`() {
         let changes = Sequence.Difference.diff(
@@ -77,7 +77,7 @@ extension Sequence.Difference.`Hunks Test`.Unit {
     }
 
     @Test
-    func `custom context lines respected`() {
+    func `Difference hunks honor the requested context line count`() {
         var old = (1...20).map { "line\($0)" }
         var new = old
         new[0] = "changed1"
@@ -104,7 +104,7 @@ extension Sequence.Difference.`Hunks Test`.Unit {
     }
 }
 
-extension Sequence.Difference.`Hunks Test`.`Edge Case` {
+extension Sequence.Difference.`Difference hunks group nearby edits with bounded context`.`Difference hunks preserve empty pure edit and context boundary cases` {
     @Test
     func `identical sequences produce no hunks`() {
         let changes = Sequence.Difference.diff(["a", "b", "c"], ["a", "b", "c"])

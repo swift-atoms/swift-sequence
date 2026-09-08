@@ -4,14 +4,14 @@ import Testing
 
 extension Sequence {
     @Suite
-    struct `Map Test` {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Sequence mapping transforms elements while preserving order` {
+        @Suite struct `Sequence mapping preserves transformations result types and identity` {}
+        @Suite struct `Sequence mapping handles empty and singleton sources` {}
+        @Suite struct `No sequence mapping integration cases are defined` {}
     }
 }
 
-extension Sequence.`Map Test`.Unit {
+extension Sequence.`Sequence mapping transforms elements while preserving order`.`Sequence mapping preserves transformations result types and identity` {
     @Test
     func `map transforms each element`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5])
@@ -34,7 +34,7 @@ extension Sequence.`Map Test`.Unit {
     }
 }
 
-extension Sequence.`Map Test`.`Edge Case` {
+extension Sequence.`Sequence mapping transforms elements while preserving order`.`Sequence mapping handles empty and singleton sources` {
     @Test
     func `map over empty sequence produces empty array`() {
         let source = Sequence.Fixture.Source<Int>([])
@@ -43,7 +43,7 @@ extension Sequence.`Map Test`.`Edge Case` {
     }
 
     @Test
-    func `map over single element`() {
+    func `Mapping a singleton sequence transforms its sole element`() {
         let source = Sequence.Fixture.Source([42])
         let result = source.map { $0 + 1 }.collect()
         #expect(result == [43])

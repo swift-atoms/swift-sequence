@@ -6,14 +6,14 @@ import Testing
 
 extension Sequence.Difference {
     @Suite
-    struct Test {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Sequence differences preserve edit structure and minimal distance` {
+        @Suite struct `Sequence differences identify insertions removals and unchanged elements` {}
+        @Suite struct `Sequence differences preserve empty singleton and disjoint cases` {}
+        @Suite struct `No sequence difference integration cases are defined` {}
     }
 }
 
-extension Sequence.Difference.Test.Unit {
+extension Sequence.Difference.`Sequence differences preserve edit structure and minimal distance`.`Sequence differences identify insertions removals and unchanged elements` {
 
     @Test
     func `core diff identical sequences produces all both`() {
@@ -28,7 +28,7 @@ extension Sequence.Difference.Test.Unit {
     }
 
     @Test
-    func `core diff single deletion`() {
+    func `A core sequence difference identifies one deleted element`() {
         let old = ["a", "b", "c"]
         let new = ["a", "c"]
         let steps = Sequence.Difference.diff(
@@ -40,7 +40,7 @@ extension Sequence.Difference.Test.Unit {
     }
 
     @Test
-    func `core diff single insertion`() {
+    func `A core sequence difference identifies one inserted element`() {
         let old = ["a", "c"]
         let new = ["a", "b", "c"]
         let steps = Sequence.Difference.diff(
@@ -52,7 +52,7 @@ extension Sequence.Difference.Test.Unit {
     }
 
     @Test
-    func `core diff replacement`() {
+    func `A core sequence difference represents replacement as removal and insertion`() {
         let old = ["a", "b"]
         let new = ["a", "c"]
         let steps = Sequence.Difference.diff(
@@ -135,9 +135,9 @@ extension Sequence.Difference.Test.Unit {
     }
 }
 
-extension Sequence.Difference.Test.`Edge Case` {
+extension Sequence.Difference.`Sequence differences preserve edit structure and minimal distance`.`Sequence differences preserve empty singleton and disjoint cases` {
     @Test
-    func `both empty sequences`() {
+    func `The core difference between empty sequences contains no steps`() {
         let steps = Sequence.Difference.diff(
             oldCount: .zero,
             newCount: .zero,
@@ -169,7 +169,7 @@ extension Sequence.Difference.Test.`Edge Case` {
     }
 
     @Test
-    func `completely different sequences`() {
+    func `The core difference between disjoint sequences removes and inserts every element`() {
         let (removed, inserted) = Sequence.Difference.diff(["a", "b", "c"], ["x", "y", "z"])
             .counts()
         #expect(removed == 3)
@@ -177,13 +177,13 @@ extension Sequence.Difference.Test.`Edge Case` {
     }
 
     @Test
-    func `single element identical`() {
+    func `The core difference between equal singleton sequences preserves the shared element`() {
         let changes = Sequence.Difference.diff(["a"], ["a"])
         #expect(changes.collect() == [.both("a")])
     }
 
     @Test
-    func `single element different`() {
+    func `The core difference between distinct singleton sequences replaces the element`() {
         let changes = Sequence.Difference.diff(["a"], ["b"])
         let (removed, inserted) = changes.counts()
         #expect(removed == 1)
@@ -191,20 +191,20 @@ extension Sequence.Difference.Test.`Edge Case` {
     }
 
     @Test
-    func `convenience diff empty sequences`() {
+    func `The sequence difference convenience method preserves two empty inputs`() {
         let empty: [String] = []
         let changes = Sequence.Difference.diff(empty, empty)
         #expect(changes.collect().isEmpty)
     }
 
     @Test
-    func `convenience diff from empty to non-empty`() {
+    func `The sequence difference convenience method inserts every new element`() {
         let changes = Sequence.Difference.diff([], ["a", "b"])
         #expect(changes.collect() == [.second("a"), .second("b")])
     }
 
     @Test
-    func `convenience diff from non-empty to empty`() {
+    func `The sequence difference convenience method removes every old element`() {
         let changes = Sequence.Difference.diff(["a", "b"], [])
         #expect(changes.collect() == [.first("a"), .first("b")])
     }

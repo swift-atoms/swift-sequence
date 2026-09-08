@@ -6,14 +6,14 @@ import Testing
 
 extension Sequence.First {
     @Suite
-    struct Test {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Sequence first match search preserves order and typed failures` {
+        @Suite struct `First match search returns the earliest matching element` {}
+        @Suite struct `First match search returns nil for empty or nonmatching sequences` {}
+        @Suite struct `Borrowed first match search distinguishes iterator and predicate failures` {}
     }
 }
 
-extension Sequence.First.Test.Unit {
+extension Sequence.First.`Sequence first match search preserves order and typed failures`.`First match search returns the earliest matching element` {
     @Test
     func `borrowing first returns the first match`() {
         let source = Sequence.Fixture.Borrowing.Source([1, 2, 3, 4])
@@ -22,7 +22,7 @@ extension Sequence.First.Test.Unit {
     }
 
     @Test
-    func `first matching element found`() {
+    func `First match search returns the matching sequence element`() {
         var source = Sequence.Fixture.Source([1, 2, 3, 4, 5])
         let result = source.first { $0 > 3 }
         #expect(result == 4)
@@ -36,7 +36,7 @@ extension Sequence.First.Test.Unit {
     }
 }
 
-extension Sequence.First.Test.`Edge Case` {
+extension Sequence.First.`Sequence first match search preserves order and typed failures`.`First match search returns nil for empty or nonmatching sequences` {
     @Test
     func `first with no match returns nil`() {
         var source = Sequence.Fixture.Source([1, 2, 3])
@@ -52,7 +52,7 @@ extension Sequence.First.Test.`Edge Case` {
     }
 }
 
-extension Sequence.First.Test.Integration {
+extension Sequence.First.`Sequence first match search preserves order and typed failures`.`Borrowed first match search distinguishes iterator and predicate failures` {
 
     enum PredicateFailure: Swift.Error {
         case stop

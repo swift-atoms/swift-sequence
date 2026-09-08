@@ -6,14 +6,14 @@ import Testing
 
 extension Sequence.Difference {
     @Suite
-    struct `Change Test` {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Difference changes expose their payloads markers and descriptions` {
+        @Suite struct `Difference change accessors preserve the selected case and payload` {}
+        @Suite struct `No difference change boundary cases are defined` {}
+        @Suite struct `No difference change integration cases are defined` {}
     }
 }
 
-extension Sequence.Difference.`Change Test`.Unit {
+extension Sequence.Difference.`Difference changes expose their payloads markers and descriptions`.`Difference change accessors preserve the selected case and payload` {
     @Test
     func `first element extracts value`() {
         #expect(Sequence.Difference.Change<String>.first("a").element == "a")

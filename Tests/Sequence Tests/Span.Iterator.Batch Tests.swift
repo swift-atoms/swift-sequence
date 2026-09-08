@@ -5,14 +5,14 @@ import Testing
 
 extension Sequence {
     @Suite
-    struct `Span Iterator Batch Test` {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Span batch iterators preserve ordered batches and skipped counts` {
+        @Suite struct `Span batch iteration preserves batch sizes and remaining elements` {}
+        @Suite struct `Span batch iteration handles empty spans and oversized skips` {}
+        @Suite struct `No span batch iteration integration cases are defined` {}
     }
 }
 
-extension Sequence.`Span Iterator Batch Test`.Unit {
+extension Sequence.`Span batch iterators preserve ordered batches and skipped counts`.`Span batch iteration preserves batch sizes and remaining elements` {
     @Test
     func `next(maximumCount:) returns batches of requested size`() {
         let array = [1, 2, 3, 4, 5, 6]
@@ -82,9 +82,9 @@ extension Sequence.`Span Iterator Batch Test`.Unit {
     }
 }
 
-extension Sequence.`Span Iterator Batch Test`.`Edge Case` {
+extension Sequence.`Span batch iterators preserve ordered batches and skipped counts`.`Span batch iteration handles empty spans and oversized skips` {
     @Test
-    func `batch iterator over empty span`() {
+    func `An empty span batch iterator returns no elements`() {
         let array: [Int] = []
         array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)

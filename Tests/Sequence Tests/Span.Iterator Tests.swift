@@ -5,14 +5,14 @@ import Testing
 
 extension Sequence {
     @Suite
-    struct `Span Iterator Test` {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Span iterators preserve element order and exhaustion state` {
+        @Suite struct `Span iteration advances through elements and updates remaining counts` {}
+        @Suite struct `Iterating an empty span immediately reaches exhaustion` {}
+        @Suite struct `No span iteration integration cases are defined` {}
     }
 }
 
-extension Sequence.`Span Iterator Test`.Unit {
+extension Sequence.`Span iterators preserve element order and exhaustion state`.`Span iteration advances through elements and updates remaining counts` {
     @Test
     func `next returns elements in order`() {
         let array = [10, 20, 30]
@@ -71,9 +71,9 @@ extension Sequence.`Span Iterator Test`.Unit {
     }
 }
 
-extension Sequence.`Span Iterator Test`.`Edge Case` {
+extension Sequence.`Span iterators preserve element order and exhaustion state`.`Iterating an empty span immediately reaches exhaustion` {
     @Test
-    func `iterator over empty span`() {
+    func `An empty span iterator returns no element and has no remaining count`() {
         let array: [Int] = []
         array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)

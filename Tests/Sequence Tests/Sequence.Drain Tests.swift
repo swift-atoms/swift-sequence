@@ -4,14 +4,14 @@ import Testing
 
 extension Sequence.Drain {
     @Suite
-    struct Test {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    struct `Sequence draining transfers elements and empties its source` {
+        @Suite struct `Sequence draining visits every element and transfers ownership` {}
+        @Suite struct `Draining an empty sequence leaves it empty` {}
+        @Suite struct `No sequence drain integration cases are defined` {}
     }
 }
 
-extension Sequence.Drain.Test.Unit {
+extension Sequence.Drain.`Sequence draining transfers elements and empties its source`.`Sequence draining visits every element and transfers ownership` {
     @Test
     func `drain visits all elements and empties source`() {
         var source = Sequence.Fixture.Drainable.Source([1, 2, 3, 4, 5])
@@ -29,7 +29,7 @@ extension Sequence.Drain.Test.Unit {
     }
 }
 
-extension Sequence.Drain.Test.`Edge Case` {
+extension Sequence.Drain.`Sequence draining transfers elements and empties its source`.`Draining an empty sequence leaves it empty` {
     @Test
     func `drain on empty source does nothing`() {
         var source = Sequence.Fixture.Drainable.Source<Int>([])

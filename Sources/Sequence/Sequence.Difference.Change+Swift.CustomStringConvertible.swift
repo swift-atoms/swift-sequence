@@ -1,5 +1,5 @@
 internal import Cardinal
-public import Ordinal
+import Ordinal
 
 extension Sequence.Difference.Change: Swift.CustomStringConvertible {
 

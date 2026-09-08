@@ -25,7 +25,7 @@ extension Swift.Span {
     }
 }
 
-public import Carrier
+import Carrier
 public import Iterator
 
 extension Swift.Span {

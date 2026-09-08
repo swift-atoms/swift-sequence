@@ -1,5 +1,4 @@
 public import Cardinal
-internal import Cardinal
 internal import Ordinal
 
 extension Sequence.Difference.Changes where Value: CustomStringConvertible {

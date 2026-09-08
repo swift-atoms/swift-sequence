@@ -18,6 +18,10 @@ let package = Package(
         .library(name: "Sequence Test Support", targets: ["Sequence Test Support"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/swift-atoms/swift-tagged.git", branch: "main"),
+
+        .package(url: "https://github.com/swift-atoms/swift-ownership.git", branch: "main"),
+
         .package(
             url: "https://github.com/swift-atoms/swift-iterator.git",
             branch: "main"
@@ -91,6 +95,19 @@ let package = Package(
                 .target(name: "Sequence Foundation Integration"),
             ],
             path: "Tests/Sequence Tests"
+        ),
+        .testTarget(
+            name: "Consolidated Sequence Property Tests",
+            dependencies: [
+                .product(name: "Tagged", package: "swift-tagged"),
+
+                .target(name: "Sequence"),
+                .product(name: "Property", package: "swift-property"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Iterator", package: "swift-iterator"),
+                .product(name: "Ownership", package: "swift-ownership"),
+            ],
+            path: "Tests/Consolidated swift-sequence-property"
         ),
     ],
     swiftLanguageModes: [.v6]

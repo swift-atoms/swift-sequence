@@ -67,6 +67,7 @@ where
         maximumCount: some Carrier.`Protocol`<Cardinal>
     ) throws(Base.Iterator.Failure) -> Swift.Span<Base.Element> {
         let maximumCount = maximumCount.underlying
+        guard maximumCount > .zero else { return Swift.Span<Base.Element>() }
         guard !_done else {
             return try _base.next(maximumCount: Cardinal.zero)
         }

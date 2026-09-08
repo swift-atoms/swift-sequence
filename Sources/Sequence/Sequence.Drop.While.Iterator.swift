@@ -68,11 +68,12 @@ where
         maximumCount: some Carrier.`Protocol`<Cardinal>
     ) throws(Base.Iterator.Failure) -> Swift.Span<Base.Element> {
         let maximumCount = maximumCount.underlying
+        guard maximumCount > .zero else { return Swift.Span<Base.Element>() }
         if !_dropping {
             return try _base.next(maximumCount: maximumCount)
         }
         while _dropping {
-            let span = try _base.next(maximumCount: maximumCount > .zero ? maximumCount : .max)
+            let span = try _base.next(maximumCount: maximumCount)
             if span.isEmpty { return span }
             for i in span.indices {
                 if !_predicate(span[i]) {

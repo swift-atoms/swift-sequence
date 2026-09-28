@@ -17,6 +17,9 @@ let package = Package(
         .library(name: "Sequence Foundation Integration", targets: ["Sequence Foundation Integration"]),
         .library(name: "Sequence Test Support", targets: ["Sequence Test Support"]),
     ],
+    traits: [
+        .trait(name: "CardinalSpan", description: "CardinalSpan integration"),
+    ],
     dependencies: [
         .package(url: "https://github.com/swift-atoms/swift-tagged.git", branch: "main"),
 
@@ -52,6 +55,26 @@ let package = Package(
         ),
     ],
     targets: [
+        .testTarget(
+            name: "Absorbed Sequence Cardinal Collect Tests",
+            dependencies: [
+                .target(name: "Sequence"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Iterator", package: "swift-iterator"),
+                .product(name: "Ownership", package: "swift-ownership"),
+                .product(name: "Property", package: "swift-property"),
+            ],
+            path: "Tests/Absorbed Sequence Cardinal Collect Tests"
+        ),
+        .testTarget(
+            name: "Absorbed Cardinal Span Tests",
+            dependencies: [
+                .product(name: "Cardinal", package: "swift-cardinal", condition: .when(traits: ["CardinalSpan"])),
+                .product(name: "Ordinal", package: "swift-ordinal", condition: .when(traits: ["CardinalSpan"])),
+                .target(name: "Sequence", condition: .when(traits: ["CardinalSpan"])),
+            ],
+            path: "Tests/Absorbed Cardinal Span Tests"
+        ),
         .target(
             name: "Sequence",
             dependencies: [
@@ -64,7 +87,7 @@ let package = Package(
             ],
             path: "Sources/Sequence"
         ),
-        
+
         .target(
             name: "Sequence Foundation Integration",
             dependencies: [

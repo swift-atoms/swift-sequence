@@ -65,7 +65,7 @@ extension Swift.Span.Iterator {
     @_lifetime(self: immortal)
     public mutating func next() -> Element? {
         guard _position.rawValue < _count.rawValue else { return nil }
-        let element = _span[_position]
+        let element = _span[Int(_position.rawValue)]
         _position = Ordinal(_position.rawValue + 1)
         return element
     }

@@ -18,7 +18,7 @@ extension Sequence.`Span batch iterators preserve ordered batches and skipped co
         let array = [1, 2, 3, 4, 5, 6]
         array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
-            var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
+            var iterator = Swift::Span<Int>.Iterator.Batch(span: span)
 
             var count = iterator.next(maximumCount: Cardinal(3)).count
             #expect(count == 3)
@@ -36,7 +36,7 @@ extension Sequence.`Span batch iterators preserve ordered batches and skipped co
         let array = [1, 2, 3, 4, 5]
         array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
-            var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
+            var iterator = Swift::Span<Int>.Iterator.Batch(span: span)
 
             var count = iterator.next(maximumCount: Cardinal(3)).count
             #expect(count == 3)
@@ -51,7 +51,7 @@ extension Sequence.`Span batch iterators preserve ordered batches and skipped co
         let array = [1, 2, 3, 4, 5]
         array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
-            var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
+            var iterator = Swift::Span<Int>.Iterator.Batch(span: span)
 
             let skipped = iterator.skip(by: Cardinal(2))
             #expect(skipped == 2)
@@ -66,7 +66,7 @@ extension Sequence.`Span batch iterators preserve ordered batches and skipped co
         let array = [1, 2, 3, 4]
         array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
-            var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
+            var iterator = Swift::Span<Int>.Iterator.Batch(span: span)
 
             var rem = iterator.remaining
             #expect(rem == 4)
@@ -88,7 +88,7 @@ extension Sequence.`Span batch iterators preserve ordered batches and skipped co
         let array: [Int] = []
         array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
-            var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
+            var iterator = Swift::Span<Int>.Iterator.Batch(span: span)
 
             let empty = iterator.isEmpty
             #expect(empty)
@@ -106,7 +106,7 @@ extension Sequence.`Span batch iterators preserve ordered batches and skipped co
         let array = [1, 2, 3]
         array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
-            var iterator = Swift.Span<Int>.Iterator.Batch(span: span)
+            var iterator = Swift::Span<Int>.Iterator.Batch(span: span)
 
             let skipped = iterator.skip(by: Cardinal(10))
             #expect(skipped == 3)

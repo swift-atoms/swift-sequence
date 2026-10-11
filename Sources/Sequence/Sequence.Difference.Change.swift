@@ -60,8 +60,8 @@ extension Sequence.Difference.Change where Element: CustomStringConvertible {
     }
 }
 
-extension Sequence.Difference.Change: Swift.Sendable where Element: Swift.Sendable {}
+extension Sequence.Difference.Change: Swift::Sendable where Element: Swift::Sendable {}
 
-extension Sequence.Difference.Change: Swift.Equatable where Element: Swift.Equatable {}
+extension Sequence.Difference.Change: Swift::Equatable where Element: Swift::Equatable {}
 
-extension Sequence.Difference.Change: Swift.Hashable where Element: Swift.Hashable {}
+extension Sequence.Difference.Change: Swift::Hashable where Element: Swift::Hashable {}

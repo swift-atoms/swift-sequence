@@ -3,7 +3,7 @@ public import Either
 extension Sequenceable where Self: ~Copyable, Element: Escapable, Iterator.Failure == Never {
 
     @inlinable
-    public consuming func consume<E: Swift.Error>(
+    public consuming func consume<E: Swift::Error>(
         _ body: (consuming Element) throws(E) -> Void
     ) throws(E) {
         var iterator = makeIterator()
@@ -16,7 +16,7 @@ extension Sequenceable where Self: ~Copyable, Element: Escapable, Iterator.Failu
 extension Sequenceable where Self: ~Copyable, Element: Escapable {
 
     @inlinable
-    public consuming func consume<E: Swift.Error>(
+    public consuming func consume<E: Swift::Error>(
         _ body: (consuming Element) throws(E) -> Void
     ) throws(Either<E, Iterator.Failure>) {
         var iterator = makeIterator()

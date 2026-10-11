@@ -20,11 +20,11 @@ extension Sequence.Drop {
     }
 }
 
-extension Sequence.Drop.First: Swift.Copyable
-where Base: Swift.Copyable & ~Escapable, Base.Element: ~Swift.Copyable & ~Escapable {}
+extension Sequence.Drop.First: Swift::Copyable
+where Base: Swift::Copyable & ~Escapable, Base.Element: ~Swift::Copyable & ~Escapable {}
 
-extension Sequence.Drop.First: Swift.Escapable
-where Base: Swift.Escapable & ~Copyable, Base.Element: ~Copyable & ~Swift.Escapable {}
+extension Sequence.Drop.First: Swift::Escapable
+where Base: Swift::Escapable & ~Copyable, Base.Element: ~Copyable & ~Swift::Escapable {}
 
 extension Sequence.Drop.First: Sequenceable
 where Base: ~Copyable & ~Escapable, Base.Element: ~Copyable & ~Escapable {

@@ -11,7 +11,7 @@ struct Span_Cardinal_Tests {
     func `cardinal counts extract prefixes and suffixes`() {
         let values = [10, 20, 30, 40]
         values.withUnsafeBufferPointer { buffer in
-            let span = unsafe Swift.Span(_unsafeElements: buffer)
+            let span = unsafe Swift::Span(_unsafeElements: buffer)
             let prefix = span.extracting(first: Cardinal(UInt(2)))
             let suffix = span.extracting(droppingFirst: Cardinal(UInt(2)))
 
@@ -28,7 +28,7 @@ struct Span_Cardinal_Tests {
     func `ordinal positions address span elements`() {
         let values = [10, 20, 30]
         values.withUnsafeBufferPointer { buffer in
-            let span = unsafe Swift.Span(_unsafeElements: buffer)
+            let span = unsafe Swift::Span(_unsafeElements: buffer)
             #expect(span[Ordinal(UInt(1))] == 20)
         }
     }

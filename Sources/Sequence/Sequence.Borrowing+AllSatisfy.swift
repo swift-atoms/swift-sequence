@@ -5,7 +5,7 @@ extension Sequence.Borrowing.`Protocol`
 where Self: ~Copyable & ~Escapable, Iterator.Failure == Never {
 
     @inlinable
-    public borrowing func allSatisfy<E: Swift.Error>(
+    public borrowing func allSatisfy<E: Swift::Error>(
         _ predicate: (borrowing Element) throws(E) -> Bool
     ) throws(E) -> Bool {
         var iterator = makeIterator()

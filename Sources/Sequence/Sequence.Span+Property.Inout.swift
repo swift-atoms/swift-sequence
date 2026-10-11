@@ -10,7 +10,7 @@ where
 {
 
     @inlinable
-    public func forEach(_ body: (Swift.Span<Base.Element>) -> Void) {
+    public func forEach(_ body: (Swift::Span<Base.Element>) -> Void) {
         func loop(_ source: borrowing Base) {
             var iterator = source.makeIterator()
             while true {
@@ -40,7 +40,7 @@ where
     @inlinable
     public func reduce<Accumulator>(
         into initial: Accumulator,
-        _ operation: (inout Accumulator, Swift.Span<Base.Element>) -> Void
+        _ operation: (inout Accumulator, Swift::Span<Base.Element>) -> Void
     ) -> Accumulator {
         var result = initial
         func loop(_ source: borrowing Base) {
@@ -58,7 +58,7 @@ where
     @inlinable
     public func reduce<Accumulator>(
         from initial: Accumulator,
-        _ operation: (Accumulator, Swift.Span<Base.Element>) -> Accumulator
+        _ operation: (Accumulator, Swift::Span<Base.Element>) -> Accumulator
     ) -> Accumulator {
         var result = initial
         func loop(_ source: borrowing Base) {

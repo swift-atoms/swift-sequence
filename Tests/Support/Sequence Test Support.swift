@@ -83,7 +83,7 @@ extension Sequence.Fixture.Borrowing {
 
 extension Sequence.Fixture.Borrowing {
 
-    public enum IteratorFailure: Swift.Error, Equatable {
+    public enum IteratorFailure: Swift::Error, Equatable {
         case failure
     }
 
@@ -109,7 +109,7 @@ extension Sequence.Fixture.Borrowing {
 
     public struct FailingIterator<Element: Copyable>: ~Escapable {
         @usableFromInline
-        let _span: Swift.Span<Element>
+        let _span: Swift::Span<Element>
 
         @usableFromInline
         let _failAt: Cardinal::Cardinal
@@ -119,7 +119,7 @@ extension Sequence.Fixture.Borrowing {
 
         @inlinable
         @_lifetime(copy span)
-        package init(_ span: Swift.Span<Element>, failAt: Cardinal::Cardinal) {
+        package init(_ span: Swift::Span<Element>, failAt: Cardinal::Cardinal) {
             self._span = span
             self._failAt = failAt
             self._position = 0
@@ -135,7 +135,7 @@ extension Sequence.Fixture.Borrowing.FailingIterator: Iterator::Iterator.Chunk.`
     @_lifetime(&self)
     public mutating func next(
         maximumCount _: some Carrier::Carrier.`Protocol`<Cardinal::Cardinal>
-    ) throws(Failure) -> Swift.Span<Element> {
+    ) throws(Failure) -> Swift::Span<Element> {
         if Cardinal::Cardinal(UInt(_position)) == _failAt { throw .failure }
         guard _position < _span.count else { return _span.extracting(first: 0) }
         let result = _span.extracting(droppingFirst: _position).extracting(first: 1)

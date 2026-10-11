@@ -54,7 +54,7 @@ extension Sequence.First.`Sequence first match search preserves order and typed 
 
 extension Sequence.First.`Sequence first match search preserves order and typed failures`.`Borrowed first match search distinguishes iterator and predicate failures` {
 
-    enum PredicateFailure: Swift.Error {
+    enum PredicateFailure: Swift::Error {
         case stop
     }
 

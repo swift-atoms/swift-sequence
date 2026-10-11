@@ -16,7 +16,7 @@ extension Sequenceable where Self: ~Copyable {
     }
 }
 
-extension Sequenceable where Self: Swift.Sequence, Iterator.Failure == Never {
+extension Sequenceable where Self: Swift::Sequence, Iterator.Failure == Never {
 
     @inline(always)
     @inlinable
@@ -32,7 +32,7 @@ extension Sequenceable where Self: Copyable, Element: Copyable, Iterator.Failure
 
     @_disfavoredOverload
     @inlinable
-    public func forEach<E: Swift.Error>(
+    public func forEach<E: Swift::Error>(
         _ body: (Element) throws(E) -> Void
     ) throws(E) {
         var iterator = makeIterator()
@@ -46,7 +46,7 @@ extension Sequenceable where Self: Copyable, Element: Copyable {
 
     @_disfavoredOverload
     @inlinable
-    public func forEach<E: Swift.Error>(
+    public func forEach<E: Swift::Error>(
         _ body: (Element) throws(E) -> Void
     ) throws(Either<E, Iterator.Failure>) {
         var iterator = makeIterator()

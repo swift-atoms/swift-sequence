@@ -18,11 +18,11 @@ extension Sequence {
     }
 }
 
-extension Sequence.Filter: Swift.Copyable
-where Base: Swift.Copyable & ~Escapable, Base.Element: Escapable {}
+extension Sequence.Filter: Swift::Copyable
+where Base: Swift::Copyable & ~Escapable, Base.Element: Escapable {}
 
-extension Sequence.Filter: Swift.Escapable
-where Base: Swift.Escapable & ~Copyable, Base.Element: Swift.Escapable {}
+extension Sequence.Filter: Swift::Escapable
+where Base: Swift::Escapable & ~Copyable, Base.Element: Swift::Escapable {}
 
 extension Sequence.Filter: Sequenceable
 where Base: ~Copyable & ~Escapable, Base.Element: Escapable {

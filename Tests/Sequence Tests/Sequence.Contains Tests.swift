@@ -61,7 +61,7 @@ extension Sequence.Contains.`Sequence containment finds matching elements and pr
 
 extension Sequence.Contains.`Sequence containment finds matching elements and preserves typed failures`.`Borrowed containment distinguishes iterator and predicate failures` {
 
-    enum PredicateFailure: Swift.Error {
+    enum PredicateFailure: Swift::Error {
         case stop
     }
 

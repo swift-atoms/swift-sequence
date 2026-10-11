@@ -1,7 +1,7 @@
 internal import Cardinal
 import Ordinal
 
-extension Sequence.Difference.Change: Swift.CustomStringConvertible {
+extension Sequence.Difference.Change: Swift::CustomStringConvertible {
 
     public var description: String {
         switch self {

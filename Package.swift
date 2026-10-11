@@ -115,7 +115,6 @@ let package = Package(
                 .product(name: "Either", package: "swift-either"),
                 .product(name: "Iterator", package: "swift-iterator"),
                 .product(name: "Ordinal", package: "swift-ordinal"),
-                .target(name: "Sequence Foundation Integration"),
             ],
             path: "Tests/Sequence Tests"
         ),

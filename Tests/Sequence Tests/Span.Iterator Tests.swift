@@ -18,7 +18,7 @@ extension Sequence.`Span iterators preserve element order and exhaustion state`.
         let array = [10, 20, 30]
         array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
-            var iterator = Swift.Span<Int>.Iterator(span: span)
+            var iterator = Swift::Span<Int>.Iterator(span: span)
             #expect(iterator.next() == 10)
             #expect(iterator.next() == 20)
             #expect(iterator.next() == 30)
@@ -31,7 +31,7 @@ extension Sequence.`Span iterators preserve element order and exhaustion state`.
         let array = [1, 2]
         array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
-            var iterator = Swift.Span<Int>.Iterator(span: span)
+            var iterator = Swift::Span<Int>.Iterator(span: span)
 
             var empty = iterator.isEmpty
             #expect(!empty)
@@ -51,7 +51,7 @@ extension Sequence.`Span iterators preserve element order and exhaustion state`.
         let array = [1, 2, 3]
         array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
-            var iterator = Swift.Span<Int>.Iterator(span: span)
+            var iterator = Swift::Span<Int>.Iterator(span: span)
 
             var rem = iterator.remaining
             #expect(rem == 3)
@@ -77,7 +77,7 @@ extension Sequence.`Span iterators preserve element order and exhaustion state`.
         let array: [Int] = []
         array.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(_unsafeElements: buffer)
-            var iterator = Swift.Span<Int>.Iterator(span: span)
+            var iterator = Swift::Span<Int>.Iterator(span: span)
 
             let empty = iterator.isEmpty
             #expect(empty)

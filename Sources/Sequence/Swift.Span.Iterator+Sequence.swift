@@ -3,14 +3,14 @@ public import Carrier
 public import Iterator
 public import Ordinal
 
-extension Swift.Span.Iterator {
+extension Swift::Span.Iterator {
 
     @safe
     public struct Batch: ~Escapable, ~Copyable,
         __IteratorChunkProtocol
     {
         @usableFromInline
-        let _span: Swift.Span<Element>
+        let _span: Swift::Span<Element>
 
         @usableFromInline
         var _position: Ordinal
@@ -20,7 +20,7 @@ extension Swift.Span.Iterator {
 
         @inlinable
         @_lifetime(copy span)
-        public init(span: Swift.Span<Element>) {
+        public init(span: Swift::Span<Element>) {
             self._span = span
             self._position = .zero
             self._count = Cardinal(UInt(bitPattern: span.count))
@@ -29,7 +29,7 @@ extension Swift.Span.Iterator {
 }
 
 
-extension Swift.Span.Iterator {
+extension Swift::Span.Iterator {
 
     public typealias Failure = Never
 
@@ -48,7 +48,7 @@ extension Swift.Span.Iterator {
     @_lifetime(&self)
     public mutating func next(
         maximumCount: some Carrier.`Protocol`<Cardinal>
-    ) -> Swift.Span<Element> {
+    ) -> Swift::Span<Element> {
         let take = min(maximumCount.underlying, remaining)
         guard take > Cardinal(0) else { return _span.extracting(first: 0) }
 

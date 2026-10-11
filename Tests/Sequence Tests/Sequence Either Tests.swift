@@ -3,11 +3,11 @@ import Iterator
 import Sequence
 import Testing
 
-private enum SourceError: Swift.Error, Equatable {
+private enum SourceError: Swift::Error, Equatable {
     case failed
 }
 
-private enum BodyError: Swift.Error, Equatable {
+private enum BodyError: Swift::Error, Equatable {
     case rejected
 }
 
@@ -17,7 +17,9 @@ private struct FailingSequence: Sequenceable {
 
     let elements: [Int]
     let failureIndex: Int?
+}
 
+extension FailingSequence {
     consuming func makeIterator() -> FailingIterator {
         var index = 0
         return FailingIterator { () throws(SourceError) -> Int? in

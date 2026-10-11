@@ -12,6 +12,6 @@ extension Sequence {
     }
 }
 
-extension Sequence.Map: Swift.Copyable where Base: Swift.Copyable & ~Escapable {}
+extension Sequence.Map: Swift::Copyable where Base: Swift::Copyable & ~Escapable {}
 
-extension Sequence.Map: Swift.Escapable where Base: Swift.Escapable & ~Copyable {}
+extension Sequence.Map: Swift::Escapable where Base: Swift::Escapable & ~Copyable {}

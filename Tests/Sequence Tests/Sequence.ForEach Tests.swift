@@ -51,7 +51,7 @@ extension Sequence.ForEach.`Sequence visitation preserves element order and type
 
 extension Sequence.ForEach.`Sequence visitation preserves element order and typed failures`.`Sequence visitation propagates iterator and callback failures with their declared types` {
 
-    enum Stop: Swift.Error, Equatable {
+    enum Stop: Swift::Error, Equatable {
         case at(Int)
     }
 

@@ -38,7 +38,7 @@ extension Sequence_ForEach_Property_Tests {
 
 extension Sequence_ForEach_Property_Tests {
 
-    enum Stop: Swift.Error, Equatable {
+    enum Stop: Swift::Error, Equatable {
         case at(Int)
     }
 

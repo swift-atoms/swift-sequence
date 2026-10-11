@@ -6,7 +6,7 @@ extension Sequence.Borrowing.`Protocol`
 where Self: ~Copyable & ~Escapable, Iterator.Failure == Never {
 
     @inlinable
-    public borrowing func forEach<E: Swift.Error>(
+    public borrowing func forEach<E: Swift::Error>(
         _ body: (borrowing Element) throws(E) -> Void
     ) throws(E) {
         var iterator = makeIterator()
@@ -24,12 +24,12 @@ extension Sequence.Borrowing.`Protocol`
 where Self: ~Copyable & ~Escapable {
 
     @inlinable
-    public borrowing func forEach<E: Swift.Error>(
+    public borrowing func forEach<E: Swift::Error>(
         _ body: (borrowing Element) throws(E) -> Void
     ) throws(Either<E, Iterator.Failure>) {
         var iterator = makeIterator()
         while true {
-            let span: Swift.Span<Element>
+            let span: Swift::Span<Element>
             do throws(Iterator.Failure) {
                 span = try iterator.next(maximumCount: Cardinal(UInt.max))
             } catch {

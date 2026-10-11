@@ -9,24 +9,26 @@ private final class SequenceDemandLog {
     var predicates: [Int] = []
 }
 
-private enum SequenceDemandFailure: Swift.Error, Equatable {
+private enum SequenceDemandFailure: Swift::Error, Equatable {
     case unavailable
 }
 
 private struct BorrowedDemandSequence: Sequenceable, ~Copyable, ~Escapable {
-    typealias Element = Int
-    typealias Iterator = BorrowedDemandIterator
-
-    let values: Swift.Span<Int>
+    let values: Swift::Span<Int>
     let log: SequenceDemandLog
     let fails: Bool
 
     @_lifetime(copy values)
-    init(_ values: Swift.Span<Int>, log: SequenceDemandLog, fails: Bool = false) {
+    init(_ values: Swift::Span<Int>, log: SequenceDemandLog, fails: Bool = false) {
         self.values = values
         self.log = log
         self.fails = fails
     }
+}
+
+extension BorrowedDemandSequence {
+    typealias Element = Int
+    typealias Iterator = BorrowedDemandIterator
 
     @_lifetime(copy self)
     consuming func makeIterator() -> Iterator {
@@ -37,20 +39,22 @@ private struct BorrowedDemandSequence: Sequenceable, ~Copyable, ~Escapable {
 private struct BorrowedDemandIterator:
     Iterator::Iterator.`Protocol`, __IteratorChunkProtocol, ~Copyable, ~Escapable
 {
-    typealias Element = Int
-    typealias Failure = SequenceDemandFailure
-
-    let values: Swift.Span<Int>
+    let values: Swift::Span<Int>
     let log: SequenceDemandLog
     let fails: Bool
     var position = 0
 
     @_lifetime(copy values)
-    init(_ values: Swift.Span<Int>, log: SequenceDemandLog, fails: Bool) {
+    init(_ values: Swift::Span<Int>, log: SequenceDemandLog, fails: Bool) {
         self.values = values
         self.log = log
         self.fails = fails
     }
+}
+
+extension BorrowedDemandIterator {
+    typealias Element = Int
+    typealias Failure = SequenceDemandFailure
 
     mutating func next() throws(Failure) -> Int? {
         log.scalarCalls += 1
@@ -63,12 +67,12 @@ private struct BorrowedDemandIterator:
     @_lifetime(&self)
     mutating func next(
         maximumCount: some Carrier.`Protocol`<Cardinal>
-    ) throws(Failure) -> Swift.Span<Int> {
+    ) throws(Failure) -> Swift::Span<Int> {
         let maximumCount = maximumCount.underlying
         log.requests.append(maximumCount)
-        guard maximumCount > .zero else { return Swift.Span<Int>() }
+        guard maximumCount > .zero else { return Swift::Span<Int>() }
         if fails { throw .unavailable }
-        let take = Int(Swift.min(maximumCount.rawValue, UInt(values.count - position)))
+        let take = Int(Swift::min(maximumCount.rawValue, UInt(values.count - position)))
         let start = position
         position += take
         return values.extracting(start..<position)
@@ -322,7 +326,7 @@ struct `Zero chunk demand preserves span iterator positions` {
     @Test
     func `A span iterator preserves its remaining elements across zero demand`() {
         let values = [10, 20, 30]
-        var iterator = Swift.Span<Int>.Iterator(span: values.span)
+        var iterator = Swift::Span<Int>.Iterator(span: values.span)
         let initialIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
         #expect(initialIsEmpty)
         #expect(iterator.remaining == 3)
@@ -346,7 +350,7 @@ struct `Zero chunk demand preserves span iterator positions` {
     @Test
     func `A span batch iterator preserves its remaining elements across zero demand`() {
         let values = [10, 20, 30]
-        var iterator = Swift.Span<Int>.Iterator.Batch(span: values.span)
+        var iterator = Swift::Span<Int>.Iterator.Batch(span: values.span)
         let initialIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
         #expect(initialIsEmpty)
         #expect(iterator.remaining == 3)

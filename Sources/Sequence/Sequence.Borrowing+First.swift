@@ -10,7 +10,7 @@ where
 {
 
     @inlinable
-    public borrowing func first<E: Swift.Error>(
+    public borrowing func first<E: Swift::Error>(
         where predicate: (borrowing Element) throws(E) -> Bool
     ) throws(E) -> Element? {
         var iterator = makeIterator()
@@ -29,12 +29,12 @@ extension Sequence.Borrowing.`Protocol`
 where Self: ~Copyable & ~Escapable, Element: Copyable & Escapable {
 
     @inlinable
-    public borrowing func first<E: Swift.Error>(
+    public borrowing func first<E: Swift::Error>(
         where predicate: (borrowing Element) throws(E) -> Bool
     ) throws(Either<E, Iterator.Failure>) -> Element? {
         var iterator = makeIterator()
         while true {
-            let span: Swift.Span<Element>
+            let span: Swift::Span<Element>
             do throws(Iterator.Failure) {
                 span = try iterator.next(maximumCount: Cardinal(UInt.max))
             } catch {

@@ -12,10 +12,12 @@ extension Sequence.Fixture {
         init(_ elements: [Element]) {
             self.elements = elements
         }
+    }
+}
 
-        consuming func makeIterator() -> FixtureIterator<Element> {
-            FixtureIterator(elements)
-        }
+extension Sequence.Fixture.Source {
+    consuming func makeIterator() -> FixtureIterator<Element> {
+        FixtureIterator(elements)
     }
 }
 
@@ -27,7 +29,9 @@ struct FixtureIterator<Element: Sendable>: Iterator.`Protocol` {
         self.elements = elements
         self.index = 0
     }
+}
 
+extension FixtureIterator {
     mutating func next() -> Element? {
         guard index < elements.count else { return nil }
         defer { index += 1 }

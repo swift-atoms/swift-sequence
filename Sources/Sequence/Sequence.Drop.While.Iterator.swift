@@ -66,9 +66,9 @@ where
     @inlinable
     public mutating func next(
         maximumCount: some Carrier.`Protocol`<Cardinal>
-    ) throws(Base.Iterator.Failure) -> Swift.Span<Base.Element> {
+    ) throws(Base.Iterator.Failure) -> Swift::Span<Base.Element> {
         let maximumCount = maximumCount.underlying
-        guard maximumCount > .zero else { return Swift.Span<Base.Element>() }
+        guard maximumCount > .zero else { return Swift::Span<Base.Element>() }
         if !_dropping {
             return try _base.next(maximumCount: maximumCount)
         }

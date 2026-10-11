@@ -2,7 +2,7 @@
 public import Cardinal
 public import Ordinal
 
-extension Swift.Span where Element: Copyable {
+extension Swift::Span where Element: Copyable {
 
     @inlinable
     @_lifetime(copy self)
@@ -11,7 +11,7 @@ extension Swift.Span where Element: Copyable {
     }
 }
 
-extension Swift.Span {
+extension Swift::Span {
 
     @inlinable
     @_lifetime(copy self)

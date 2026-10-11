@@ -3,7 +3,7 @@ public import Carrier
 import Iterator
 public import Ordinal
 
-extension Swift.Span.Iterator.Batch {
+extension Swift::Span.Iterator.Batch {
 
     public typealias Failure = Never
 
@@ -22,7 +22,7 @@ extension Swift.Span.Iterator.Batch {
     @_lifetime(&self)
     public mutating func next(
         maximumCount: some Carrier.`Protocol`<Cardinal>
-    ) -> Swift.Span<Element> {
+    ) -> Swift::Span<Element> {
         let take = min(maximumCount.underlying, remaining)
         guard take > Cardinal(0) else { return _span.extracting(first: 0) }
 

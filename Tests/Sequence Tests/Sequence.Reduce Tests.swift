@@ -64,7 +64,7 @@ extension Sequence.Reduce.`Sequence reductions preserve accumulated values and t
 
 extension Sequence.Reduce.`Sequence reductions preserve accumulated values and typed failures`.`Borrowed reductions distinguish iterator and callback failures` {
 
-    enum AccumulatorFailure: Swift.Error {
+    enum AccumulatorFailure: Swift::Error {
         case stop
     }
 

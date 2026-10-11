@@ -14,7 +14,7 @@ extension Sequence.Satisfies {
 extension Sequence.Satisfies.`Sequence quantifiers preserve universal existential and negative matching`.`Sequence quantifiers evaluate matching conditions and preserve throwing predicates` {
     @Test
     func `borrowing allSatisfy preserves throwing predicates`() throws {
-        enum Stop: Swift.Error { case stop }
+        enum Stop: Swift::Error { case stop }
         let source = Sequence.Fixture.Borrowing.Source([2, 4, 6])
 
         #expect(try source.allSatisfy { element throws(Stop) in element.isMultiple(of: 2) })

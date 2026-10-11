@@ -72,12 +72,14 @@ extension Sequence.Fixture.Borrowing {
         public init(_ elements: [Element]) {
             self._elements = elements
         }
+    }
+}
 
-        @inlinable
-        @_lifetime(borrow self)
-        public borrowing func makeIterator() -> Iterator::Iterator.Chunk<Element> {
-            Iterator::Iterator.Chunk(_elements.span)
-        }
+extension Sequence.Fixture.Borrowing.Source {
+    @inlinable
+    @_lifetime(borrow self)
+    public borrowing func makeIterator() -> Iterator::Iterator.Chunk<Element> {
+        Iterator::Iterator.Chunk(_elements.span)
     }
 }
 

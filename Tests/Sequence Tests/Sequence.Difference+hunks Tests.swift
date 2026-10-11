@@ -54,7 +54,7 @@ extension Sequence.Difference.`Difference hunks group nearby edits with bounded 
     @Test
     func `distant changes produce multiple hunks`() {
 
-        var old = (1...10).map { "line\($0)" }
+        let old = (1...10).map { "line\($0)" }
         var new = old
         new[0] = "changed1"
         new[9] = "changed10"
@@ -66,7 +66,7 @@ extension Sequence.Difference.`Difference hunks group nearby edits with bounded 
 
     @Test
     func `adjacent changes merge into single hunk`() {
-        var old = (1...10).map { "line\($0)" }
+        let old = (1...10).map { "line\($0)" }
         var new = old
         new[0] = "changed1"
         new[1] = "changed2"
@@ -78,7 +78,7 @@ extension Sequence.Difference.`Difference hunks group nearby edits with bounded 
 
     @Test
     func `Difference hunks honor the requested context line count`() {
-        var old = (1...20).map { "line\($0)" }
+        let old = (1...20).map { "line\($0)" }
         var new = old
         new[0] = "changed1"
         new[19] = "changed20"

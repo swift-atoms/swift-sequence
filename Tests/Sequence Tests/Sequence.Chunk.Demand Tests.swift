@@ -173,7 +173,9 @@ struct `Zero chunk demand preserves sequence adapters and their borrowed sources
         let log = SequenceDemandLog()
         try checkChunkDemand(
             BorrowedDemandSequence(values.span, log: log).drop(first: 2),
-            expected: [3, 4], maximumCount: maximumCount, log: log
+            expected: [3, 4],
+            maximumCount: maximumCount,
+            log: log
         )
         try checkScalarValues(
             BorrowedDemandSequence(values.span, log: SequenceDemandLog()).drop(first: 2),
@@ -190,7 +192,9 @@ struct `Zero chunk demand preserves sequence adapters and their borrowed sources
                 log.predicates.append($0)
                 return $0 < 3
             }),
-            expected: [3, 4], maximumCount: maximumCount, log: log
+            expected: [3, 4],
+            maximumCount: maximumCount,
+            log: log
         )
         #expect(log.predicates == [1, 2, 3])
         try checkScalarValues(
@@ -205,7 +209,9 @@ struct `Zero chunk demand preserves sequence adapters and their borrowed sources
         let log = SequenceDemandLog()
         try checkChunkDemand(
             BorrowedDemandSequence(values.span, log: log).prefix(first: 2),
-            expected: [1, 2], maximumCount: maximumCount, log: log
+            expected: [1, 2],
+            maximumCount: maximumCount,
+            log: log
         )
         try checkScalarValues(
             BorrowedDemandSequence(values.span, log: SequenceDemandLog()).prefix(first: 2),
@@ -222,7 +228,9 @@ struct `Zero chunk demand preserves sequence adapters and their borrowed sources
                 log.predicates.append($0)
                 return $0 < 3
             }),
-            expected: [1, 2], maximumCount: maximumCount, log: log
+            expected: [1, 2],
+            maximumCount: maximumCount,
+            log: log
         )
         #expect(log.predicates == [1, 2, 3])
         try checkScalarValues(
@@ -315,7 +323,9 @@ struct `Zero chunk demand preserves sequence adapters and their borrowed sources
                     return $0 < 4
                 })
                 .prefix(first: 2),
-            expected: [2, 3], maximumCount: 1, log: log
+            expected: [2, 3],
+            maximumCount: 1,
+            log: log
         )
         #expect(log.predicates == [2, 3])
     }

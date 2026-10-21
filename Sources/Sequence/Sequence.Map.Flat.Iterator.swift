@@ -39,7 +39,7 @@ where
         while true {
             if _inner != nil {
 
-                if let element = try _inner!.next() {
+                if let element = try _inner?.next() {
                     return element
                 }
                 _inner = nil

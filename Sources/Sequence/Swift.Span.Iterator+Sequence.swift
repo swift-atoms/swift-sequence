@@ -28,7 +28,6 @@ extension Swift::Span.Iterator {
     }
 }
 
-
 extension Swift::Span.Iterator {
 
     public typealias Failure = Never

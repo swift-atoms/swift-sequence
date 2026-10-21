@@ -1,8 +1,8 @@
 import Cardinal
-import Sequence
 import Iterator
 import Ownership
 import Property
+import Sequence
 import Testing
 
 @Suite("Sequence.Hint × Property")

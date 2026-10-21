@@ -1,8 +1,7 @@
 public import Cardinal
-public import Ordinal
-
 import Carrier
 public import Iterator
+public import Ordinal
 
 extension Swift::Span {
 

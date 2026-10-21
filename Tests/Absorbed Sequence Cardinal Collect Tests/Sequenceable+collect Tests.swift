@@ -1,9 +1,8 @@
-import Sequence
-import Sequence
 import Cardinal
 import Iterator
 import Ownership
 import Property
+import Sequence
 import Testing
 
 @Suite("Sequenceable.collect × Cardinal")

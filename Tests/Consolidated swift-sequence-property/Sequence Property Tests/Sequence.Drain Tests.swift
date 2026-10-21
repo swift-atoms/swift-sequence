@@ -1,9 +1,9 @@
-import Property
-import Ownership
-import Tagged
-import Sequence
 import Cardinal
 import Iterator
+import Ownership
+import Property
+import Sequence
+import Tagged
 import Testing
 
 @Suite("Sequence.Drain × Property")

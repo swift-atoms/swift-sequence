@@ -1,2 +1,2 @@
-@_exported public import Sequence
 import Foundation
+@_exported public import Sequence

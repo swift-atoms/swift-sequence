@@ -3,7 +3,9 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence.Drop {
+enum `Sequence.Drop Tests` {}
+
+extension `Sequence.Drop Tests` {
     @Suite
     struct `Dropping sequence elements removes at most the requested leading count` {
         @Suite struct `Count based dropping removes the requested leading elements` {}
@@ -12,7 +14,7 @@ extension Sequence.Drop {
     }
 }
 
-extension Sequence.Drop.`Dropping sequence elements removes at most the requested leading count`.`Count based dropping removes the requested leading elements` {
+extension `Sequence.Drop Tests`.`Dropping sequence elements removes at most the requested leading count`.`Count based dropping removes the requested leading elements` {
     @Test
     func `Count based sequence dropping removes the requested prefix`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5])
@@ -28,7 +30,7 @@ extension Sequence.Drop.`Dropping sequence elements removes at most the requeste
     }
 }
 
-extension Sequence.Drop.`Dropping sequence elements removes at most the requested leading count`.`Count based dropping preserves zero empty and oversized cases` {
+extension `Sequence.Drop Tests`.`Dropping sequence elements removes at most the requested leading count`.`Count based dropping preserves zero empty and oversized cases` {
     @Test
     func `drop zero elements returns all`() {
         let source = Sequence.Fixture.Source([1, 2, 3])

@@ -2,7 +2,7 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence {
+extension `Sequence Tests` {
     @Suite
     struct `Sequence filtering preserves matching elements in source order` {
         @Suite struct `Sequence filtering selects matches without reordering them` {}
@@ -11,7 +11,7 @@ extension Sequence {
     }
 }
 
-extension Sequence.`Sequence filtering preserves matching elements in source order`.`Sequence filtering selects matches without reordering them` {
+extension `Sequence Tests`.`Sequence filtering preserves matching elements in source order`.`Sequence filtering selects matches without reordering them` {
     @Test
     func `filter keeps matching elements`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5, 6])
@@ -27,7 +27,7 @@ extension Sequence.`Sequence filtering preserves matching elements in source ord
     }
 }
 
-extension Sequence.`Sequence filtering preserves matching elements in source order`.`Sequence filtering handles empty sources and predicates matching none or all` {
+extension `Sequence Tests`.`Sequence filtering preserves matching elements in source order`.`Sequence filtering handles empty sources and predicates matching none or all` {
     @Test
     func `filter over empty sequence produces empty array`() {
         let source = Sequence.Fixture.Source<Int>([])

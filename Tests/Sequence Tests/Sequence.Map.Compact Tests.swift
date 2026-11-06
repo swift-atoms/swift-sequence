@@ -2,7 +2,7 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence {
+extension `Sequence Tests` {
     @Suite
     struct `Compact mapping transforms elements and discards nil results` {
         @Suite struct `Compact mapping preserves transformed nonnil results` {}
@@ -11,7 +11,7 @@ extension Sequence {
     }
 }
 
-extension Sequence.`Compact mapping transforms elements and discards nil results`.`Compact mapping preserves transformed nonnil results` {
+extension `Sequence Tests`.`Compact mapping transforms elements and discards nil results`.`Compact mapping preserves transformed nonnil results` {
     @Test
     func `compactMap removes nils`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5])
@@ -27,7 +27,7 @@ extension Sequence.`Compact mapping transforms elements and discards nil results
     }
 }
 
-extension Sequence.`Compact mapping transforms elements and discards nil results`.`Compact mapping handles empty sources and uniformly nil or nonnil results` {
+extension `Sequence Tests`.`Compact mapping transforms elements and discards nil results`.`Compact mapping handles empty sources and uniformly nil or nonnil results` {
     @Test
     func `Compact mapping preserves an empty sequence`() {
         let source = Sequence.Fixture.Source<Int>([])

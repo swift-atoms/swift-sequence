@@ -4,7 +4,9 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence.First {
+enum `Sequence.First Tests` {}
+
+extension `Sequence.First Tests` {
     @Suite
     struct `Sequence first match search preserves order and typed failures` {
         @Suite struct `First match search returns the earliest matching element` {}
@@ -13,7 +15,7 @@ extension Sequence.First {
     }
 }
 
-extension Sequence.First.`Sequence first match search preserves order and typed failures`.`First match search returns the earliest matching element` {
+extension `Sequence.First Tests`.`Sequence first match search preserves order and typed failures`.`First match search returns the earliest matching element` {
     @Test
     func `borrowing first returns the first match`() {
         let source = Sequence.Fixture.Borrowing.Source([1, 2, 3, 4])
@@ -36,7 +38,7 @@ extension Sequence.First.`Sequence first match search preserves order and typed 
     }
 }
 
-extension Sequence.First.`Sequence first match search preserves order and typed failures`.`First match search returns nil for empty or nonmatching sequences` {
+extension `Sequence.First Tests`.`Sequence first match search preserves order and typed failures`.`First match search returns nil for empty or nonmatching sequences` {
     @Test
     func `first with no match returns nil`() {
         var source = Sequence.Fixture.Source([1, 2, 3])
@@ -52,7 +54,7 @@ extension Sequence.First.`Sequence first match search preserves order and typed 
     }
 }
 
-extension Sequence.First.`Sequence first match search preserves order and typed failures`.`Borrowed first match search distinguishes iterator and predicate failures` {
+extension `Sequence.First Tests`.`Sequence first match search preserves order and typed failures`.`Borrowed first match search distinguishes iterator and predicate failures` {
 
     enum PredicateFailure: Swift::Error {
         case stop

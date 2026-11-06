@@ -2,7 +2,7 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence {
+extension `Sequence Tests` {
     @Suite
     struct `Flat mapping preserves outer and inner sequence order` {
         @Suite struct `Flat mapping transforms flattens and composes sequence elements` {}
@@ -11,7 +11,7 @@ extension Sequence {
     }
 }
 
-extension Sequence.`Flat mapping preserves outer and inner sequence order`.`Flat mapping transforms flattens and composes sequence elements` {
+extension `Sequence Tests`.`Flat mapping preserves outer and inner sequence order`.`Flat mapping transforms flattens and composes sequence elements` {
     @Test
     func `flatMap transforms and flattens`() {
         let source = Sequence.Fixture.Source([1, 2, 3])
@@ -53,7 +53,7 @@ extension Sequence.`Flat mapping preserves outer and inner sequence order`.`Flat
     }
 }
 
-extension Sequence.`Flat mapping preserves outer and inner sequence order`.`Flat mapping preserves empty and singleton sequence shapes` {
+extension `Sequence Tests`.`Flat mapping preserves outer and inner sequence order`.`Flat mapping preserves empty and singleton sequence shapes` {
     @Test
     func `Flat mapping preserves an empty outer sequence`() {
         let source = Sequence.Fixture.Source<Int>([])

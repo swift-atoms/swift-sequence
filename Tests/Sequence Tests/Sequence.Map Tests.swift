@@ -2,7 +2,7 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence {
+extension `Sequence Tests` {
     @Suite
     struct `Sequence mapping transforms elements while preserving order` {
         @Suite struct `Sequence mapping preserves transformations result types and identity` {}
@@ -11,7 +11,7 @@ extension Sequence {
     }
 }
 
-extension Sequence.`Sequence mapping transforms elements while preserving order`.`Sequence mapping preserves transformations result types and identity` {
+extension `Sequence Tests`.`Sequence mapping transforms elements while preserving order`.`Sequence mapping preserves transformations result types and identity` {
     @Test
     func `map transforms each element`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5])
@@ -34,7 +34,7 @@ extension Sequence.`Sequence mapping transforms elements while preserving order`
     }
 }
 
-extension Sequence.`Sequence mapping transforms elements while preserving order`.`Sequence mapping handles empty and singleton sources` {
+extension `Sequence Tests`.`Sequence mapping transforms elements while preserving order`.`Sequence mapping handles empty and singleton sources` {
     @Test
     func `map over empty sequence produces empty array`() {
         let source = Sequence.Fixture.Source<Int>([])

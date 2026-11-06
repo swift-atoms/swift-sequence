@@ -3,7 +3,7 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence {
+extension `Sequence Tests` {
     @Suite
     struct `Span batch iterators preserve ordered batches and skipped counts` {
         @Suite struct `Span batch iteration preserves batch sizes and remaining elements` {}
@@ -12,7 +12,7 @@ extension Sequence {
     }
 }
 
-extension Sequence.`Span batch iterators preserve ordered batches and skipped counts`.`Span batch iteration preserves batch sizes and remaining elements` {
+extension `Sequence Tests`.`Span batch iterators preserve ordered batches and skipped counts`.`Span batch iteration preserves batch sizes and remaining elements` {
     @Test
     func `next(maximumCount:) returns batches of requested size`() {
         let array = [1, 2, 3, 4, 5, 6]
@@ -82,7 +82,7 @@ extension Sequence.`Span batch iterators preserve ordered batches and skipped co
     }
 }
 
-extension Sequence.`Span batch iterators preserve ordered batches and skipped counts`.`Span batch iteration handles empty spans and oversized skips` {
+extension `Sequence Tests`.`Span batch iterators preserve ordered batches and skipped counts`.`Span batch iteration handles empty spans and oversized skips` {
     @Test
     func `An empty span batch iterator returns no elements`() {
         let array: [Int] = []

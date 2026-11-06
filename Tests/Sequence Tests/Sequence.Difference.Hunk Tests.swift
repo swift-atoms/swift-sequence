@@ -4,7 +4,9 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence.Difference.Hunk {
+enum `Sequence.Difference.Hunk Tests` {}
+
+extension `Sequence.Difference.Hunk Tests` {
     @Suite
     struct `Difference hunk descriptions preserve line positions and counts` {
         @Suite struct `Difference hunk headers format ordinary and larger positions` {}
@@ -13,7 +15,7 @@ extension Sequence.Difference.Hunk {
     }
 }
 
-extension Sequence.Difference.Hunk.`Difference hunk descriptions preserve line positions and counts`.`Difference hunk headers format ordinary and larger positions` {
+extension `Sequence.Difference.Hunk Tests`.`Difference hunk descriptions preserve line positions and counts`.`Difference hunk headers format ordinary and larger positions` {
     @Test
     func `header formats standard hunk`() {
         let hunk = Sequence.Difference.Hunk(
@@ -35,7 +37,7 @@ extension Sequence.Difference.Hunk.`Difference hunk descriptions preserve line p
     }
 }
 
-extension Sequence.Difference.Hunk.`Difference hunk descriptions preserve line positions and counts`.`Difference hunk headers preserve zero line counts` {
+extension `Sequence.Difference.Hunk Tests`.`Difference hunk descriptions preserve line positions and counts`.`Difference hunk headers preserve zero line counts` {
     @Test
     func `A difference hunk header formats zero line counts`() {
         let hunk = Sequence.Difference.Hunk(

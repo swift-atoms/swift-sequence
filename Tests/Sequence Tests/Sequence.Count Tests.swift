@@ -3,7 +3,7 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence {
+extension `Sequence Tests` {
     @Suite
     struct `Sequence counting reports the number of matching elements` {
         @Suite struct `Sequence counting includes exactly the matching elements` {}
@@ -11,7 +11,7 @@ extension Sequence {
     }
 }
 
-extension Sequence.`Sequence counting reports the number of matching elements`.`Sequence counting includes exactly the matching elements` {
+extension `Sequence Tests`.`Sequence counting reports the number of matching elements`.`Sequence counting includes exactly the matching elements` {
     @Test
     func `count(where:) returns matching count`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5, 6])
@@ -20,7 +20,7 @@ extension Sequence.`Sequence counting reports the number of matching elements`.`
     }
 }
 
-extension Sequence.`Sequence counting reports the number of matching elements`.`Sequence counting handles predicates matching none or all elements` {
+extension `Sequence Tests`.`Sequence counting reports the number of matching elements`.`Sequence counting handles predicates matching none or all elements` {
     @Test
     func `count(where:) with no matches returns zero`() {
         let source = Sequence.Fixture.Source([1, 2, 3])

@@ -2,7 +2,9 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence.Satisfies {
+enum `Sequence.Satisfies Tests` {}
+
+extension `Sequence.Satisfies Tests` {
     @Suite
     struct `Sequence quantifiers preserve universal existential and negative matching` {
         @Suite struct `Sequence quantifiers evaluate matching conditions and preserve throwing predicates` {}
@@ -11,7 +13,7 @@ extension Sequence.Satisfies {
     }
 }
 
-extension Sequence.Satisfies.`Sequence quantifiers preserve universal existential and negative matching`.`Sequence quantifiers evaluate matching conditions and preserve throwing predicates` {
+extension `Sequence.Satisfies Tests`.`Sequence quantifiers preserve universal existential and negative matching`.`Sequence quantifiers evaluate matching conditions and preserve throwing predicates` {
     @Test
     func `borrowing allSatisfy preserves throwing predicates`() throws {
         enum Stop: Swift::Error { case stop }
@@ -57,7 +59,7 @@ extension Sequence.Satisfies.`Sequence quantifiers preserve universal existentia
     }
 }
 
-extension Sequence.Satisfies.`Sequence quantifiers preserve universal existential and negative matching`.`Empty sequences preserve quantifier identity values` {
+extension `Sequence.Satisfies Tests`.`Sequence quantifiers preserve universal existential and negative matching`.`Empty sequences preserve quantifier identity values` {
     @Test
     func `satisfies all on empty sequence returns true`() {
         var source = Sequence.Fixture.Source<Int>([])

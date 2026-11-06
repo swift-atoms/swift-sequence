@@ -3,7 +3,9 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence.Prefix {
+enum `Sequence.Prefix Tests` {}
+
+extension `Sequence.Prefix Tests` {
     @Suite
     struct `Sequence prefixes retain at most the requested leading count` {
         @Suite struct `Count based prefixes retain the requested leading elements` {}
@@ -12,7 +14,7 @@ extension Sequence.Prefix {
     }
 }
 
-extension Sequence.Prefix.`Sequence prefixes retain at most the requested leading count`.`Count based prefixes retain the requested leading elements` {
+extension `Sequence.Prefix Tests`.`Sequence prefixes retain at most the requested leading count`.`Count based prefixes retain the requested leading elements` {
     @Test
     func `A count based sequence prefix retains the requested leading elements`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5])
@@ -28,7 +30,7 @@ extension Sequence.Prefix.`Sequence prefixes retain at most the requested leadin
     }
 }
 
-extension Sequence.Prefix.`Sequence prefixes retain at most the requested leading count`.`Count based prefixes preserve zero empty and oversized cases` {
+extension `Sequence.Prefix Tests`.`Sequence prefixes retain at most the requested leading count`.`Count based prefixes preserve zero empty and oversized cases` {
     @Test
     func `prefix zero elements returns empty`() {
         let source = Sequence.Fixture.Source([1, 2, 3])

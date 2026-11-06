@@ -3,7 +3,7 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence {
+extension `Sequence Tests` {
     @Suite
     struct `Span iterators preserve element order and exhaustion state` {
         @Suite struct `Span iteration advances through elements and updates remaining counts` {}
@@ -12,7 +12,7 @@ extension Sequence {
     }
 }
 
-extension Sequence.`Span iterators preserve element order and exhaustion state`.`Span iteration advances through elements and updates remaining counts` {
+extension `Sequence Tests`.`Span iterators preserve element order and exhaustion state`.`Span iteration advances through elements and updates remaining counts` {
     @Test
     func `next returns elements in order`() {
         let array = [10, 20, 30]
@@ -71,7 +71,7 @@ extension Sequence.`Span iterators preserve element order and exhaustion state`.
     }
 }
 
-extension Sequence.`Span iterators preserve element order and exhaustion state`.`Iterating an empty span immediately reaches exhaustion` {
+extension `Sequence Tests`.`Span iterators preserve element order and exhaustion state`.`Iterating an empty span immediately reaches exhaustion` {
     @Test
     func `An empty span iterator returns no element and has no remaining count`() {
         let array: [Int] = []

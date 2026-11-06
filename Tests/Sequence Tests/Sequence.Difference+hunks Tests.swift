@@ -4,7 +4,7 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence.Difference {
+extension `Sequence.Difference Tests` {
     @Suite
     struct `Difference hunks group nearby edits with bounded context` {
         @Suite struct `Difference hunks preserve headers context and edit counts` {}
@@ -13,7 +13,7 @@ extension Sequence.Difference {
     }
 }
 
-extension Sequence.Difference.`Difference hunks group nearby edits with bounded context`.`Difference hunks preserve headers context and edit counts` {
+extension `Sequence.Difference Tests`.`Difference hunks group nearby edits with bounded context`.`Difference hunks preserve headers context and edit counts` {
     @Test
     func `single change produces one hunk`() {
         let changes = Sequence.Difference.diff(
@@ -104,7 +104,7 @@ extension Sequence.Difference.`Difference hunks group nearby edits with bounded 
     }
 }
 
-extension Sequence.Difference.`Difference hunks group nearby edits with bounded context`.`Difference hunks preserve empty pure edit and context boundary cases` {
+extension `Sequence.Difference Tests`.`Difference hunks group nearby edits with bounded context`.`Difference hunks preserve empty pure edit and context boundary cases` {
     @Test
     func `identical sequences produce no hunks`() {
         let changes = Sequence.Difference.diff(["a", "b", "c"], ["a", "b", "c"])

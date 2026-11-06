@@ -4,7 +4,9 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence.Difference {
+enum `Sequence.Difference Tests` {}
+
+extension `Sequence.Difference Tests` {
     @Suite
     struct `Sequence differences preserve edit structure and minimal distance` {
         @Suite struct `Sequence differences identify insertions removals and unchanged elements` {}
@@ -13,7 +15,7 @@ extension Sequence.Difference {
     }
 }
 
-extension Sequence.Difference.`Sequence differences preserve edit structure and minimal distance`.`Sequence differences identify insertions removals and unchanged elements` {
+extension `Sequence.Difference Tests`.`Sequence differences preserve edit structure and minimal distance`.`Sequence differences identify insertions removals and unchanged elements` {
 
     @Test
     func `core diff identical sequences produces all both`() {
@@ -135,7 +137,7 @@ extension Sequence.Difference.`Sequence differences preserve edit structure and 
     }
 }
 
-extension Sequence.Difference.`Sequence differences preserve edit structure and minimal distance`.`Sequence differences preserve empty singleton and disjoint cases` {
+extension `Sequence.Difference Tests`.`Sequence differences preserve edit structure and minimal distance`.`Sequence differences preserve empty singleton and disjoint cases` {
     @Test
     func `The core difference between empty sequences contains no steps`() {
         let steps = Sequence.Difference.diff(

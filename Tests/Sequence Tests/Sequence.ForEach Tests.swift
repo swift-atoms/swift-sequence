@@ -4,7 +4,9 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence.ForEach {
+enum `Sequence.ForEach Tests` {}
+
+extension `Sequence.ForEach Tests` {
     @Suite
     struct `Sequence visitation preserves element order and typed failures` {
         @Suite struct `Sequence visitation borrows and visits every element in order` {}
@@ -13,7 +15,7 @@ extension Sequence.ForEach {
     }
 }
 
-extension Sequence.ForEach.`Sequence visitation preserves element order and typed failures`.`Sequence visitation borrows and visits every element in order` {
+extension `Sequence.ForEach Tests`.`Sequence visitation preserves element order and typed failures`.`Sequence visitation borrows and visits every element in order` {
     @Test
     func `borrowing forEach visits every element in order`() {
         let source = Sequence.Fixture.Borrowing.Source([1, 2, 3, 4, 5])
@@ -39,7 +41,7 @@ extension Sequence.ForEach.`Sequence visitation preserves element order and type
     }
 }
 
-extension Sequence.ForEach.`Sequence visitation preserves element order and typed failures`.`Visiting an empty sequence invokes no callback` {
+extension `Sequence.ForEach Tests`.`Sequence visitation preserves element order and typed failures`.`Visiting an empty sequence invokes no callback` {
     @Test
     func `forEach on empty sequence does nothing`() {
         var source = Sequence.Fixture.Source<Int>([])
@@ -49,7 +51,7 @@ extension Sequence.ForEach.`Sequence visitation preserves element order and type
     }
 }
 
-extension Sequence.ForEach.`Sequence visitation preserves element order and typed failures`.`Sequence visitation propagates iterator and callback failures with their declared types` {
+extension `Sequence.ForEach Tests`.`Sequence visitation preserves element order and typed failures`.`Sequence visitation propagates iterator and callback failures with their declared types` {
 
     enum Stop: Swift::Error, Equatable {
         case at(Int)

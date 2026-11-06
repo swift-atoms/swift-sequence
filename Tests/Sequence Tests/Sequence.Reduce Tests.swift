@@ -4,7 +4,9 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence.Reduce {
+enum `Sequence.Reduce Tests` {}
+
+extension `Sequence.Reduce Tests` {
     @Suite
     struct `Sequence reductions preserve accumulated values and typed failures` {
         @Suite struct `Sequence reductions support borrowed mutable and immutable accumulation` {}
@@ -13,7 +15,7 @@ extension Sequence.Reduce {
     }
 }
 
-extension Sequence.Reduce.`Sequence reductions preserve accumulated values and typed failures`.`Sequence reductions support borrowed mutable and immutable accumulation` {
+extension `Sequence.Reduce Tests`.`Sequence reductions preserve accumulated values and typed failures`.`Sequence reductions support borrowed mutable and immutable accumulation` {
     @Test
     func `borrowing reduce accumulates without copying the source`() {
         let source = Sequence.Fixture.Borrowing.Source([1, 2, 3, 4])
@@ -46,7 +48,7 @@ extension Sequence.Reduce.`Sequence reductions preserve accumulated values and t
     }
 }
 
-extension Sequence.Reduce.`Sequence reductions preserve accumulated values and typed failures`.`Reducing an empty sequence preserves its initial value` {
+extension `Sequence.Reduce Tests`.`Sequence reductions preserve accumulated values and typed failures`.`Reducing an empty sequence preserves its initial value` {
     @Test
     func `reduce into on empty sequence returns initial`() {
         var source = Sequence.Fixture.Source<Int>([])
@@ -62,7 +64,7 @@ extension Sequence.Reduce.`Sequence reductions preserve accumulated values and t
     }
 }
 
-extension Sequence.Reduce.`Sequence reductions preserve accumulated values and typed failures`.`Borrowed reductions distinguish iterator and callback failures` {
+extension `Sequence.Reduce Tests`.`Sequence reductions preserve accumulated values and typed failures`.`Borrowed reductions distinguish iterator and callback failures` {
 
     enum AccumulatorFailure: Swift::Error {
         case stop

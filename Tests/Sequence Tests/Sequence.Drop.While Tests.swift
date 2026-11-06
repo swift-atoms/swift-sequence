@@ -3,7 +3,7 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence.Drop {
+extension `Sequence.Drop Tests` {
     @Suite
     struct `Predicate dropping removes the matching prefix of a sequence` {
         @Suite struct `Predicate dropping stops at the first nonmatching element` {}
@@ -12,7 +12,7 @@ extension Sequence.Drop {
     }
 }
 
-extension Sequence.Drop.`Predicate dropping removes the matching prefix of a sequence`.`Predicate dropping stops at the first nonmatching element` {
+extension `Sequence.Drop Tests`.`Predicate dropping removes the matching prefix of a sequence`.`Predicate dropping stops at the first nonmatching element` {
     @Test
     func `Predicate dropping removes the leading matching elements`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5])
@@ -28,7 +28,7 @@ extension Sequence.Drop.`Predicate dropping removes the matching prefix of a seq
     }
 }
 
-extension Sequence.Drop.`Predicate dropping removes the matching prefix of a sequence`.`Predicate dropping preserves empty and uniformly matching cases` {
+extension `Sequence.Drop Tests`.`Predicate dropping removes the matching prefix of a sequence`.`Predicate dropping preserves empty and uniformly matching cases` {
     @Test
     func `predicate never true keeps all elements`() {
         let source = Sequence.Fixture.Source([1, 2, 3])

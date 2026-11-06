@@ -4,7 +4,9 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence.Difference.Step {
+enum `Sequence.Difference.Step Tests` {}
+
+extension `Sequence.Difference.Step Tests` {
     @Suite
     struct `Difference steps expose change status and edit markers` {
         @Suite struct `Difference step predicates and markers distinguish edit cases` {}
@@ -13,7 +15,7 @@ extension Sequence.Difference.Step {
     }
 }
 
-extension Sequence.Difference.Step.`Difference steps expose change status and edit markers`.`Difference step predicates and markers distinguish edit cases` {
+extension `Sequence.Difference.Step Tests`.`Difference steps expose change status and edit markers`.`Difference step predicates and markers distinguish edit cases` {
     @Test
     func `first isChange returns true`() {
         #expect(Sequence.Difference.Step.first.isChange)

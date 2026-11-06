@@ -3,7 +3,9 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence {
+enum `Sequence Tests` {}
+
+extension `Sequence Tests` {
     @Suite
     struct `Sequence compositions preserve transformation order` {
         @Suite struct `No sequence composition unit cases are defined` {}
@@ -12,7 +14,7 @@ extension Sequence {
     }
 }
 
-extension Sequence.`Sequence compositions preserve transformation order`.`Composed sequence operations produce the expected ordered values` {
+extension `Sequence Tests`.`Sequence compositions preserve transformation order`.`Composed sequence operations produce the expected ordered values` {
     @Test
     func `Mapping before filtering collects the matching transformed values`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])

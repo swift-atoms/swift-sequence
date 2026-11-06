@@ -3,7 +3,7 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence.Prefix {
+extension `Sequence.Prefix Tests` {
     @Suite
     struct `Predicate prefixes retain the matching leading sequence elements` {
         @Suite struct `Predicate prefixes stop at the first nonmatching element` {}
@@ -12,7 +12,7 @@ extension Sequence.Prefix {
     }
 }
 
-extension Sequence.Prefix.`Predicate prefixes retain the matching leading sequence elements`.`Predicate prefixes stop at the first nonmatching element` {
+extension `Sequence.Prefix Tests`.`Predicate prefixes retain the matching leading sequence elements`.`Predicate prefixes stop at the first nonmatching element` {
     @Test
     func `A predicate prefix retains the leading matching elements`() {
         let source = Sequence.Fixture.Source([1, 2, 3, 4, 5])
@@ -28,7 +28,7 @@ extension Sequence.Prefix.`Predicate prefixes retain the matching leading sequen
     }
 }
 
-extension Sequence.Prefix.`Predicate prefixes retain the matching leading sequence elements`.`Predicate prefixes preserve empty and uniformly matching cases` {
+extension `Sequence.Prefix Tests`.`Predicate prefixes retain the matching leading sequence elements`.`Predicate prefixes preserve empty and uniformly matching cases` {
     @Test
     func `predicate always true takes all elements`() {
         let source = Sequence.Fixture.Source([1, 2, 3])

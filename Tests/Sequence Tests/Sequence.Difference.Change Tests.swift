@@ -4,7 +4,7 @@ import Sequence
 import Sequence_Test_Support
 import Testing
 
-extension Sequence.Difference {
+extension `Sequence.Difference Tests` {
     @Suite
     struct `Difference changes expose their payloads markers and descriptions` {
         @Suite struct `Difference change accessors preserve the selected case and payload` {}
@@ -13,7 +13,7 @@ extension Sequence.Difference {
     }
 }
 
-extension Sequence.Difference.`Difference changes expose their payloads markers and descriptions`.`Difference change accessors preserve the selected case and payload` {
+extension `Sequence.Difference Tests`.`Difference changes expose their payloads markers and descriptions`.`Difference change accessors preserve the selected case and payload` {
     @Test
     func `first element extracts value`() {
         #expect(Sequence.Difference.Change<String>.first("a").element == "a")

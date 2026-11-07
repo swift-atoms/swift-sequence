@@ -4,8 +4,8 @@
     import Sequence
     import Testing
 
-    @Suite("Span × Cardinal and Ordinal")
-    struct Span_Cardinal_Tests {
+    @Suite
+    struct `Span × Cardinal and Ordinal` {
 
         @Test
         func `cardinal counts extract prefixes and suffixes`() {

@@ -9,10 +9,15 @@ enum `Sequence.Contains Tests` {}
 extension `Sequence.Contains Tests` {
     @Suite
     struct `Sequence containment finds matching elements and preserves typed failures` {
-        @Suite struct `Sequence containment identifies present and absent matches` {}
-        @Suite struct `Sequence containment preserves empty results and short circuits` {}
-        @Suite struct `Borrowed containment distinguishes iterator and predicate failures` {}
     }
+}
+
+extension `Sequence.Contains Tests`.`Sequence containment finds matching elements and preserves typed failures` {
+    @Suite struct `Sequence containment identifies present and absent matches` {}
+
+    @Suite struct `Sequence containment preserves empty results and short circuits` {}
+
+    @Suite struct `Borrowed containment distinguishes iterator and predicate failures` {}
 }
 
 extension `Sequence.Contains Tests`.`Sequence containment finds matching elements and preserves typed failures`.`Sequence containment identifies present and absent matches` {

@@ -7,10 +7,15 @@ import Testing
 extension `Sequence.Difference Tests` {
     @Suite
     struct `Difference changes expose their payloads markers and descriptions` {
-        @Suite struct `Difference change accessors preserve the selected case and payload` {}
-        @Suite struct `No difference change boundary cases are defined` {}
-        @Suite struct `No difference change integration cases are defined` {}
     }
+}
+
+extension `Sequence.Difference Tests`.`Difference changes expose their payloads markers and descriptions` {
+    @Suite struct `Difference change accessors preserve the selected case and payload` {}
+
+    @Suite struct `No difference change boundary cases are defined` {}
+
+    @Suite struct `No difference change integration cases are defined` {}
 }
 
 extension `Sequence.Difference Tests`.`Difference changes expose their payloads markers and descriptions`.`Difference change accessors preserve the selected case and payload` {

@@ -8,10 +8,15 @@ enum `Sequence.Prefix Tests` {}
 extension `Sequence.Prefix Tests` {
     @Suite
     struct `Sequence prefixes retain at most the requested leading count` {
-        @Suite struct `Count based prefixes retain the requested leading elements` {}
-        @Suite struct `Count based prefixes preserve zero empty and oversized cases` {}
-        @Suite struct `No sequence count prefix integration cases are defined` {}
     }
+}
+
+extension `Sequence.Prefix Tests`.`Sequence prefixes retain at most the requested leading count` {
+    @Suite struct `Count based prefixes retain the requested leading elements` {}
+
+    @Suite struct `Count based prefixes preserve zero empty and oversized cases` {}
+
+    @Suite struct `No sequence count prefix integration cases are defined` {}
 }
 
 extension `Sequence.Prefix Tests`.`Sequence prefixes retain at most the requested leading count`.`Count based prefixes retain the requested leading elements` {

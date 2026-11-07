@@ -8,10 +8,15 @@ enum `Sequence Tests` {}
 extension `Sequence Tests` {
     @Suite
     struct `Sequence compositions preserve transformation order` {
-        @Suite struct `No sequence composition unit cases are defined` {}
-        @Suite struct `No sequence composition boundary cases are defined` {}
-        @Suite struct `Composed sequence operations produce the expected ordered values` {}
     }
+}
+
+extension `Sequence Tests`.`Sequence compositions preserve transformation order` {
+    @Suite struct `No sequence composition unit cases are defined` {}
+
+    @Suite struct `No sequence composition boundary cases are defined` {}
+
+    @Suite struct `Composed sequence operations produce the expected ordered values` {}
 }
 
 extension `Sequence Tests`.`Sequence compositions preserve transformation order`.`Composed sequence operations produce the expected ordered values` {

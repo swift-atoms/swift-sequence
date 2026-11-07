@@ -6,9 +6,13 @@ import Testing
 extension `Sequence Tests` {
     @Suite
     struct `Sequence counting reports the number of matching elements` {
-        @Suite struct `Sequence counting includes exactly the matching elements` {}
-        @Suite struct `Sequence counting handles predicates matching none or all elements` {}
     }
+}
+
+extension `Sequence Tests`.`Sequence counting reports the number of matching elements` {
+    @Suite struct `Sequence counting includes exactly the matching elements` {}
+
+    @Suite struct `Sequence counting handles predicates matching none or all elements` {}
 }
 
 extension `Sequence Tests`.`Sequence counting reports the number of matching elements`.`Sequence counting includes exactly the matching elements` {

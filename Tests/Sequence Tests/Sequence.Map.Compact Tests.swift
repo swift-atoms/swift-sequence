@@ -5,10 +5,15 @@ import Testing
 extension `Sequence Tests` {
     @Suite
     struct `Compact mapping transforms elements and discards nil results` {
-        @Suite struct `Compact mapping preserves transformed nonnil results` {}
-        @Suite struct `Compact mapping handles empty sources and uniformly nil or nonnil results` {}
-        @Suite struct `No sequence compact mapping integration cases are defined` {}
     }
+}
+
+extension `Sequence Tests`.`Compact mapping transforms elements and discards nil results` {
+    @Suite struct `Compact mapping preserves transformed nonnil results` {}
+
+    @Suite struct `Compact mapping handles empty sources and uniformly nil or nonnil results` {}
+
+    @Suite struct `No sequence compact mapping integration cases are defined` {}
 }
 
 extension `Sequence Tests`.`Compact mapping transforms elements and discards nil results`.`Compact mapping preserves transformed nonnil results` {

@@ -7,10 +7,15 @@ enum `Sequence.Drain Tests` {}
 extension `Sequence.Drain Tests` {
     @Suite
     struct `Sequence draining transfers elements and empties its source` {
-        @Suite struct `Sequence draining visits every element and transfers ownership` {}
-        @Suite struct `Draining an empty sequence leaves it empty` {}
-        @Suite struct `No sequence drain integration cases are defined` {}
     }
+}
+
+extension `Sequence.Drain Tests`.`Sequence draining transfers elements and empties its source` {
+    @Suite struct `Sequence draining visits every element and transfers ownership` {}
+
+    @Suite struct `Draining an empty sequence leaves it empty` {}
+
+    @Suite struct `No sequence drain integration cases are defined` {}
 }
 
 extension `Sequence.Drain Tests`.`Sequence draining transfers elements and empties its source`.`Sequence draining visits every element and transfers ownership` {

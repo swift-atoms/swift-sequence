@@ -6,10 +6,15 @@ import Testing
 extension `Sequence.Drop Tests` {
     @Suite
     struct `Predicate dropping removes the matching prefix of a sequence` {
-        @Suite struct `Predicate dropping stops at the first nonmatching element` {}
-        @Suite struct `Predicate dropping preserves empty and uniformly matching cases` {}
-        @Suite struct `No sequence predicate drop integration cases are defined` {}
     }
+}
+
+extension `Sequence.Drop Tests`.`Predicate dropping removes the matching prefix of a sequence` {
+    @Suite struct `Predicate dropping stops at the first nonmatching element` {}
+
+    @Suite struct `Predicate dropping preserves empty and uniformly matching cases` {}
+
+    @Suite struct `No sequence predicate drop integration cases are defined` {}
 }
 
 extension `Sequence.Drop Tests`.`Predicate dropping removes the matching prefix of a sequence`.`Predicate dropping stops at the first nonmatching element` {

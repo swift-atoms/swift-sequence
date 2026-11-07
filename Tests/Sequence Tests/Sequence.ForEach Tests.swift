@@ -9,10 +9,15 @@ enum `Sequence.ForEach Tests` {}
 extension `Sequence.ForEach Tests` {
     @Suite
     struct `Sequence visitation preserves element order and typed failures` {
-        @Suite struct `Sequence visitation borrows and visits every element in order` {}
-        @Suite struct `Visiting an empty sequence invokes no callback` {}
-        @Suite struct `Sequence visitation propagates iterator and callback failures with their declared types` {}
     }
+}
+
+extension `Sequence.ForEach Tests`.`Sequence visitation preserves element order and typed failures` {
+    @Suite struct `Sequence visitation borrows and visits every element in order` {}
+
+    @Suite struct `Visiting an empty sequence invokes no callback` {}
+
+    @Suite struct `Sequence visitation propagates iterator and callback failures with their declared types` {}
 }
 
 extension `Sequence.ForEach Tests`.`Sequence visitation preserves element order and typed failures`.`Sequence visitation borrows and visits every element in order` {

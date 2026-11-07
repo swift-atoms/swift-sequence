@@ -9,10 +9,15 @@ enum `Sequence.First Tests` {}
 extension `Sequence.First Tests` {
     @Suite
     struct `Sequence first match search preserves order and typed failures` {
-        @Suite struct `First match search returns the earliest matching element` {}
-        @Suite struct `First match search returns nil for empty or nonmatching sequences` {}
-        @Suite struct `Borrowed first match search distinguishes iterator and predicate failures` {}
     }
+}
+
+extension `Sequence.First Tests`.`Sequence first match search preserves order and typed failures` {
+    @Suite struct `First match search returns the earliest matching element` {}
+
+    @Suite struct `First match search returns nil for empty or nonmatching sequences` {}
+
+    @Suite struct `Borrowed first match search distinguishes iterator and predicate failures` {}
 }
 
 extension `Sequence.First Tests`.`Sequence first match search preserves order and typed failures`.`First match search returns the earliest matching element` {

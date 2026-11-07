@@ -9,10 +9,15 @@ enum `Sequence.Reduce Tests` {}
 extension `Sequence.Reduce Tests` {
     @Suite
     struct `Sequence reductions preserve accumulated values and typed failures` {
-        @Suite struct `Sequence reductions support borrowed mutable and immutable accumulation` {}
-        @Suite struct `Reducing an empty sequence preserves its initial value` {}
-        @Suite struct `Borrowed reductions distinguish iterator and callback failures` {}
     }
+}
+
+extension `Sequence.Reduce Tests`.`Sequence reductions preserve accumulated values and typed failures` {
+    @Suite struct `Sequence reductions support borrowed mutable and immutable accumulation` {}
+
+    @Suite struct `Reducing an empty sequence preserves its initial value` {}
+
+    @Suite struct `Borrowed reductions distinguish iterator and callback failures` {}
 }
 
 extension `Sequence.Reduce Tests`.`Sequence reductions preserve accumulated values and typed failures`.`Sequence reductions support borrowed mutable and immutable accumulation` {

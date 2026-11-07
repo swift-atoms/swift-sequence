@@ -7,10 +7,15 @@ enum `Sequence.Satisfies Tests` {}
 extension `Sequence.Satisfies Tests` {
     @Suite
     struct `Sequence quantifiers preserve universal existential and negative matching` {
-        @Suite struct `Sequence quantifiers evaluate matching conditions and preserve throwing predicates` {}
-        @Suite struct `Empty sequences preserve quantifier identity values` {}
-        @Suite struct `No sequence quantification integration cases are defined` {}
     }
+}
+
+extension `Sequence.Satisfies Tests`.`Sequence quantifiers preserve universal existential and negative matching` {
+    @Suite struct `Sequence quantifiers evaluate matching conditions and preserve throwing predicates` {}
+
+    @Suite struct `Empty sequences preserve quantifier identity values` {}
+
+    @Suite struct `No sequence quantification integration cases are defined` {}
 }
 
 extension `Sequence.Satisfies Tests`.`Sequence quantifiers preserve universal existential and negative matching`.`Sequence quantifiers evaluate matching conditions and preserve throwing predicates` {

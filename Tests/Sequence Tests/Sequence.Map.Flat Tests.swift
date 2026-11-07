@@ -5,10 +5,15 @@ import Testing
 extension `Sequence Tests` {
     @Suite
     struct `Flat mapping preserves outer and inner sequence order` {
-        @Suite struct `Flat mapping transforms flattens and composes sequence elements` {}
-        @Suite struct `Flat mapping preserves empty and singleton sequence shapes` {}
-        @Suite struct `No sequence flat mapping integration cases are defined` {}
     }
+}
+
+extension `Sequence Tests`.`Flat mapping preserves outer and inner sequence order` {
+    @Suite struct `Flat mapping transforms flattens and composes sequence elements` {}
+
+    @Suite struct `Flat mapping preserves empty and singleton sequence shapes` {}
+
+    @Suite struct `No sequence flat mapping integration cases are defined` {}
 }
 
 extension `Sequence Tests`.`Flat mapping preserves outer and inner sequence order`.`Flat mapping transforms flattens and composes sequence elements` {

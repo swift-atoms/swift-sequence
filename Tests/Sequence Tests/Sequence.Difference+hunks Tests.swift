@@ -7,10 +7,15 @@ import Testing
 extension `Sequence.Difference Tests` {
     @Suite
     struct `Difference hunks group nearby edits with bounded context` {
-        @Suite struct `Difference hunks preserve headers context and edit counts` {}
-        @Suite struct `Difference hunks preserve empty pure edit and context boundary cases` {}
-        @Suite struct `No difference hunk integration cases are defined` {}
     }
+}
+
+extension `Sequence.Difference Tests`.`Difference hunks group nearby edits with bounded context` {
+    @Suite struct `Difference hunks preserve headers context and edit counts` {}
+
+    @Suite struct `Difference hunks preserve empty pure edit and context boundary cases` {}
+
+    @Suite struct `No difference hunk integration cases are defined` {}
 }
 
 extension `Sequence.Difference Tests`.`Difference hunks group nearby edits with bounded context`.`Difference hunks preserve headers context and edit counts` {

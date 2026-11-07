@@ -8,10 +8,15 @@ enum `Sequence.Drop Tests` {}
 extension `Sequence.Drop Tests` {
     @Suite
     struct `Dropping sequence elements removes at most the requested leading count` {
-        @Suite struct `Count based dropping removes the requested leading elements` {}
-        @Suite struct `Count based dropping preserves zero empty and oversized cases` {}
-        @Suite struct `No sequence count drop integration cases are defined` {}
     }
+}
+
+extension `Sequence.Drop Tests`.`Dropping sequence elements removes at most the requested leading count` {
+    @Suite struct `Count based dropping removes the requested leading elements` {}
+
+    @Suite struct `Count based dropping preserves zero empty and oversized cases` {}
+
+    @Suite struct `No sequence count drop integration cases are defined` {}
 }
 
 extension `Sequence.Drop Tests`.`Dropping sequence elements removes at most the requested leading count`.`Count based dropping removes the requested leading elements` {

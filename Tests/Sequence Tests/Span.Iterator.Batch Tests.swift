@@ -6,10 +6,15 @@ import Testing
 extension `Sequence Tests` {
     @Suite
     struct `Span batch iterators preserve ordered batches and skipped counts` {
-        @Suite struct `Span batch iteration preserves batch sizes and remaining elements` {}
-        @Suite struct `Span batch iteration handles empty spans and oversized skips` {}
-        @Suite struct `No span batch iteration integration cases are defined` {}
     }
+}
+
+extension `Sequence Tests`.`Span batch iterators preserve ordered batches and skipped counts` {
+    @Suite struct `Span batch iteration preserves batch sizes and remaining elements` {}
+
+    @Suite struct `Span batch iteration handles empty spans and oversized skips` {}
+
+    @Suite struct `No span batch iteration integration cases are defined` {}
 }
 
 extension `Sequence Tests`.`Span batch iterators preserve ordered batches and skipped counts`.`Span batch iteration preserves batch sizes and remaining elements` {

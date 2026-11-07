@@ -9,10 +9,15 @@ enum `Sequence.Difference.Hunk Tests` {}
 extension `Sequence.Difference.Hunk Tests` {
     @Suite
     struct `Difference hunk descriptions preserve line positions and counts` {
-        @Suite struct `Difference hunk headers format ordinary and larger positions` {}
-        @Suite struct `Difference hunk headers preserve zero line counts` {}
-        @Suite struct `No difference hunk header integration cases are defined` {}
     }
+}
+
+extension `Sequence.Difference.Hunk Tests`.`Difference hunk descriptions preserve line positions and counts` {
+    @Suite struct `Difference hunk headers format ordinary and larger positions` {}
+
+    @Suite struct `Difference hunk headers preserve zero line counts` {}
+
+    @Suite struct `No difference hunk header integration cases are defined` {}
 }
 
 extension `Sequence.Difference.Hunk Tests`.`Difference hunk descriptions preserve line positions and counts`.`Difference hunk headers format ordinary and larger positions` {

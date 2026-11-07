@@ -165,220 +165,226 @@ where
     try checkZeroDemand(&iterator, log: log)
 }
 
-@Suite
-struct `Zero chunk demand preserves sequence adapters and their borrowed sources` {
-    @Test(arguments: [UInt(1), 3, UInt.max])
-    func `Zero requests preserve a count based drop`(maximumCount: UInt) throws {
-        let values = [1, 2, 3, 4]
-        let log = SequenceDemandLog()
-        try checkChunkDemand(
-            BorrowedDemandSequence(values.span, log: log).drop(first: 2),
-            expected: [3, 4],
-            maximumCount: maximumCount,
-            log: log
-        )
-        try checkScalarValues(
-            BorrowedDemandSequence(values.span, log: SequenceDemandLog()).drop(first: 2),
-            expected: [3, 4]
-        )
-    }
+enum `Sequence.Chunk.Demand Tests` {}
 
-    @Test(arguments: [UInt(1), 3, UInt.max])
-    func `Zero requests preserve a predicate based drop`(maximumCount: UInt) throws {
-        let values = [1, 2, 3, 4]
-        let log = SequenceDemandLog()
-        try checkChunkDemand(
-            BorrowedDemandSequence(values.span, log: log).drop(while: {
-                log.predicates.append($0)
-                return $0 < 3
-            }),
-            expected: [3, 4],
-            maximumCount: maximumCount,
-            log: log
-        )
-        #expect(log.predicates == [1, 2, 3])
-        try checkScalarValues(
-            BorrowedDemandSequence(values.span, log: SequenceDemandLog()).drop(while: { $0 < 3 }),
-            expected: [3, 4]
-        )
-    }
+extension `Sequence.Chunk.Demand Tests` {
+    @Suite
+    struct `Zero chunk demand preserves sequence adapters and their borrowed sources` {
+        @Test(arguments: [UInt(1), 3, UInt.max])
+        func `Zero requests preserve a count based drop`(maximumCount: UInt) throws {
+            let values = [1, 2, 3, 4]
+            let log = SequenceDemandLog()
+            try checkChunkDemand(
+                BorrowedDemandSequence(values.span, log: log).drop(first: 2),
+                expected: [3, 4],
+                maximumCount: maximumCount,
+                log: log
+            )
+            try checkScalarValues(
+                BorrowedDemandSequence(values.span, log: SequenceDemandLog()).drop(first: 2),
+                expected: [3, 4]
+            )
+        }
 
-    @Test(arguments: [UInt(1), 3, UInt.max])
-    func `Zero requests preserve a count based prefix`(maximumCount: UInt) throws {
-        let values = [1, 2, 3, 4]
-        let log = SequenceDemandLog()
-        try checkChunkDemand(
-            BorrowedDemandSequence(values.span, log: log).prefix(first: 2),
-            expected: [1, 2],
-            maximumCount: maximumCount,
-            log: log
-        )
-        try checkScalarValues(
-            BorrowedDemandSequence(values.span, log: SequenceDemandLog()).prefix(first: 2),
-            expected: [1, 2]
-        )
-    }
+        @Test(arguments: [UInt(1), 3, UInt.max])
+        func `Zero requests preserve a predicate based drop`(maximumCount: UInt) throws {
+            let values = [1, 2, 3, 4]
+            let log = SequenceDemandLog()
+            try checkChunkDemand(
+                BorrowedDemandSequence(values.span, log: log).drop(while: {
+                    log.predicates.append($0)
+                    return $0 < 3
+                }),
+                expected: [3, 4],
+                maximumCount: maximumCount,
+                log: log
+            )
+            #expect(log.predicates == [1, 2, 3])
+            try checkScalarValues(
+                BorrowedDemandSequence(values.span, log: SequenceDemandLog()).drop(while: { $0 < 3 }),
+                expected: [3, 4]
+            )
+        }
 
-    @Test(arguments: [UInt(1), 3, UInt.max])
-    func `Zero requests preserve a predicate based prefix`(maximumCount: UInt) throws {
-        let values = [1, 2, 3, 4]
-        let log = SequenceDemandLog()
-        try checkChunkDemand(
-            BorrowedDemandSequence(values.span, log: log).prefix(while: {
-                log.predicates.append($0)
-                return $0 < 3
-            }),
-            expected: [1, 2],
-            maximumCount: maximumCount,
-            log: log
-        )
-        #expect(log.predicates == [1, 2, 3])
-        try checkScalarValues(
-            BorrowedDemandSequence(values.span, log: SequenceDemandLog()).prefix(while: { $0 < 3 }),
-            expected: [1, 2]
-        )
-    }
+        @Test(arguments: [UInt(1), 3, UInt.max])
+        func `Zero requests preserve a count based prefix`(maximumCount: UInt) throws {
+            let values = [1, 2, 3, 4]
+            let log = SequenceDemandLog()
+            try checkChunkDemand(
+                BorrowedDemandSequence(values.span, log: log).prefix(first: 2),
+                expected: [1, 2],
+                maximumCount: maximumCount,
+                log: log
+            )
+            try checkScalarValues(
+                BorrowedDemandSequence(values.span, log: SequenceDemandLog()).prefix(first: 2),
+                expected: [1, 2]
+            )
+        }
 
-    @Test
-    func `Zero requests defer every adapter source failure until positive demand`() throws {
-        let values = [1, 2, 3]
-        let dropCountLog = SequenceDemandLog()
-        try checkDemandFailure(
-            BorrowedDemandSequence(values.span, log: dropCountLog, fails: true).drop(first: 2),
-            log: dropCountLog
-        )
-        let prefixCountLog = SequenceDemandLog()
-        try checkDemandFailure(
-            BorrowedDemandSequence(values.span, log: prefixCountLog, fails: true).prefix(first: 2),
-            log: prefixCountLog
-        )
-        let dropPredicateLog = SequenceDemandLog()
-        try checkDemandFailure(
-            BorrowedDemandSequence(values.span, log: dropPredicateLog, fails: true).drop(while: {
-                dropPredicateLog.predicates.append($0)
-                return true
-            }),
-            log: dropPredicateLog
-        )
-        let prefixPredicateLog = SequenceDemandLog()
-        try checkDemandFailure(
-            BorrowedDemandSequence(values.span, log: prefixPredicateLog, fails: true).prefix(while: {
-                prefixPredicateLog.predicates.append($0)
-                return true
-            }),
-            log: prefixPredicateLog
-        )
-    }
+        @Test(arguments: [UInt(1), 3, UInt.max])
+        func `Zero requests preserve a predicate based prefix`(maximumCount: UInt) throws {
+            let values = [1, 2, 3, 4]
+            let log = SequenceDemandLog()
+            try checkChunkDemand(
+                BorrowedDemandSequence(values.span, log: log).prefix(while: {
+                    log.predicates.append($0)
+                    return $0 < 3
+                }),
+                expected: [1, 2],
+                maximumCount: maximumCount,
+                log: log
+            )
+            #expect(log.predicates == [1, 2, 3])
+            try checkScalarValues(
+                BorrowedDemandSequence(values.span, log: SequenceDemandLog()).prefix(while: { $0 < 3 }),
+                expected: [1, 2]
+            )
+        }
 
-    @Test
-    func `An empty outer prefix does not evaluate an inner predicate drop`() throws {
-        let values = [1, 2, 3, 4]
-        let log = SequenceDemandLog()
-        var iterator = BorrowedDemandSequence(values.span, log: log)
-            .drop(while: {
-                log.predicates.append($0)
-                return $0 < 3
-            })
-            .prefix(first: .zero)
-            .makeIterator()
+        @Test
+        func `Zero requests defer every adapter source failure until positive demand`() throws {
+            let values = [1, 2, 3]
+            let dropCountLog = SequenceDemandLog()
+            try checkDemandFailure(
+                BorrowedDemandSequence(values.span, log: dropCountLog, fails: true).drop(first: 2),
+                log: dropCountLog
+            )
+            let prefixCountLog = SequenceDemandLog()
+            try checkDemandFailure(
+                BorrowedDemandSequence(values.span, log: prefixCountLog, fails: true).prefix(first: 2),
+                log: prefixCountLog
+            )
+            let dropPredicateLog = SequenceDemandLog()
+            try checkDemandFailure(
+                BorrowedDemandSequence(values.span, log: dropPredicateLog, fails: true).drop(while: {
+                    dropPredicateLog.predicates.append($0)
+                    return true
+                }),
+                log: dropPredicateLog
+            )
+            let prefixPredicateLog = SequenceDemandLog()
+            try checkDemandFailure(
+                BorrowedDemandSequence(values.span, log: prefixPredicateLog, fails: true).prefix(while: {
+                    prefixPredicateLog.predicates.append($0)
+                    return true
+                }),
+                log: prefixPredicateLog
+            )
+        }
 
-        let isEmpty = try iterator.next(maximumCount: Cardinal.one).isEmpty
-        #expect(isEmpty)
-        #expect(log.requests.isEmpty)
-        #expect(log.predicates.isEmpty)
-        #expect(log.scalarCalls == 0)
-        try checkZeroDemand(&iterator, log: log)
-    }
+        @Test
+        func `An empty outer prefix does not evaluate an inner predicate drop`() throws {
+            let values = [1, 2, 3, 4]
+            let log = SequenceDemandLog()
+            var iterator = BorrowedDemandSequence(values.span, log: log)
+                .drop(while: {
+                    log.predicates.append($0)
+                    return $0 < 3
+                })
+                .prefix(first: .zero)
+                .makeIterator()
 
-    @Test
-    func `An empty outer prefix does not advance nested drops and prefixes`() throws {
-        let values = [1, 2, 3, 4]
-        let log = SequenceDemandLog()
-        var iterator = BorrowedDemandSequence(values.span, log: log)
-            .prefix(while: {
-                log.predicates.append($0)
-                return $0 < 4
-            })
-            .drop(first: .one)
-            .prefix(first: .zero)
-            .makeIterator()
+            let isEmpty = try iterator.next(maximumCount: Cardinal.one).isEmpty
+            #expect(isEmpty)
+            #expect(log.requests.isEmpty)
+            #expect(log.predicates.isEmpty)
+            #expect(log.scalarCalls == 0)
+            try checkZeroDemand(&iterator, log: log)
+        }
 
-        let isEmpty = try iterator.next(maximumCount: Cardinal.one).isEmpty
-        #expect(isEmpty)
-        #expect(log.requests.isEmpty)
-        #expect(log.predicates.isEmpty)
-        #expect(log.scalarCalls == 0)
-        try checkZeroDemand(&iterator, log: log)
-    }
-
-    @Test
-    func `Zero requests preserve the values of a nonempty adapter composition`() throws {
-        let values = [1, 2, 3, 4]
-        let log = SequenceDemandLog()
-        try checkChunkDemand(
-            BorrowedDemandSequence(values.span, log: log)
-                .drop(first: .one)
+        @Test
+        func `An empty outer prefix does not advance nested drops and prefixes`() throws {
+            let values = [1, 2, 3, 4]
+            let log = SequenceDemandLog()
+            var iterator = BorrowedDemandSequence(values.span, log: log)
                 .prefix(while: {
                     log.predicates.append($0)
                     return $0 < 4
                 })
-                .prefix(first: 2),
-            expected: [2, 3],
-            maximumCount: 1,
-            log: log
-        )
-        #expect(log.predicates == [2, 3])
+                .drop(first: .one)
+                .prefix(first: .zero)
+                .makeIterator()
+
+            let isEmpty = try iterator.next(maximumCount: Cardinal.one).isEmpty
+            #expect(isEmpty)
+            #expect(log.requests.isEmpty)
+            #expect(log.predicates.isEmpty)
+            #expect(log.scalarCalls == 0)
+            try checkZeroDemand(&iterator, log: log)
+        }
+
+        @Test
+        func `Zero requests preserve the values of a nonempty adapter composition`() throws {
+            let values = [1, 2, 3, 4]
+            let log = SequenceDemandLog()
+            try checkChunkDemand(
+                BorrowedDemandSequence(values.span, log: log)
+                    .drop(first: .one)
+                    .prefix(while: {
+                        log.predicates.append($0)
+                        return $0 < 4
+                    })
+                    .prefix(first: 2),
+                expected: [2, 3],
+                maximumCount: 1,
+                log: log
+            )
+            #expect(log.predicates == [2, 3])
+        }
     }
 }
 
-@Suite
-struct `Zero chunk demand preserves span iterator positions` {
-    @Test
-    func `A span iterator preserves its remaining elements across zero demand`() {
-        let values = [10, 20, 30]
-        var iterator = Swift::Span<Int>.Iterator(span: values.span)
-        let initialIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
-        #expect(initialIsEmpty)
-        #expect(iterator.remaining == 3)
-        #expect(iterator.skip(by: Cardinal.zero) == .zero)
-        #expect(iterator.next() == 10)
-        let middleIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
-        #expect(middleIsEmpty)
-        #expect(iterator.remaining == 2)
-        do {
-            let tail = iterator.next(maximumCount: Cardinal.max)
-            var actual: [Int] = []
-            for index in tail.indices { actual.append(tail[index]) }
-            #expect(actual == [20, 30])
+extension `Sequence.Chunk.Demand Tests` {
+    @Suite
+    struct `Zero chunk demand preserves span iterator positions` {
+        @Test
+        func `A span iterator preserves its remaining elements across zero demand`() {
+            let values = [10, 20, 30]
+            var iterator = Swift::Span<Int>.Iterator(span: values.span)
+            let initialIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
+            #expect(initialIsEmpty)
+            #expect(iterator.remaining == 3)
+            #expect(iterator.skip(by: Cardinal.zero) == .zero)
+            #expect(iterator.next() == 10)
+            let middleIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
+            #expect(middleIsEmpty)
+            #expect(iterator.remaining == 2)
+            do {
+                let tail = iterator.next(maximumCount: Cardinal.max)
+                var actual: [Int] = []
+                for index in tail.indices { actual.append(tail[index]) }
+                #expect(actual == [20, 30])
+            }
+            let finalIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
+            #expect(finalIsEmpty)
+            #expect(iterator.remaining == .zero)
+            #expect(iterator.next() == nil)
         }
-        let finalIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
-        #expect(finalIsEmpty)
-        #expect(iterator.remaining == .zero)
-        #expect(iterator.next() == nil)
-    }
 
-    @Test
-    func `A span batch iterator preserves its remaining elements across zero demand`() {
-        let values = [10, 20, 30]
-        var iterator = Swift::Span<Int>.Iterator.Batch(span: values.span)
-        let initialIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
-        #expect(initialIsEmpty)
-        #expect(iterator.remaining == 3)
-        #expect(iterator.skip(by: Cardinal.zero) == .zero)
-        #expect(iterator.next() == 10)
-        let middleIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
-        #expect(middleIsEmpty)
-        #expect(iterator.remaining == 2)
-        do {
-            let tail = iterator.next(maximumCount: Cardinal.max)
-            var actual: [Int] = []
-            for index in tail.indices { actual.append(tail[index]) }
-            #expect(actual == [20, 30])
+        @Test
+        func `A span batch iterator preserves its remaining elements across zero demand`() {
+            let values = [10, 20, 30]
+            var iterator = Swift::Span<Int>.Iterator.Batch(span: values.span)
+            let initialIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
+            #expect(initialIsEmpty)
+            #expect(iterator.remaining == 3)
+            #expect(iterator.skip(by: Cardinal.zero) == .zero)
+            #expect(iterator.next() == 10)
+            let middleIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
+            #expect(middleIsEmpty)
+            #expect(iterator.remaining == 2)
+            do {
+                let tail = iterator.next(maximumCount: Cardinal.max)
+                var actual: [Int] = []
+                for index in tail.indices { actual.append(tail[index]) }
+                #expect(actual == [20, 30])
+            }
+            let finalIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
+            #expect(finalIsEmpty)
+            #expect(iterator.remaining == .zero)
+            #expect(iterator.skip(by: Cardinal.zero) == .zero)
+            #expect(iterator.next() == nil)
         }
-        let finalIsEmpty = iterator.next(maximumCount: Cardinal.zero).isEmpty
-        #expect(finalIsEmpty)
-        #expect(iterator.remaining == .zero)
-        #expect(iterator.skip(by: Cardinal.zero) == .zero)
-        #expect(iterator.next() == nil)
     }
 }

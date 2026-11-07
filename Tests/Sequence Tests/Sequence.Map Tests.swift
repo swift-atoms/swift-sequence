@@ -5,10 +5,15 @@ import Testing
 extension `Sequence Tests` {
     @Suite
     struct `Sequence mapping transforms elements while preserving order` {
-        @Suite struct `Sequence mapping preserves transformations result types and identity` {}
-        @Suite struct `Sequence mapping handles empty and singleton sources` {}
-        @Suite struct `No sequence mapping integration cases are defined` {}
     }
+}
+
+extension `Sequence Tests`.`Sequence mapping transforms elements while preserving order` {
+    @Suite struct `Sequence mapping preserves transformations result types and identity` {}
+
+    @Suite struct `Sequence mapping handles empty and singleton sources` {}
+
+    @Suite struct `No sequence mapping integration cases are defined` {}
 }
 
 extension `Sequence Tests`.`Sequence mapping transforms elements while preserving order`.`Sequence mapping preserves transformations result types and identity` {

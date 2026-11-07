@@ -5,10 +5,15 @@ import Testing
 extension `Sequence Tests` {
     @Suite
     struct `Sequence filtering preserves matching elements in source order` {
-        @Suite struct `Sequence filtering selects matches without reordering them` {}
-        @Suite struct `Sequence filtering handles empty sources and predicates matching none or all` {}
-        @Suite struct `No sequence filter integration cases are defined` {}
     }
+}
+
+extension `Sequence Tests`.`Sequence filtering preserves matching elements in source order` {
+    @Suite struct `Sequence filtering selects matches without reordering them` {}
+
+    @Suite struct `Sequence filtering handles empty sources and predicates matching none or all` {}
+
+    @Suite struct `No sequence filter integration cases are defined` {}
 }
 
 extension `Sequence Tests`.`Sequence filtering preserves matching elements in source order`.`Sequence filtering selects matches without reordering them` {

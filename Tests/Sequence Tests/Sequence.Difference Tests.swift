@@ -9,10 +9,15 @@ enum `Sequence.Difference Tests` {}
 extension `Sequence.Difference Tests` {
     @Suite
     struct `Sequence differences preserve edit structure and minimal distance` {
-        @Suite struct `Sequence differences identify insertions removals and unchanged elements` {}
-        @Suite struct `Sequence differences preserve empty singleton and disjoint cases` {}
-        @Suite struct `No sequence difference integration cases are defined` {}
     }
+}
+
+extension `Sequence.Difference Tests`.`Sequence differences preserve edit structure and minimal distance` {
+    @Suite struct `Sequence differences identify insertions removals and unchanged elements` {}
+
+    @Suite struct `Sequence differences preserve empty singleton and disjoint cases` {}
+
+    @Suite struct `No sequence difference integration cases are defined` {}
 }
 
 extension `Sequence.Difference Tests`.`Sequence differences preserve edit structure and minimal distance`.`Sequence differences identify insertions removals and unchanged elements` {

@@ -9,10 +9,15 @@ enum `Sequence.Difference.Step Tests` {}
 extension `Sequence.Difference.Step Tests` {
     @Suite
     struct `Difference steps expose change status and edit markers` {
-        @Suite struct `Difference step predicates and markers distinguish edit cases` {}
-        @Suite struct `No difference step boundary cases are defined` {}
-        @Suite struct `No difference step integration cases are defined` {}
     }
+}
+
+extension `Sequence.Difference.Step Tests`.`Difference steps expose change status and edit markers` {
+    @Suite struct `Difference step predicates and markers distinguish edit cases` {}
+
+    @Suite struct `No difference step boundary cases are defined` {}
+
+    @Suite struct `No difference step integration cases are defined` {}
 }
 
 extension `Sequence.Difference.Step Tests`.`Difference steps expose change status and edit markers`.`Difference step predicates and markers distinguish edit cases` {

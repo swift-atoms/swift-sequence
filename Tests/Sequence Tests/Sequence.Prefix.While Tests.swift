@@ -6,10 +6,15 @@ import Testing
 extension `Sequence.Prefix Tests` {
     @Suite
     struct `Predicate prefixes retain the matching leading sequence elements` {
-        @Suite struct `Predicate prefixes stop at the first nonmatching element` {}
-        @Suite struct `Predicate prefixes preserve empty and uniformly matching cases` {}
-        @Suite struct `No sequence predicate prefix integration cases are defined` {}
     }
+}
+
+extension `Sequence.Prefix Tests`.`Predicate prefixes retain the matching leading sequence elements` {
+    @Suite struct `Predicate prefixes stop at the first nonmatching element` {}
+
+    @Suite struct `Predicate prefixes preserve empty and uniformly matching cases` {}
+
+    @Suite struct `No sequence predicate prefix integration cases are defined` {}
 }
 
 extension `Sequence.Prefix Tests`.`Predicate prefixes retain the matching leading sequence elements`.`Predicate prefixes stop at the first nonmatching element` {

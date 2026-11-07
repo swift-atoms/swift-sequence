@@ -6,10 +6,15 @@ import Testing
 extension `Sequence Tests` {
     @Suite
     struct `Span iterators preserve element order and exhaustion state` {
-        @Suite struct `Span iteration advances through elements and updates remaining counts` {}
-        @Suite struct `Iterating an empty span immediately reaches exhaustion` {}
-        @Suite struct `No span iteration integration cases are defined` {}
     }
+}
+
+extension `Sequence Tests`.`Span iterators preserve element order and exhaustion state` {
+    @Suite struct `Span iteration advances through elements and updates remaining counts` {}
+
+    @Suite struct `Iterating an empty span immediately reaches exhaustion` {}
+
+    @Suite struct `No span iteration integration cases are defined` {}
 }
 
 extension `Sequence Tests`.`Span iterators preserve element order and exhaustion state`.`Span iteration advances through elements and updates remaining counts` {

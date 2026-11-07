@@ -31,70 +31,68 @@ extension FailingSequence {
     }
 }
 
-extension `Sequence Either Tests`.`Sequence Either Tests` {
-    @Suite
-    struct `Sequence Either Tests` {
+@Suite
+struct `Sequence Either Tests` {
 
-        @Test
-        func `forEach visits every element`() throws {
-            let sequence = FailingSequence(elements: [1, 2, 3], failureIndex: nil)
-            var visited: [Int] = []
+    @Test
+    func `forEach visits every element`() throws {
+        let sequence = FailingSequence(elements: [1, 2, 3], failureIndex: nil)
+        var visited: [Int] = []
 
+        try sequence.forEach { (element: Int) throws(BodyError) in
+            visited.append(element)
+        }
+
+        #expect(visited == [1, 2, 3])
+    }
+
+    @Test
+    func `forEach wraps body failure on the left`() {
+        let sequence = FailingSequence(elements: [1, 2, 3], failureIndex: nil)
+
+        do throws(Either<BodyError, SourceError>) {
             try sequence.forEach { (element: Int) throws(BodyError) in
-                visited.append(element)
+                if element == 2 { throw .rejected }
             }
-
-            #expect(visited == [1, 2, 3])
+            Issue.record("expected body failure")
+        } catch {
+            guard case .left(let failure) = error else {
+                Issue.record("expected left body failure")
+                return
+            }
+            #expect(failure == .rejected)
         }
+    }
 
-        @Test
-        func `forEach wraps body failure on the left`() {
-            let sequence = FailingSequence(elements: [1, 2, 3], failureIndex: nil)
+    @Test
+    func `forEach wraps iterator failure on the right`() {
+        let sequence = FailingSequence(elements: [1, 2, 3], failureIndex: 1)
 
-            do throws(Either<BodyError, SourceError>) {
-                try sequence.forEach { (element: Int) throws(BodyError) in
-                    if element == 2 { throw .rejected }
-                }
-                Issue.record("expected body failure")
-            } catch {
-                guard case .left(let failure) = error else {
-                    Issue.record("expected left body failure")
-                    return
-                }
-                #expect(failure == .rejected)
+        do throws(Either<BodyError, SourceError>) {
+            try sequence.forEach { (_: Int) throws(BodyError) in }
+            Issue.record("expected iterator failure")
+        } catch {
+            guard case .right(let failure) = error else {
+                Issue.record("expected right iterator failure")
+                return
             }
+            #expect(failure == .failed)
         }
+    }
 
-        @Test
-        func `forEach wraps iterator failure on the right`() {
-            let sequence = FailingSequence(elements: [1, 2, 3], failureIndex: 1)
+    @Test
+    func `consume preserves iterator failure`() {
+        let sequence = FailingSequence(elements: [1, 2, 3], failureIndex: 2)
 
-            do throws(Either<BodyError, SourceError>) {
-                try sequence.forEach { (_: Int) throws(BodyError) in }
-                Issue.record("expected iterator failure")
-            } catch {
-                guard case .right(let failure) = error else {
-                    Issue.record("expected right iterator failure")
-                    return
-                }
-                #expect(failure == .failed)
+        do throws(Either<BodyError, SourceError>) {
+            try sequence.consume { (_: consuming Int) throws(BodyError) in }
+            Issue.record("expected iterator failure")
+        } catch {
+            guard case .right(let failure) = error else {
+                Issue.record("expected right iterator failure")
+                return
             }
-        }
-
-        @Test
-        func `consume preserves iterator failure`() {
-            let sequence = FailingSequence(elements: [1, 2, 3], failureIndex: 2)
-
-            do throws(Either<BodyError, SourceError>) {
-                try sequence.consume { (_: consuming Int) throws(BodyError) in }
-                Issue.record("expected iterator failure")
-            } catch {
-                guard case .right(let failure) = error else {
-                    Issue.record("expected right iterator failure")
-                    return
-                }
-                #expect(failure == .failed)
-            }
+            #expect(failure == .failed)
         }
     }
 }

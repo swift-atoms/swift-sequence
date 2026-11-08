@@ -6,7 +6,7 @@ import Sequence
 import Tagged
 import Testing
 
-@Suite("Sequence.Drain × Property")
+@Suite
 struct Sequence_Drain_Property_Tests {}
 
 extension Sequence_Drain_Property_Tests {

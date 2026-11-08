@@ -5,7 +5,7 @@ import Property
 import Sequence
 import Testing
 
-@Suite("Sequenceable.collect × Cardinal")
+@Suite
 struct Sequenceable_Collect_Cardinal_Tests {}
 
 extension Sequenceable_Collect_Cardinal_Tests {

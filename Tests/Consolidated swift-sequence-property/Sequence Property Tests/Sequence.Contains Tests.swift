@@ -5,7 +5,7 @@ import Property
 import Sequence
 import Testing
 
-@Suite("Sequence.Contains × Property")
+@Suite
 struct Sequence_Contains_Property_Tests {}
 
 extension Sequence_Contains_Property_Tests {

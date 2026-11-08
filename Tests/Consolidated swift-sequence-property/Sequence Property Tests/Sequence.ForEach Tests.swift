@@ -5,7 +5,7 @@ import Property
 import Sequence
 import Testing
 
-@Suite("Sequence.ForEach × Property")
+@Suite
 struct Sequence_ForEach_Property_Tests {}
 
 extension Sequence_ForEach_Property_Tests {

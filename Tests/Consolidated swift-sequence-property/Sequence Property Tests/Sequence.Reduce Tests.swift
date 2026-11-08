@@ -5,7 +5,7 @@ import Property
 import Sequence
 import Testing
 
-@Suite("Sequence.Reduce × Property")
+@Suite
 struct Sequence_Reduce_Property_Tests {}
 
 extension Sequence_Reduce_Property_Tests {

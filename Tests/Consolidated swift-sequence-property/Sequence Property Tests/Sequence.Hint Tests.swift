@@ -5,7 +5,7 @@ import Property
 import Sequence
 import Testing
 
-@Suite("Sequence.Hint × Property")
+@Suite
 struct Sequence_Hint_Property_Tests {
 
     @Test

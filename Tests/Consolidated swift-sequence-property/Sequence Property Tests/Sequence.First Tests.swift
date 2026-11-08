@@ -5,7 +5,7 @@ import Property
 import Sequence
 import Testing
 
-@Suite("Sequence.First × Property")
+@Suite
 struct Sequence_First_Property_Tests {}
 
 extension Sequence_First_Property_Tests {

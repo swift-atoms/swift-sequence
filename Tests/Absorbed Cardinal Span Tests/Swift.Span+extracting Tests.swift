@@ -4,9 +4,9 @@
     import Sequence
     import Testing
 
-enum `Swift.Span+extracting Tests` {}
+    enum `Swift.Span+extracting Tests` {}
 
-extension `Swift.Span+extracting Tests` {
+    extension `Swift.Span+extracting Tests` {
         @Suite
         struct `Span × Cardinal and Ordinal` {
 
@@ -36,5 +36,5 @@ extension `Swift.Span+extracting Tests` {
                 }
             }
         }
-}
+    }
 #endif

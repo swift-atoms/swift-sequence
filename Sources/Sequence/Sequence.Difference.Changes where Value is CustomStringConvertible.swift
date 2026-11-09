@@ -75,8 +75,8 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
                         if Cardinal(UInt(contextBuffer.count)) >= contextLines {
                             hunks.append(
                                 Sequence.Difference.Hunk(
-                                    old: .init(start: oldStart, count: oldCount),
-                                    new: .init(start: newStart, count: newCount),
+                                    old: .unified(start: oldStart, count: oldCount),
+                                    new: .unified(start: newStart, count: newCount),
                                     lines: currentLines
                                 )
                             )
@@ -99,13 +99,22 @@ extension Sequence.Difference.Changes where Value: CustomStringConvertible {
         if inHunk {
             hunks.append(
                 Sequence.Difference.Hunk(
-                    old: .init(start: oldStart, count: oldCount),
-                    new: .init(start: newStart, count: newCount),
+                    old: .unified(start: oldStart, count: oldCount),
+                    new: .unified(start: newStart, count: newCount),
                     lines: currentLines
                 )
             )
         }
 
         return hunks
+    }
+}
+
+extension Sequence.Difference.Hunk.Side {
+
+    /// A side whose start follows unified diff: an empty side starts at the line
+    /// that precedes it, so an empty side at the top of the file starts at 0.
+    fileprivate static func unified(start: Ordinal, count: Cardinal) -> Self {
+        Self(start: count == .zero ? start.predecessor.saturating() : start, count: count)
     }
 }

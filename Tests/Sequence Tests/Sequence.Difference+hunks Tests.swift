@@ -104,8 +104,9 @@ extension `Sequence.Difference Tests`.`Difference hunks group nearby edits with 
         )
         let hunks = changes.hunks()
         #expect(hunks.count == 1)
-        #expect(hunks[0].old.count >= 1)
-        #expect(hunks[0].new.count >= 1)
+        #expect(hunks[0].old == .init(start: 1, count: 3))
+        #expect(hunks[0].new == .init(start: 1, count: 4))
+        #expect(hunks[0].header == "@@ -1,3 +1,4 @@")
     }
 }
 
@@ -174,7 +175,56 @@ extension `Sequence.Difference Tests`.`Difference hunks group nearby edits with 
         )
         #expect(second.filter { $0 == .both("c6") }.count == 1)
 
-        #expect(hunks[1].old.count == 4)
-        #expect(hunks[1].new.count == 4)
+        #expect(hunks[0].old == .init(start: 1, count: 4))
+        #expect(hunks[0].new == .init(start: 1, count: 4))
+        #expect(hunks[1].old == .init(start: 5, count: 4))
+        #expect(hunks[1].new == .init(start: 5, count: 4))
+    }
+
+    @Test
+    func `a gap of twice the context minus one merges two changes into one hunk`() {
+
+        let old = ["line1", "c1", "c2", "c3", "c4", "c5", "line7"]
+        var new = old
+        new[0] = "changed1"
+        new[6] = "changed7"
+
+        let hunks = Sequence.Difference.diff(old, new).hunks(contextLines: 3)
+        #expect(hunks.count == 1)
+        #expect(
+            hunks[0].lines == [
+                .first("line1"), .second("changed1"),
+                .both("c1"), .both("c2"), .both("c3"), .both("c4"), .both("c5"),
+                .first("line7"), .second("changed7"),
+            ]
+        )
+        #expect(hunks[0].old == .init(start: 1, count: 7))
+        #expect(hunks[0].new == .init(start: 1, count: 7))
+    }
+
+    @Test
+    func `an empty old side of a pure insertion starts at zero`() {
+        let hunks = Sequence.Difference.diff([], ["a", "b", "c"]).hunks()
+        #expect(hunks[0].old == .init(start: 0, count: 0))
+        #expect(hunks[0].new == .init(start: 1, count: 3))
+        #expect(hunks[0].header == "@@ -0,0 +1,3 @@")
+    }
+
+    @Test
+    func `an empty new side of a pure deletion starts at zero`() {
+        let hunks = Sequence.Difference.diff(["a", "b", "c"], []).hunks()
+        #expect(hunks[0].old == .init(start: 1, count: 3))
+        #expect(hunks[0].new == .init(start: 0, count: 0))
+        #expect(hunks[0].header == "@@ -1,3 +0,0 @@")
+    }
+
+    @Test
+    func `an empty side inside the file starts at the line that precedes it`() {
+        let hunks = Sequence.Difference.diff(["a", "b", "c"], ["a", "b", "x", "c"]).hunks(contextLines: 0)
+        #expect(hunks.count == 1)
+        #expect(hunks[0].lines == [.second("x")])
+        #expect(hunks[0].old == .init(start: 2, count: 0))
+        #expect(hunks[0].new == .init(start: 3, count: 1))
+        #expect(hunks[0].header == "@@ -2,0 +3,1 @@")
     }
 }
